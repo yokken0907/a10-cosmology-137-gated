@@ -1,0 +1,71 @@
+theory:
+  classy:
+    path: /home/kei/class_hybrid_a10
+    extra_args:
+      non_linear: 'halofit'
+      N_ncdm: 1
+      N_ur: 2.0328
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+  # SH0ES尤度の明示的追加（H0 = 73.04 +/- 1.04 のガウス分布）
+  shoes_H0:
+    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+    requires: [H0]
+
+params:
+  H0:
+    prior: [60, 80]
+    ref: 72.0      # プロファイル尤度で安定した座標を初期値に設定
+    proposal: 0.5
+  omega_b:
+    prior: [0.02, 0.025]
+    ref: 0.022374
+    proposal: 0.00002
+  omega_cdm:
+    prior: [0.10, 0.14]
+    ref: 0.119552
+    proposal: 0.0001
+  A_s:
+    prior: [1.5e-9, 3.0e-9]
+    ref: 2.113568e-09
+    proposal: 0.005e-9
+  n_s:
+    prior: [0.92, 1.0]
+    ref: 0.965947
+    proposal: 0.0005
+  tau_reio:
+    prior: [0.04, 0.08]
+    ref: 0.054958
+    proposal: 0.0005
+
+  m_ncdm: 0.06
+
+  ua10_f_ax:
+    prior: [0.001, 0.2]
+    ref: 0.123453
+    proposal: 0.0005
+  ua10_V0:
+    prior: [0.001, 0.1]
+    ref: 0.075609
+    proposal: 0.0005
+  ua10_Gamma0:
+    prior: [0.001, 0.05]
+    ref: 0.016238
+    proposal: 0.00005
+  ua10_phi_trigger:
+    prior: [135, 140]
+    ref: 137.9295
+    proposal: 0.002
+  ua10_n_ax: 2.5
+
+sampler:
+  minimize:
+    method: bobyqa # 谷底を最速で見つけるアルゴリズム
+    ignore_prior: False
+
+output: chains_h0_scan/h0_720

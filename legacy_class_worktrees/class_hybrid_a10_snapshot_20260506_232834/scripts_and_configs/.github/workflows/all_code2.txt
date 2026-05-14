@@ -1,0 +1,3348 @@
+# Script to change the names of CLASS modules (by Nils Schöneberg & Julien Lesgourgues)
+#
+# Can be used to:
+#  - rename module files, module prefixes, module structures, module structure acronyms
+#  - undo renaming
+#  - clean the generated log and backup files
+#
+# usage: CLASS_rename.py [-h] --method {rename,undo,clean} [-v | -q]
+#
+# optional arguments:
+#  -h, --help            show this help message and exit
+#  --method {rename,undo,clean}   rename / undo renaming / clean
+#  -v, --verbose         Increase the verbosity of the program for more detailed output
+#  -q, --quiet           Make the program entirely quiet, setting the verbosity to 0.
+#                        Also disables the user confirmation, so use it carefully
+#
+# The actual renaming to be performed has to be set beforehand in the section below.
+# Currently this is set for the transformation
+# of CLASS v2.10.8 into CLASS v3.0.0 and backwards.
+
+### EDIT ONLY BELOW ###
+### EDIT ONLY BELOW ###
+
+module_filename = ["thermodynamics","perturbations","nonlinear","transfer","spectra"]
+module_prefix = ["thermodynamics","perturb","nonlinear","transfer","spectra"]
+structure_longname = ["thermo","perturbs","nonlinear","transfers","spectra"]
+structure_shortname = ["th","pt","nl","tr","sp"]
+
+newmodule_filename = ["thermodynamics","perturbations","fourier","transfer","harmonic"]
+newmodule_prefix = ["thermodynamics","perturbations","fourier","transfer","harmonic"]
+newstructure_longname = ["thermodynamics","perturbations","fourier","transfer","harmonic"]
+newstructure_shortname= ["th","pt","fo","tr","hr"]
+
+# Potential problem: structure short names are just two
+# letters. Combinations of the same two letters may
+# appear casually. Thus in some sub-cases we first
+# check for exceptions.
+
+# to identify these exception, for each short name (e.g. 'nl'), run:
+#
+# > grep "nl\." */*.c */*.h */*.py */*.pyx */*.pxd */*.ipynb */*.ini *.ini
+#
+# > grep "\&nl" */*.c */*.h */*.py */*.pyx */*.pxd */*.ipynb */*.ini *.ini
+#
+# and check whether some of the lines feature an nl that has nothing
+# to do with the stucture short name. If yes, write the exception in
+# the dictionary below.
+
+exceptions = {"th":[],
+              "pt":[],
+              "nl":["nl_corr","R_nl"],
+              "tr":[],
+              "sp":["osp.","resp"]}
+
+prefix_exceptions = {"thermodynamics":[],
+                     "perturbations":[],
+                     "nonlinear":["nonlinear_method","nonlinear_scale","nonlinear_min_k_max"],
+                     "transfer":[],
+                     "spectra":[]}
+
+src_folder = "source"
+incl_folder = "include"
+test_folder = "test"
+
+### EDIT ONLY ABOVE ###
+### EDIT ONLY ABOVE ###
+
+
+
+
+import os
+import argparse
+
+# parse the arguments of the command line
+parser = argparse.ArgumentParser(description='Change the names of CLASS modules')
+parser.add_argument("--method",choices=["rename","undo","clean"], required=True,help="Do you want to rename / undo renaming / clean the generated log and backup files? Type 'rename','undo', or 'clean'")
+# default verbosity is 1, can be increased with -v or decreased with -q
+group = parser.add_mutually_exclusive_group()
+group.add_argument("-v", "--verbose", action="count",default=1,help="Increase the verbosity of the program for more detailed output")
+group.add_argument("-q", "--quiet", action="store_true",help="Make the program entirely quiet, setting the verbosity to 0. This also disables the confirmation required by the user, so use it carefully")
+parse_dict = parser.parse_args()
+
+if parse_dict.quiet:
+  parse_dict.verbose = 0
+
+# Inform the user about the starting of the actual routine
+if parse_dict.verbose>0:
+  print("START RENAMING ROUTINE v.0.3 (credits Nils Schöneberg & Julien Lesgourgues)")
+  print("CHECKING ALL FILES IN DIRECTORY : "+os.path.abspath("."))
+
+# Find the list of all the directories that we will parse and in which we will do changes in some files
+#
+# Get the list of all folders and subfolders in the local folder
+# After this step, each element x is such that x[0] contains a folder name 'folder/subfolder/.../'
+folder_list = [x for x in os.walk(".")]
+# remove .git, doc, build folders
+folder_list = [x for x in folder_list if not (".git" in x[0])]
+#folder_list = [x for x in folder_list if not ("doc" in x[0])]
+folder_list = [x for x in folder_list if not ("doc/manual" in x[0])]
+folder_list = [x for x in folder_list if not ("doc/input/latex" in x[0])]
+folder_list = [x for x in folder_list if not ("build" in x[0])]
+# remove the folder of the RealSpaceInterface containing cached data
+folder_list = [x for x in folder_list if not ("RealSpaceInterface/static" in x[0])]
+# keep only the list of all folders, not the files they contain
+folder_list = [x[0] for x in folder_list]
+
+if parse_dict.verbose > 0:
+  # show the list of 'folder/subfolder/.../'
+  print("FOLDER LIST : "+" ".join(folder_list))
+
+  # let the user confirm or abort
+  read = input("Continue? (y/n)")
+  if not read.startswith("y"):
+    quit()
+
+###############
+# 'undo' mode #
+###############
+
+if parse_dict.method == "undo":
+
+  # For each changed module/file name, go back to old file names (e.g. 'fourier.c' -> 'nonlinear.c') such that they can be overwritten by the corresponding .old files
+  for i in range(len(module_filename)):
+    xf = module_filename[i]
+    yf = newmodule_filename[i]
+    os.rename(os.path.join(src_folder,yf+".c"),os.path.join(src_folder,xf+".c"))
+    os.rename(os.path.join(incl_folder,yf+".h"),os.path.join(incl_folder,xf+".h"))
+    os.rename(os.path.join(test_folder,"test_"+yf+".c"),os.path.join(test_folder,"test_"+xf+".c"))
+    if parse_dict.verbose > 0:
+      print("REVERTED TO MODULE NAME "+xf)
+
+  # find all folders containing .old and/or .unchanged files
+  for fldername in folder_list:
+    # First, get name of all files and subfolders in this folder
+    filelist_all = os.listdir(fldername)
+    filelist = []
+    for fname in filelist_all:
+      tmp_name = os.path.join(fldername, fname)
+      # remove subfolder names, keep only file names
+      if os.path.isdir(tmp_name):
+        continue
+      if tmp_name.endswith(".old"):
+        filelist.append(fname)
+      elif tmp_name.endswith(".unchanged"):
+        filelist.append(fname)
+
+    if parse_dict.verbose > 2:
+      print (fldername, filelist)
+
+    for filename in filelist:
+      # remove the log files *.unchanged
+      # (this can be done safely, as all relevant information is in the .old files)
+      if(".unchanged" in filename):
+        os.remove(os.path.join(fldername,filename))
+
+      # remove the .old extensions, thus overwriting the changed files with the old files
+      if(".old" in filename):
+        os.rename(os.path.join(fldername,filename),os.path.join(fldername,filename.replace(".old","")))
+        if parse_dict.verbose > 1:
+          print ("mv "+os.path.join(fldername,filename)+" "+os.path.join(fldername,filename.replace(".old",""))+"!")
+
+    if parse_dict.verbose > 0:
+      print ("IN "+fname+", DELETED .unchanged AND RESTORED ORIGINAL FROM .old FILES")
+
+
+################
+# 'clean' mode #
+################
+
+elif parse_dict.method == "clean":
+
+  # find all folders containing .old and/or .unchanged files
+  for fldername in folder_list:
+    # First, get name of all files and subfolders in this folder
+    filelist_all = os.listdir(fldername)
+    filelist = []
+    for fname in filelist_all:
+      tmp_name = os.path.join(fldername, fname)
+      # remove subfolder names, keep only file names
+      if os.path.isdir(tmp_name):
+        continue
+      if tmp_name.endswith(".old"):
+        filelist.append(fname)
+      elif tmp_name.endswith(".unchanged"):
+        filelist.append(fname)
+
+    if parse_dict.verbose > 2:
+      print (fldername,filelist)
+
+    for filename in filelist:
+      # just remove any .unchanged or .old files
+      if(".unchanged" in filename or ".old" in filename):
+        os.remove(os.path.join(fldername,filename))
+
+    if parse_dict.verbose > 0:
+      print ("IN "+fname+", DELETED .unchanged AND .old FILES")
+
+    try:
+      # remove log files Makefile.old and possibly autostep.py
+      os.remove("Makefile.old")
+      if parse_dict.verbose > 0:
+        print ("REMOVED Makefile.old")
+      os.remove(os.path.join("python","autosetup.py"))
+      if parse_dict.verbose > 0:
+        print ("REMOVED python/autosetup.py")
+    except:
+      pass
+
+#################
+# 'rename' mode #
+#################
+
+elif parse_dict.method == "rename":
+
+  # Some operations only have to be done for the first iteration over all files
+  # One example of this is the generation of the backup .old files
+  # Thus, we keep track if this is our first iteration
+  first_loop = True
+
+  # loop over each module to be renamed/modified
+  for i in range(len(module_filename)):
+
+    xf = module_filename[i]
+    xp = module_prefix[i]
+    xsl = structure_longname[i]
+    xss = structure_shortname[i]
+
+    yf = newmodule_filename[i]
+    yp = newmodule_prefix[i]
+    ysl = newstructure_longname[i]
+    yss = newstructure_shortname[i]
+
+    if parse_dict.verbose > 0:
+      print("BEGIN RENAMING {} -> {}".format(xsl,ysl))
+
+    # Parse and possibly do changes in each file of the folder fldername
+    for fldername in folder_list:
+
+      # Establish the list of file to be parsed and possibly modified in this folder
+
+      # First, get name of all files and subfolders in this folder
+      filelist_all = os.listdir(fldername)
+      filelist = []
+      for fname in filelist_all:
+        tmp_name = os.path.join(fldername, fname)
+        # remove subfolder names, keep only file names
+        if os.path.isdir(tmp_name):
+          continue
+        # ignore the automatically generated python setup file
+        if "autosetup.py" in tmp_name:
+          continue
+        # take into account other files with extension .c, .py, .pyx, .pxd, .ipynb, .h, .ini
+        # but not the .py of the local (root) folder (and thus e.g. not this script!)
+        if tmp_name.endswith(".c"):
+          filelist.append(fname)
+        elif tmp_name.endswith(".py"):
+          if fldername != '.':
+            filelist.append(fname)
+        elif tmp_name.endswith(".pyx"):
+          filelist.append(fname)
+        elif tmp_name.endswith(".pxd"):
+          filelist.append(fname)
+        elif tmp_name.endswith(".ipynb"):
+          filelist.append(fname)
+        elif tmp_name.endswith(".h"):
+          filelist.append(fname)
+        elif tmp_name.endswith(".ini"):
+          filelist.append(fname)
+        elif tmp_name.endswith(".md"):
+          filelist.append(fname)
+
+      # show the list of file to be parsed and possibly modified in this folder
+      if parse_dict.verbose > 1:
+        print("WILL MODIFY ALL FILES IN FOLDER '{}': [".format(fldername)+",".join(filelist)+"]")
+
+      # iterate over all files in the current folder
+      for filename in filelist:
+        # open input file (with old names)
+        with open(os.path.join(fldername,filename),"r") as inf:
+          # open temporary output file (where we will subsititue the new names)
+          with open(os.path.join(fldername,filename+".tmp"),"w") as outf:
+            # open a log file with extension .unchanged where we will store lines that were not changed but should have, potentially (for visual inspection)
+            with open(os.path.join(fldername,filename+".unchanged"),"a") as unchf:
+              # iterate over each line in the input file
+              line = inf.readline()
+              while line:
+
+                # I. Treat lines where the full structure name appears, e.g. 'nonlinear'
+                if "struct "+xsl in line:
+                  if "struct "+xsl+" "+xss in line:
+                    # replace each structure declaration (e.g. 'struct nonlinear nl' -> 'struct fourier fo')
+                    # we isolate this case because it is very useful to catch many occurences of the structure short name (e.g. 'nl') already here
+                    line = line.replace("struct "+xsl+" "+xss,"struct "+ysl+" "+yss)
+                  else:
+                    # replace other occurences (e.g. 'struct nonlinear' -> 'struct fourier')
+                    # Special care is needed here! Check that the next character is not a letter
+                    # Thus we only allow for a small selection of relevant possibilities
+                    for char in ['\t','\n',' ','*','`',';',':']:
+                      line = line.replace("struct "+xsl+char,"struct "+ysl+char)
+                if "cdef "+xsl in line:
+                  if "cdef "+xsl+" "+xss in line:
+                    # replace each structure declaration (e.g. 'cdef nonlinear nl' -> 'cdef fourier fo')
+                    # we isolate this case because it is very useful to catch many occurences of the structure short name (e.g. 'nl') already here
+                    line = line.replace("cdef "+xsl+" "+xss,"cdef "+ysl+" "+yss)
+                  else:
+                    # replace other occurences (e.g. 'cdef nonlinear' -> 'cdef fourier')
+                    line = line.replace("cdef "+xsl,"cdef "+ysl)
+                if xsl+" structure" in line:
+                  line = line.replace(xsl+" structure",ysl+" structure")
+
+                # II. Treat lines where the module (= file) name appears
+                if xf.upper() in line:
+                  # replace capitalized module name (e.g. '__NONLINEAR__' -> '__FOURIER__')
+                  line = line.replace(xf.upper(),yf.upper())
+                if xf+".c" in line:
+                  # replace full filename in the comments (e.g. 'nonlinear.c' --> 'fourier.c')
+                  line = line.replace(xf+".c",yf+".c")
+                if xf+".h" in line:
+                  # replace full filename in the comments (e.g. 'nonlinear.h' --> 'fourier.h')
+                  line = line.replace(xf+".h",yf+".h")
+                if xf+" module" in line:
+                  # replace full filename in the comments (e.g. 'nonlinear module' --> 'fourier module')
+                  line = line.replace(xf+" module",yf+" module")
+                if "\""+xf+"\"" in line:
+                  # replace full filename in quotation marks (e.g. '"nonlinear"' --> '"fourier"')
+                  line = line.replace("\""+xf+"\"","\""+yf+"\"")
+
+
+                # III. Treat lines where the prefix appears
+                if xp+"_" in line:
+                   # replace all prefix names (e.g. 'nonlinear' -> 'fourier')
+                   # For all prefix exceptions, substitute the problematic string with 'xx'
+                   for i,x in enumerate(prefix_exceptions[xp]):
+                     if x in line:
+                       line = line.replace(x,prefix_exceptions[xp][i].replace(xp,'xx'))
+                   # Now replace all the corresponding names where the prefix appears
+                   line = line.replace(xp+"_",yp+"_")
+                   # Finally, re-substitute the original exception string instead of the 'xx'
+                   for i,x in enumerate(prefix_exceptions[xp]):
+                     if x.replace(xp,'xx') in line:
+                       line = line.replace(x.replace(xp,'xx'),prefix_exceptions[xp][i])
+
+                # IV. Treat line where short structure name appears, e.g. 'nl'
+                if xss in line:
+
+                  # replace pointers towards structure (e.g. 'pnl' -> 'pfo')
+                  if "p"+xss in line:
+                    line = line.replace("p"+xss,"p"+yss)
+
+                  # replace structure addresses (e.g. '&nl' -> '&fo') and structure short names before dots (e.g. 'nl.error_message' -> 'fo.error_message')
+                  if "&"+xss in line or  xss+"." in line:
+                    # For all exceptions, substitute the problematic string with 'xx'
+                    for i,x in enumerate(exceptions[xss]):
+                      if x in line:
+                        line = line.replace(x,exceptions[xss][i].replace(xss,'xx'))
+                    # Now replace all structure short names before dots and addresses
+                    line = line.replace("&"+xss,"&"+yss)
+                    line = line.replace(xss+".",yss+".")
+                    # Finally, re-substitute the original exception string instead of the 'xx'
+                    for i,x in enumerate(exceptions[xss]):
+                      if x.replace(xss,'xx') in line:
+                        line = line.replace(x.replace(xss,'xx'),exceptions[xss][i])
+
+                  # replace structures as fields of bigger structures in python (e.g. 'self.nl' -> 'self.fo')
+                  if "self."+xss in line:
+                    line = line.replace("self."+xss,"self."+yss)
+
+                  # if the line did contain the short name in another circumstances, print it in the log file .unchanged
+                  if xss in line:
+                    # Mark the occurence of the short name by arrows (e.g. 'only' -> 'o-->nl<--y')
+                    unchf.write(line.replace(xss,"-->"+xss+"<--"))
+
+                # write the line (changed or not) in the temporary output file
+                outf.write(line)
+                line = inf.readline()
+
+        # keep the input file but add to it an extension .old (so we keep it as a backup, if something goes wrong) e.g. nonlinear.c -> nonlinear.c.old
+        # This is done only in the first loop over modules.
+        if first_loop == True:
+          os.rename(os.path.join(fldername,filename),os.path.join(fldername,filename+".old"))
+        # give to the temporary output file name its final extension (e.g. 'nonlinear.c.tmp' -> 'nonlinear.c')
+        os.rename(os.path.join(fldername,filename+".tmp"),os.path.join(fldername,filename))
+
+      if parse_dict.verbose > 1:
+        print("SUCCESS IN FOLDER {}".format(fldername))
+
+    # work on the Makefile
+    if parse_dict.verbose>1:
+      print("MODIFY MAKEFILE")
+    with open("Makefile","r") as inf:
+      # implement the changes in Makefile.tmp
+      with open("Makefile.tmp","w") as outf:
+        line = inf.readline()
+        while line:
+          # replace long names (e.g. 'nonlinear' -> 'fourier')
+          if xf in line:
+            line = line.replace(xf,yf)
+          # replace long names when capitalized
+          if xf.upper() in line:
+            line = line.replace(xf.upper(),yf.upper())
+          outf.write(line)
+          line = inf.readline()
+    # keep old version with additional .old extension
+    if first_loop == True:
+      os.rename("Makefile","Makefile.old")
+    # rename Makefile.tmp -> Makefile
+    os.rename("Makefile.tmp","Makefile")
+    if parse_dict.verbose>1:
+      print("SUCCESS IN MODIFYING MAKEFILE")
+
+    # change actual file names (e.g. 'nonlinear.c' -> 'fourier.c')
+    if parse_dict.verbose>1:
+      print("RENAME MODULE "+yf)
+    os.rename(os.path.join(src_folder,xf+".c"),os.path.join(src_folder,yf+".c"))
+    os.rename(os.path.join(incl_folder,xf+".h"),os.path.join(incl_folder,yf+".h"))
+    os.rename(os.path.join(test_folder,"test_"+xf+".c"),os.path.join(test_folder,"test_"+yf+".c"))
+    if parse_dict.verbose>1:
+      print("SUCCESS IN RENAMING MODULE "+yf)
+
+
+    if parse_dict.verbose > 0:
+      print("SUCCESS FOR RENAMING {} -> {}".format(xf,yf))
+
+    # done for this particular module
+    first_loop = False
+
+# end of loop over modulea
+if parse_dict.verbose>0:
+  print("SUCCESS!")
+#!/usr/bin/env python
+"""
+.. module:: CPU
+    :synopsis: CPU, a CLASS Plotting Utility
+.. moduleauthor:: Benjamin Audren <benjamin.audren@gmail.com>
+.. credits:: Benjamin Audren, Jesus Torrado
+.. version:: 2.0
+
+This is a small python program aimed to gain time when comparing two spectra,
+e.g. from CAMB and CLASS, or a non-linear spectrum to a linear one.
+
+It is designed to be used in a command line fashion, not being restricted to
+your CLASS directory, though it recognizes mainly CLASS output format. Far from
+perfect, or complete, it could use any suggestion for enhancing it,
+just to avoid losing time on useless matters for others.
+
+Be warned that, when comparing with other format, the following is assumed:
+there are no empty line (especially at the end of file). Gnuplot comment lines
+(starting with a # are allowed). This issue will cause a non-very descriptive
+error in CPU, any suggestion for testing it is welcome.
+
+Example of use:
+- To superimpose two different spectra and see their global shape :
+python CPU.py output/lcdm_z2_pk.dat output/lncdm_z2_pk.dat
+- To see in details their ratio:
+python CPU.py output/lcdm_z2_pk.dat output/lncdm_z2_pk.dat -r
+
+The "PlanckScale" is taken with permission from Jesus Torrado's:
+cosmo_mini_toolbox, available under GPLv3 at
+https://github.com/JesusTorrado/cosmo_mini_toolbox
+
+"""
+
+from __future__ import unicode_literals, print_function
+
+# System imports
+import os
+import sys
+import argparse
+
+# Numerics
+import numpy as np
+from numpy import ma
+from scipy.interpolate import InterpolatedUnivariateSpline
+from math import floor
+
+# Plotting
+import matplotlib.pyplot as plt
+from matplotlib import scale as mscale
+from matplotlib.transforms import Transform
+from matplotlib.ticker import FixedLocator
+
+
+def CPU_parser():
+    parser = argparse.ArgumentParser(
+        description=(
+            'CPU, a CLASS Plotting Utility, specify wether you want\n'
+            'to superimpose, or plot the ratio of different files.'),
+        epilog=(
+            'A standard usage would be, for instance:\n'
+            'python CPU.py output/test_pk.dat output/test_pk_nl_density.dat'
+            ' -r\npython CPU.py output/wmap_cl.dat output/planck_cl.dat'),
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+
+    parser.add_argument(
+        'files', type=str, nargs='*', help='Files to plot')
+    parser.add_argument('-r', '--ratio', dest='ratio', action='store_true',
+                        help='Plot the ratio of the spectra')
+    parser.add_argument('-y', '--y-axis', dest='y_axis', nargs='+',
+                        help='specify the fields you want to plot.')
+    parser.add_argument('-x', '--x-axis', dest='x_axis', type=str,
+                        help='specify the field to be used on the x-axis')
+    parser.add_argument('--scale', type=str,
+                        choices=['lin', 'loglog', 'loglin', 'george'],
+                        help='Specify the scale to use for the plot')
+    parser.add_argument('--xlim', dest='xlim', nargs='+', type=float,
+                        default=[], help='Specify the x range')
+    parser.add_argument('--ylim', dest='ylim', nargs='+', type=float,
+                        default=[], help='Specify the y range')
+    parser.add_argument(
+        '-p, --print',
+        dest='printfile', default='',
+        help=('print the graph directly in a file. If no name is specified, it'
+              'uses the name of the first input file'))
+    parser.add_argument(
+        '--repeat',
+        dest='repeat', action='store_true', default=False,
+        help='repeat the step for all redshifts with same base name')
+    return parser
+
+
+def plot_CLASS_output(files, x_axis, y_axis, ratio=False, printing='',
+                      output_name='', extension='', x_variable='',
+                      scale='lin', xlim=[], ylim=[]):
+    """
+    Load the data to numpy arrays, write all the commands for plotting to a
+    Python script for further refinment, and display them.
+
+    Inspired heavily by the matlab version by Thomas Tram
+
+    Parameters
+    ----------
+    files : list
+        List of files to plot
+    x-axis : string
+        name of the column to use as the x coordinate
+    y-axis : list, str
+        List of items to plot, which should match the way they appear in the
+        file, for instance: ['TT', 'BB]
+
+    Keyword Arguments
+    -----------------
+    ratio : bool
+        If set to yes, plots the ratio of the files, taking as a reference the
+        first one
+    output_name : str
+        Specify a different name for the produced figure (by default, it takes
+        the name of the first file, and replace the .dat by .pdf)
+    extension : str
+
+    """
+    # Define the python script name, and the pdf path
+    python_script_path = os.path.splitext(files[0])[0]+'.py'
+
+    # The variable text will contain all the lines to be printed in the end to
+    # the python script path, joined with newline characters. Beware of the
+    # indentation.
+    text = ['import matplotlib.pyplot as plt',
+            'import numpy as np',
+            'import itertools', '']
+
+    # Load all the graphs
+    data = []
+    for data_file in files:
+        data.append(np.loadtxt(data_file))
+
+    # Create the full_path_files list, that contains the absolute path, so that
+    # the future python script can import them directly.
+    full_path_files = [os.path.abspath(elem) for elem in files]
+
+    text += ['files = %s' % full_path_files]
+    text += ['data = []',
+             'for data_file in files:',
+             '    data.append(np.loadtxt(data_file))']
+
+    # Recover the base name of the files, everything before the dot
+    roots = [elem.split(os.path.sep)[-1].split('.')[0] for elem in files]
+    text += ['roots = [%s]' % ', '.join(["'%s'" % root for root in roots])]
+
+    # Create the figure and ax objects
+    fig, ax = plt.subplots()
+    text += ['', 'fig, ax = plt.subplots()']
+
+    # if ratio is not set, then simply plot them all
+    original_y_axis = y_axis
+    legend = []
+    if not ratio:
+        for index, curve in enumerate(data):
+            # Recover the number of columns in the first file, as well as their
+            # title.
+            num_columns, names, tex_names = extract_headers(files[index])
+
+            text += ['', 'index, curve = %i, data[%i]' % (index, index)]
+            # Check if everything is in order
+            if num_columns == 2:
+                y_axis = [names[1]]
+            elif num_columns > 2:
+                # in case y_axis was only a string, cast it to a list
+                if isinstance(original_y_axis, str):
+                    y_axis = [original_y_axis]
+                else:
+                    y_axis = original_y_axis
+
+            # Store the selected text and tex_names to the script
+            selected = []
+            for elem in y_axis:
+                selected.extend(
+                    [name for name in names if name.find(elem) != -1 and
+                     name not in selected])
+            if not y_axis:
+                selected = names[1:]
+            y_axis = selected
+
+            # Decide for the x_axis, by default the index will be set to zero
+            x_index = 0
+            if x_axis:
+                for index_name, name in enumerate(names):
+                    if name.find(x_axis) != -1:
+                        x_index = index_name
+                        break
+            # Store to text
+            text += ['y_axis = %s' % selected]
+            text += ['tex_names = %s' % [elem for (elem, name) in
+                     zip(tex_names, names) if name in selected]]
+            text += ["x_axis = '%s'" % tex_names[x_index]]
+            text += ["ylim = %s" % ylim]
+            text += ["xlim = %s" % xlim]
+
+            for selec in y_axis:
+                index_selec = names.index(selec)
+                plot_line = 'ax.'
+                if scale == 'lin':
+                    plot_line += 'plot(curve[:, %i], curve[:, %i])' % (
+                        x_index, index_selec)
+                    ax.plot(curve[:, x_index], curve[:, index_selec])
+                elif scale == 'loglog':
+                    plot_line += 'loglog(curve[:, %i], abs(curve[:, %i]))' % (
+                        x_index, index_selec)
+                    ax.loglog(curve[:, x_index], abs(curve[:, index_selec]))
+                elif scale == 'loglin':
+                    plot_line += 'semilogx(curve[:, %i], curve[:, %i])' % (
+                        x_index, index_selec)
+                    ax.semilogx(curve[:, x_index], curve[:, index_selec])
+                elif scale == 'george':
+                    plot_line += 'plot(curve[:, %i], curve[:, %i])' % (
+                        x_index, index_selec)
+                    ax.plot(curve[:, x_index], curve[:, index_selec])
+                    ax.set_xscale('planck')
+                text += [plot_line]
+
+            legend.extend([roots[index]+': '+elem for elem in y_axis])
+
+        ax.legend(legend, loc='best')
+        text += ["",
+                 "ax.legend([root+': '+elem for (root, elem) in",
+                 "    itertools.product(roots, y_axis)], loc='best')",
+                 ""]
+    else:
+        ref = data[0]
+        num_columns, ref_curve_names, ref_tex_names = extract_headers(files[0])
+        # Check if everything is in order
+        if num_columns == 2:
+            y_axis_ref = [ref_curve_names[1]]
+        elif num_columns > 2:
+            # in case y_axis was only a string, cast it to a list
+            if isinstance(original_y_axis, str):
+                y_axis_ref = [original_y_axis]
+            else:
+                y_axis_ref = original_y_axis
+
+        # Store the selected text and tex_names to the script
+        selected = []
+        for elem in y_axis_ref:
+            selected.extend([name for name in ref_curve_names if name.find(elem) != -1 and
+                             name not in selected])
+        y_axis_ref = selected
+
+        # Decide for the x_axis, by default the index will be set to zero
+        x_index_ref = 0
+        if x_axis:
+            for index_name, name in enumerate(ref_curve_names):
+                if name.find(x_axis) != -1:
+                    x_index_ref = index_name
+                    break
+
+        for idx in range(1, len(data)):
+            current = data[idx]
+            num_columns, names, tex_names = extract_headers(files[idx])
+
+            # Check if everything is in order
+            if num_columns == 2:
+                y_axis = [names[1]]
+            elif num_columns > 2:
+                # in case y_axis was only a string, cast it to a list
+                if isinstance(original_y_axis, str):
+                    y_axis = [original_y_axis]
+                else:
+                    y_axis = original_y_axis
+
+            # Store the selected text and tex_names to the script
+            selected = []
+            for elem in y_axis:
+                selected.extend([name for name in names if name.find(elem) != -1 and
+                                 name not in selected])
+            y_axis = selected
+
+            text += ['y_axis = %s' % selected]
+            text += ['tex_names = %s' % [elem for (elem, name) in
+                                         zip(tex_names, names) if name in selected]]
+
+            # Decide for the x_axis, by default the index will be set to zero
+            x_index = 0
+            if x_axis:
+                for index_name, name in enumerate(names):
+                    if name.find(x_axis) != -1:
+                        x_index = index_name
+                        break
+
+            text += ["x_axis = '%s'" % tex_names[x_index]]
+            for selec in y_axis:
+                # Do the interpolation
+                axis = ref[:, x_index_ref]
+                reference = ref[:, ref_curve_names.index(selec)]
+                #plt.loglog(current[:, x_index], current[:, names.index(selec)])
+                #plt.show()
+                #interpolated = splrep(current[:, x_index],
+                                      #current[:, names.index(selec)])
+                interpolated = InterpolatedUnivariateSpline(current[:, x_index],
+                                      current[:, names.index(selec)])
+                if scale == 'lin':
+                    #ax.plot(axis, splev(ref[:, x_index_ref],
+                                        #interpolated)/reference-1)
+                    ax.plot(axis, interpolated(ref[:, x_index_ref])/reference-1)
+                elif scale == 'loglin':
+                    #ax.semilogx(axis, splev(ref[:, x_index_ref],
+                                            #interpolated)/reference-1)
+                    ax.semilogx(axis, interpolated(ref[:, x_index_ref])/reference-1)
+                elif scale == 'loglog':
+                    raise InputError(
+                        "loglog plot is not available for ratios")
+
+    if 'TT' in names:
+        ax.set_xlabel('$\ell$', fontsize=16)
+        text += ["ax.set_xlabel('$\ell$', fontsize=16)"]
+    elif 'P' in names:
+        ax.set_xlabel('$k$ [$h$/Mpc]', fontsize=16)
+        text += ["ax.set_xlabel('$k$ [$h$/Mpc]', fontsize=16)"]
+    else:
+        ax.set_xlabel(tex_names[x_index], fontsize=16)
+        text += ["ax.set_xlabel('%s', fontsize=16)" % tex_names[x_index]]
+    if xlim:
+        if len(xlim) > 1:
+            ax.set_xlim(xlim)
+            text += ["ax.set_xlim(xlim)"]
+        else:
+            ax.set_xlim(xlim[0])
+            text += ["ax.set_xlim(xlim[0])"]
+        ax.set_ylim()
+        text += ["ax.set_ylim()"]
+    if ylim:
+        if len(ylim) > 1:
+            ax.set_ylim(ylim)
+            text += ["ax.set_ylim(ylim)"]
+        else:
+            ax.set_ylim(ylim[0])
+            text += ["ax.set_ylim(ylim[0])"]
+    text += ['plt.show()']
+    plt.show()
+
+    # If the use wants to print the figure to a file
+    if printing:
+        fig.savefig(printing)
+        text += ["fig.savefig('%s')" % printing]
+
+    # Write to the python file all the issued commands. You can then reproduce
+    # the plot by running "python output/something_cl.dat.py"
+    with open(python_script_path, 'w') as python_script:
+        print('Creating a python script to reproduce the figure')
+        print('--> stored in %s' % python_script_path)
+        python_script.write('\n'.join(text))
+
+    # If the use wants to print the figure to a file
+    if printing:
+        fig.savefig(printing)
+
+
+class FormatError(Exception):
+    """Format not recognised"""
+    pass
+
+
+class TypeError(Exception):
+    """Spectrum type not recognised"""
+    pass
+
+
+class NumberOfFilesError(Exception):
+    """Invalid number of files"""
+    pass
+
+
+class InputError(Exception):
+    """Incompatible input requirements"""
+    pass
+
+
+def replace_scale(string):
+    """
+    This assumes that the string starts with "(.)", which will be replaced by
+    (8piG/3)
+
+    >>> print replace_scale('(.)toto')
+    >>> '(8\\pi G/3)toto'
+    """
+    string_list = list(string)
+    string_list.pop(1)
+    string_list[1:1] = list('8\\pi G/3')
+    return ''.join(string_list)
+
+
+def process_long_names(long_names):
+    """
+    Given the names extracted from the header, return two arrays, one with the
+    short version, and one tex version
+
+    >>> names, tex_names = process_long_names(['(.)toto', 'proper time [Gyr]'])
+    >>> print names
+    >>> ['toto', 'proper time']
+    >>> print tex_names
+    >>> ['(8\\pi G/3)toto, 'proper time [Gyr]']
+
+    """
+    names = []
+    tex_names = []
+    # First pass, to remove the leading scales
+    for name in long_names:
+        # This can happen in the background file
+        if name.startswith('(.)', 0):
+            temp_name = name[3:]
+            names.append(temp_name)
+            tex_names.append(replace_scale(name))
+        # Otherwise, we simply
+        else:
+            names.append(name)
+            tex_names.append(name)
+
+    # Finally, remove any extra spacing
+    names = [''.join(elem.split()) for elem in names]
+    return names, tex_names
+
+
+def extract_headers(header_path):
+    with open(header_path, 'r') as header_file:
+        header = [line for line in header_file if line[0] == '#']
+        header = header[-1]
+
+    # Count the number of columns in the file, and recover their name. Thanks
+    # Thomas Tram for the trick
+    indices = [i+1 for i in range(len(header)) if
+               header.startswith(':', i)]
+    num_columns = len(indices)
+    long_names = [header[indices[i]:indices[(i+1)]-3].strip() if i < num_columns-1
+                  else header[indices[i]:].strip()
+                  for i in range(num_columns)]
+
+    # Process long_names further to handle special cases, and extract names,
+    # which will correspond to the tags specified in "y_axis".
+    names, tex_names = process_long_names(long_names)
+
+    return num_columns, names, tex_names
+
+
+def main():
+    print('~~~ Running CPU, a CLASS Plotting Utility ~~~')
+    parser = CPU_parser()
+    # Parse the command line arguments
+    args = parser.parse_args()
+
+    # if there are no argument in the input, print usage
+    if len(args.files) == 0:
+        parser.print_usage()
+        return
+
+    # if the first file name contains cl or pk, infer the type of desired
+    # spectrum
+    if not args.y_axis:
+        if args.files[0].rfind('cl') != -1:
+            scale = 'loglog'
+        elif args.files[0].rfind('pk') != -1:
+            scale = 'loglog'
+        else:
+            scale = 'lin'
+        args.y_axis = []
+    else:
+        scale = ''
+    if not args.scale:
+        if scale:
+            args.scale = scale
+        else:
+            args.scale = 'lin'
+
+    # Remove extra spacing in the y_axis list
+    args.y_axis = [''.join(elem.split()) for elem in args.y_axis]
+    # If ratio is asked, but only one file was passed in argument, politely
+    # complain
+    if args.ratio:
+        if len(args.files) < 2:
+            raise NumberOfFilesError(
+                "If you want me to compute a ratio between two files, "
+                "I strongly encourage you to give me at least two of them.")
+    # actual plotting. By default, a simple superposition of the graph is
+    # performed. If asked to be divided, the ratio is shown - whether a need
+    # for interpolation arises or not.
+    if args.ratio and args.scale == 'loglog':
+        print("Defaulting to loglin scale")
+        args.scale = 'loglin'
+
+    plot_CLASS_output(args.files, args.x_axis, args.y_axis,
+                      ratio=args.ratio, printing=args.printfile,
+                      scale=args.scale, xlim=args.xlim, ylim=args.ylim)
+
+
+# Helper code from cosmo_mini_toolbox, by Jesus Torrado, available fully at
+# https://github.com/JesusTorrado/cosmo_mini_toolbox, to use the log then
+# linear scale for the multipole axis when plotting Cl.
+nonpos = "mask"
+change = 50.0
+factor = 500.
+
+
+def _mask_nonpos(a):
+    """
+    Return a Numpy masked array where all non-positive 1 are
+    masked. If there are no non-positive, the original array
+    is returned.
+    """
+    mask = a <= 0.0
+    if mask.any():
+        return ma.MaskedArray(a, mask=mask)
+    return a
+
+
+def _clip_smaller_than_one(a):
+    a[a <= 0.0] = 1e-300
+    return a
+
+
+class PlanckScale(mscale.ScaleBase):
+    """
+    Scale used by the Planck collaboration to plot Temperature power spectra:
+    base-10 logarithmic up to l=50, and linear from there on.
+
+    Care is taken so non-positive values are not plotted.
+    """
+    name = 'planck'
+
+    def __init__(self, axis, **kwargs):
+        pass
+
+    def set_default_locators_and_formatters(self, axis):
+        axis.set_major_locator(
+            FixedLocator(
+                np.concatenate((np.array([2, 10, change]),
+                                np.arange(500, 2500, 500)))))
+        axis.set_minor_locator(
+            FixedLocator(
+                np.concatenate((np.arange(2, 10),
+                                np.arange(10, 50, 10),
+                                np.arange(floor(change/100), 2500, 100)))))
+
+    def get_transform(self):
+        """
+        Return a :class:`~matplotlib.transforms.Transform` instance
+        appropriate for the given logarithm base.
+        """
+        return self.PlanckTransform(nonpos)
+
+    def limit_range_for_scale(self, vmin, vmax, minpos):
+        """
+        Limit the domain to positive values.
+        """
+        return (vmin <= 0.0 and minpos or vmin,
+                vmax <= 0.0 and minpos or vmax)
+
+    class PlanckTransform(Transform):
+        input_dims = 1
+        output_dims = 1
+        is_separable = True
+        has_inverse = True
+
+        def __init__(self, nonpos):
+            Transform.__init__(self)
+            if nonpos == 'mask':
+                self._handle_nonpos = _mask_nonpos
+            else:
+                self._handle_nonpos = _clip_nonpos
+
+        def transform_non_affine(self, a):
+            lower = a[np.where(a<=change)]
+            greater = a[np.where(a> change)]
+            if lower.size:
+                lower = self._handle_nonpos(lower * 10.0)/10.0
+                if isinstance(lower, ma.MaskedArray):
+                    lower = ma.log10(lower)
+                else:
+                    lower = np.log10(lower)
+                lower = factor*lower
+            if greater.size:
+                greater = (factor*np.log10(change) + (greater-change))
+            # Only low
+            if not(greater.size):
+                return lower
+            # Only high
+            if not(lower.size):
+                return greater
+            return np.concatenate((lower, greater))
+
+        def inverted(self):
+            return PlanckScale.InvertedPlanckTransform()
+
+    class InvertedPlanckTransform(Transform):
+        input_dims = 1
+        output_dims = 1
+        is_separable = True
+        has_inverse = True
+
+        def transform_non_affine(self, a):
+            lower = a[np.where(a<=factor*np.log10(change))]
+            greater = a[np.where(a> factor*np.log10(change))]
+            if lower.size:
+                if isinstance(lower, ma.MaskedArray):
+                    lower = ma.power(10.0, lower/float(factor))
+                else:
+                    lower = np.power(10.0, lower/float(factor))
+            if greater.size:
+                greater = (greater + change - factor*np.log10(change))
+            # Only low
+            if not(greater.size):
+                return lower
+            # Only high
+            if not(lower.size):
+                return greater
+            return np.concatenate((lower, greater))
+
+        def inverted(self):
+            return PlanckTransform()
+
+# Finished. Register the scale!
+mscale.register_scale(PlanckScale)
+
+if __name__ == '__main__':
+    sys.exit(main())
+import matplotlib.pyplot as plt
+import numpy as np
+from classy import Class
+
+def run_ultimate_check():
+    # --- 1. 黄金モデル (Unified A10) の計算 ---
+    print("🚀 究極の Unified A10 モデルを計算中...")
+    a10 = Class()
+    a10.set({
+        '100*theta_s': 1.0411,
+        'omega_b': 0.0224,
+        'omega_cdm': 0.120,
+        'tau_reio': 0.054,
+        'A_s': 2.1e-9,
+        'n_s': 0.965,
+        'has_unified_a10': 'yes',
+        'ua10_n_ax': 2.5,
+        'ua10_f_ax': 0.25,
+        'ua10_V0': 1.9e-4,
+        'ua10_Gamma0': 0.62,
+        'ua10_phi_trigger': 1e-6,
+        'ua10_Delta_phi': 0.60,
+        'output': 'tCl, mPk',
+        'l_max_scalars': 2500
+    })
+    
+    try:
+        a10.compute()
+        h0 = a10.h() * 100
+        sigma8 = a10.sigma8()
+        omega_m = a10.Omega_m()
+        s8 = sigma8 * (omega_m / 0.3)**0.5
+        
+        print(f"\n--- 🏆 究極診断結果 ---")
+        print(f"H0: {h0:.4f}")
+        print(f"S8: {s8:.4f}")
+        print(f"rs_d: {a10.rs_drag():.2f} Mpc")
+        
+        # 波形データの保存
+        cl_a10 = a10.raw_cl(2500)
+        ll = cl_a10['ell']
+        factor = ll*(ll+1)/(2*np.pi) * 1e12 * (2.7255)**2
+        tt_a10 = factor * cl_a10['tt']
+        
+        # 計算が終わったら即座にメモリ解放（Segfault防止）
+        a10.struct_cleanup(); a10.empty()
+        
+        return ll, tt_a10, h0, s8
+
+    except Exception as e:
+        print(f"❌ 計算失敗: {e}")
+        return None
+
+# 実行
+result = run_ultimate_check()
+
+if result:
+    ll, tt_a10, h0, s8 = result
+    plt.figure(figsize=(10, 6))
+    plt.plot(ll, tt_a10, 'r-', label=f'Unified A10 (H0={h0:.2f}, S8={s8:.3f})')
+    plt.title("Ultimate Solution of Cosmological Tensions")
+    plt.xlabel(r"Multipole $\ell$")
+    plt.ylabel(r"$D_\ell^{TT} \quad [\mu K^2]$")
+    plt.legend()
+    plt.grid(alpha=0.2)
+    plt.savefig("The_Final_Universe.png", dpi=300)
+    print("\n✅ 全工程完了。'The_Final_Universe.png' を確認してください。")from ._classy import (
+    __version__,
+    Class,
+    CosmoSevereError,
+    CosmoComputationError
+)
+# corner_plot.py として保存して実行
+import matplotlib.pyplot as plt
+from getdist import plots, MCSamples
+import numpy as np
+
+# データの読み込み（ chains フォルダ内の最終データを使用）
+data = np.loadtxt('chains/a10_phase4_shoes.1.txt')
+# 重み、対数尤度を除いたパラメータ部分を抽出
+# Col 2: H0, Col 11: alpha_inv
+samples_data = data[:, [2, 11]] 
+names = ['H0', 'alpha_inv']
+labels = [r'H_0', r'\alpha^{-1}']
+
+samples = MCSamples(samples=samples_data, names=names, labels=labels)
+
+# プロットの作成
+g = plots.get_subplot_plotter()
+g.triangle_plot(samples, filled=True, colors=['#006fed'])
+plt.savefig("a10_correlation.png")
+print("プロット完了: a10_correlation.png を確認してください。")import numpy as np
+import matplotlib.pyplot as plt
+import glob
+import os
+
+# 最新の2つのデータファイルを取得
+files = glob.glob('output/a10_test_*_cl.dat')
+files.sort(key=os.path.getmtime)
+standard_file, a10_file = files[-1], files[-2] # 前回の結果との比較
+
+# データの読み込み
+data_std = np.genfromtxt(standard_file, comments='#')
+data_a10 = np.genfromtxt(a10_file, comments='#')
+
+l = data_std[:, 0]
+tt_std = data_std[:, 1]
+tt_a10 = data_a10[:, 1]
+
+# 残差（ズレの比率）を計算
+residual = (tt_a10 - tt_std) / tt_std * 100
+
+# --- プロット作成 ---
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10), sharex=True, gridspec_kw={'height_ratios': [3, 1]})
+
+# 上段：生のスペクトル
+ax1.plot(l, tt_std, 'k--', label='Standard LCDM', alpha=0.6)
+ax1.plot(l, tt_a10, 'r-', label='Unified A10 (137 Gate)', linewidth=2)
+ax1.set_yscale('log')
+ax1.set_ylabel(r'$l(l+1)C_l^{TT} / 2\pi$')
+ax1.set_title('Scientific Analysis of the 137 Gate effect')
+ax1.legend()
+ax1.grid(True, alpha=0.2)
+
+# 下段：残差（これが真実を語る）
+ax2.plot(l, residual, color='blue', linewidth=1.5)
+ax2.axhline(0, color='black', linestyle='-')
+ax2.set_ylabel('Difference [%]')
+ax2.set_xlabel('Multipole Moment (l)')
+ax2.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('scientific_analysis.png', dpi=300)
+print(f"🔬 解析完了！ 'scientific_analysis.png' を確認してください。")import sys
+import os
+from getdist import plots, MCSamples, loadMCSamples
+import matplotlib.pyplot as plt
+
+# チェーンのパスを指定
+# ./chains/ フォルダ内の a10_phase4_shoes を読み込みます
+chain_name = './chains/a10_phase4_shoes'
+
+print("データを読み込み中... 数十万行あるので少し時間がかかります。")
+samples = loadMCSamples(chain_name, settings={'ignore_rows': 0.3}) # 最初の30%をバーンインとして捨てる
+
+# 抽出するパラメーターのリスト
+# 理論の急所となるパラメーターを絞り込みます
+params_to_plot = ['H0', 'omega_cdm', 'n_s', 'ua10_V0', 'ua10_phi_trigger']
+
+# 三角プロット（等高線図）の作成
+g = plots.get_subplot_plotter()
+g.settings.num_plot_contours = 2 # 68% と 95% の信頼区間を表示
+g.triangle_plot(samples, params_to_plot, 
+                filled=True, 
+                title_limit=1, # 図の上に各パラメーターの値を表示
+                legend_labels=['A10 Phase4 shoes'])
+
+# 保存
+output_file = 'main_result_triangle.png'
+plt.savefig(output_file)
+print(f"解析完了！画像ファイル '{output_file}' を出力しました。")# analyze_matter.py として実行
+import numpy as np
+import matplotlib.pyplot as plt
+import glob
+import os
+
+# 最新の _pk.dat を取得
+files = glob.glob('output/a10_test_*_pk.dat')
+files.sort(key=os.path.getmtime)
+pk_std, pk_a10 = files[-1], files[-2]
+
+data_std = np.genfromtxt(pk_std)
+data_a10 = np.genfromtxt(pk_a10)
+
+k = data_std[:, 0]
+ps_std = data_std[:, 1]
+ps_a10 = data_a10[:, 1]
+
+plt.figure(figsize=(10, 6))
+# ズレの比率を表示
+plt.plot(k, (ps_a10 - ps_std) / ps_std * 100, color='green')
+plt.xscale('log')
+plt.ylabel('Matter Power Difference [%]')
+plt.xlabel('Wavenumber k [1/Mpc]')
+plt.title('Impact on Galaxy Distribution (137 Gate)')
+plt.grid(True, alpha=0.3)
+plt.savefig('matter_analysis.png')
+print("🌌 物質分布への影響を 'matter_analysis.png' に保存しました。")from classy import Class
+import numpy as np
+
+# 1. 宇宙モデルの設定
+cosmo = Class()
+params = {
+    # --- 基本パラメータ (Planck2018ベース) ---
+    #'h': 0.674, 
+    'h': 0.731,
+    'omega_b': 0.02237,
+    'omega_cdm': 0.1200,
+    'A_s': 2.1e-9,
+    'n_s': 0.965,
+    'tau_reio': 0.054,
+
+    # --- A10 (初期宇宙の土台) ---
+    # ここは前回のMCMCの暫定ベスト付近を設定
+    'has_unified_a10': 'yes',
+    'ua10_f_ax': 0.22, # 2%の注入
+    'ua10_phi_trigger': 0.5,
+    
+    # --- Factor X (今回実装した最新パーツ) ---
+    'has_ua10_tx': 'yes',
+    'ua10_tx_omega0': 0.042,  # 現代の寄与 4.5%
+    'ua10_tx_zt': 0.035,      # 11億年前の遷移
+    'ua10_tx_sigma': 0.04,    # 遷移の鋭さ
+    'ua10_tx_dw': -0.60,      # wを一時的に-1.42へ落とす
+    
+    'output': 'tCl,pCl,lCl,mPk',
+    'P_k_max_1/Mpc': 1.0,
+}
+
+# 2. 計算実行
+print("\n--- 宇宙論エンジンの始動 ---")
+cosmo.set(params)
+cosmo.compute()
+
+# 3. 結果の抽出
+h_derived = cosmo.h()
+H0_derived = h_derived * 100
+rs_d = cosmo.rs_drag()
+
+print(f"目的地のハッブル定数 H0: 73.0 付近")
+print(f"現在の計算結果     H0: {H0_derived:.4f} km/s/Mpc")
+print(f"音の地平線尺度     rs: {rs_d:.4f} Mpc")
+
+# 4. BAOの壁チェック (z=0.5付近の距離指標)
+# LCDM(H0=67)でのDA/rdは約9.30程度です
+z_test = 0.5
+da_rd = cosmo.angular_distance(z_test) / rs_d
+print(f"z={z_test} での BAO指標: {da_rd:.4f} (ここがLCDMから1%以内なら勝利)")
+
+cosmo.struct_cleanup()
+cosmo.empty()import numpy as np
+from classy import Class
+
+# --- 監督官の「黄金の数値」をそのまま流し込む ---
+params = {
+    '100*theta_s': 1.0411,
+    'omega_b': 0.0224,
+    'omega_cdm': 0.120,
+    'tau_reio': 0.054,
+    'A_s': 2.1e-9,
+    'n_s': 0.965,
+    'has_unified_a10': 'yes',
+    'ua10_n_ax': 2.5,
+    'ua10_f_ax': 0.25,
+    'ua10_V0': 2.0e-4,
+    'ua10_Gamma0': 0.65,
+    'ua10_phi_trigger': 1e-6,
+    'ua10_Delta_phi': 0.60,
+    
+    # 必要最低限。余計な精度パラメータは一切入れない
+    'output': 'tCl', 
+    'l_max_scalars': 2500
+}
+
+a10 = Class()
+try:
+    print("🔭 黄金モデルの計算を開始（今度は通れ！）...")
+    a10.set(params)
+    a10.compute() # 🎯 事件現場：ここを突破できるか
+    print("✅ 計算成功！グラフ作成に移行します。")
+    
+    # 成功したら、ここで簡単な数値だけ表示
+    print(f"H0: {a10.h()*100:.2f}")
+
+except Exception as e:
+    print(f"❌ やはりここで落ちるようです:\n{e}")
+
+# メモリ解放
+a10.struct_cleanup()
+a10.empty()import numpy as np
+import matplotlib.pyplot as plt
+import glob
+import os
+
+# --- 最新の2つのデータファイルを自動で探す ---
+files = glob.glob('output/a10_test_*_cl.dat')
+files.sort(key=os.path.getmtime) # 更新日時でソート
+
+if len(files) < 2:
+    print("比較には少なくとも2つのデータファイルが必要です。")
+    exit()
+
+# 最新（今実行したドラッグなし）と、その前（ドラッグあり）を取得
+standard_file = files[-1]
+a10_file = files[-2]
+
+print(f"📡 比較中:")
+print(f"  [A] A10 Model: {a10_file}")
+print(f"  [B] Standard (no drag): {standard_file}")
+
+# データの読み込み
+data_a10 = np.genfromtxt(a10_file, comments='#')
+data_std = np.genfromtxt(standard_file, comments='#')
+
+l_a10, tt_a10 = data_a10[:, 0], data_a10[:, 1]
+l_std, tt_std = data_std[:, 0], data_std[:, 1]
+
+# --- グラフ描画 ---
+plt.figure(figsize=(12, 7))
+
+# メインの比較
+plt.plot(l_std, tt_std, 'k--', label='Standard LCDM (Gamma=0)', alpha=0.8)
+plt.plot(l_a10, tt_a10, 'r-', label='Unified A10 Model (137 Gate)', linewidth=2)
+
+plt.xscale('log')
+plt.xlabel('Multipole Moment (l)')
+plt.ylabel(r'$l(l+1)C_l^{TT} / 2\pi$ [$\mu K^2$]')
+plt.title('CMB Power Spectrum Comparison')
+plt.grid(True, which="both", ls="-", alpha=0.2)
+plt.legend()
+
+# ズレを強調するための残差プロットを右上に挿入するなどの工夫も可能ですが、
+# まずは単純に重ねてみましょう。
+
+plt.savefig('cmb_comparison.png', dpi=300)
+print("🌠 比較グラフを 'cmb_comparison.png' に保存しました！")import numpy as np
+from classy import Class
+
+# ==========================================
+# 1. 標準パラメータ (Standard LCDM)
+# ==========================================
+params_std = {
+    'output': 'tCl, mPk',
+    'l_max_scalars': 2500,
+    'P_k_max_h/Mpc': 1.0,
+    'gauge': 'newtonian',
+    'YHe': 0.2454,
+    'recombination': 'RECFAST',  # 外部モジュールのバグ回避用
+    
+    # H0を計算結果として変動させるため、hではなくプランクの角度スケールを固定
+    #'100*theta_s': 1.04119, 
+    'h': 0.72,
+
+    'omega_b': 0.02237,
+    'omega_cdm': 0.12,
+    
+    # 微分方程式ソルバーを安定させるための安全装置
+    'tol_background_integration': 1e-6,
+}
+
+# ==========================================
+# 2. 改造モデルパラメータ (Unified A10)
+# ==========================================
+params_a10 = {
+    **params_std,               # 標準パラメータをすべて引き継ぐ
+    'has_unified_a10': 'yes',   # A10ロジックをオンにするスイッチ
+
+    'ua10_V0': 1.5e-4,
+    'ua10_Delta_phi': 0.60,
+    'ua10_phi_trigger': 1e-6,    
+    'ua10_Gamma0': 0.005,
+
+    'ua10_n_ax': 2.5,
+    'ua10_f_ax': 0.25,
+}
+
+# ==========================================
+# 3. 診断関数の定義
+# ==========================================
+def get_diagnostics(p_dict, label):
+    print(f"🔭 {label} の計算を開始...")
+    cosmo = Class()
+    cosmo.set(p_dict)
+    cosmo.compute()
+    
+    h0 = cosmo.h() * 100
+    sigma8 = cosmo.sigma8()
+    omega_m = cosmo.Omega_m()
+    s8 = sigma8 * (omega_m / 0.3)**0.5
+    rs = cosmo.rs_drag()
+    
+    print(f"--- {label} 診断結果 ---")
+    print(f"H0:     {h0:.2f}")
+    print(f"S8:     {s8:.4f}")
+    print(f"sigma8: {sigma8:.4f}")
+    print(f"rs_d:   {rs:.2f} Mpc\n")
+    
+    # メモリの確実な解放
+    cosmo.struct_cleanup()
+    cosmo.empty()
+    
+    return h0, s8, rs
+
+# ==========================================
+# 4. 実行と判定ブロック
+# ==========================================
+if __name__ == '__main__':
+    try:
+        h_std, s_std, r_std = get_diagnostics(params_std, "Standard LCDM")
+        h_a10, s_a10, r_a10 = get_diagnostics(params_a10, "Unified A10")
+
+        print("="*40)
+        print("📊 FINAL VERDICT: テンション解消の判定")
+        print("="*40)
+        
+        # 判定ロジック
+        h_status = "✅ Improved!" if h_a10 > h_std else "❌ Not improved"
+        print(f"H0 Tension: {h_status:<15} (Delta H0: {h_a10 - h_std:+.2f})")
+        
+        s_status = "✅ Improved!" if s_a10 < s_std else "❌ Not improved"
+        print(f"S8 Tension: {s_status:<15} (Delta S8: {s_a10 - s_std:+.4f})")
+        print("="*40)
+
+    except Exception as e:
+        print(f"\n❌ エラーが発生しました:\n{e}")import numpy as np
+import pandas as pd
+import glob
+import os
+
+# 新しく作ったディレクトリを指定
+chain_dir = "./chains_h0_scan/" 
+CHI2_COL = 1       # minuslogpost
+H0_COL = 2         # Hubble constant
+OMEGA_CDM = 4      # omega_cdm
+NS_COL = 6         # n_s
+A10_COL = 11       # A10 scale (chi)
+
+def scan_victory():
+    files = glob.glob(os.path.join(chain_dir, "*.minimum.txt"))
+    if not files: 
+        print("スキャン結果のファイルが見つかりません。")
+        return
+
+    data_list = [pd.read_csv(f, sep='\s+', comment='#', header=None) for f in files]
+    df = pd.concat(data_list, ignore_index=True)
+
+    # 見やすくソート
+    df = df.sort_values(by=H0_COL)
+
+    print("\n=== A10理論：ウォール・ブレイク(H0=73突破) 最終確認 ===")
+    print(f"{'H0':>5} | {'Total Chi2':>10} | {'A10 Scale':>10} | {'n_s':>10} | {'omega_cdm':>10}")
+    print("-" * 60)
+
+    for _, row in df.iterrows():
+        h0_val = row[H0_COL]
+        chi2_val = row[CHI2_COL]
+        a10_val = row[A10_COL]
+        ns_val = row[NS_COL]
+        ocdm_val = row[OMEGA_CDM]
+        
+        print(f"{h0_val:5.1f} | {chi2_val:10.2f} | {a10_val:10.3f} | {ns_val:10.4f} | {ocdm_val:10.5f}")
+
+if __name__ == "__main__":
+    scan_victory()import matplotlib.pyplot as plt
+import numpy as np
+from classy import Class
+
+print("🚀 黄金モデル (Unified A10) 単独突破作戦を開始...")
+
+a10 = Class()
+a10.set({
+    '100*theta_s': 1.0411,
+    'omega_b': 0.0224,
+    'omega_cdm': 0.120,
+    'tau_reio': 0.054,
+    'A_s': 2.1e-9,
+    'n_s': 0.965,
+    'has_unified_a10': 'yes',
+    'ua10_n_ax': 2.5,
+    'ua10_f_ax': 0.25,
+    'ua10_V0': 2.0e-4,
+    'ua10_Gamma0': 0.65,
+    'ua10_phi_trigger': 1e-6,
+    'ua10_Delta_phi': 0.60,
+    'output': 'tCl',
+    'l_max_scalars': 2500
+})
+
+try:
+    # メモリが綺麗な状態で、真っ先に A10 を計算
+    a10.compute()
+    print("✅ 計算成功！ H0 =", a10.h()*100)
+    
+    cl_a10 = a10.raw_cl(2500)
+    ll = cl_a10['ell']
+    factor = ll*(ll+1)/(2*np.pi) * 1e12 * (2.7255)**2 
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(ll, factor*cl_a10['tt'], 'r-', label='Unified A10 (H0=73.14)')
+    plt.xlabel(r'Multipole $\ell$')
+    plt.ylabel(r'$D_\ell^{TT} \quad [\mu K^2]$')
+    plt.title("The Golden Universe: Unified A10 Spectrum")
+    plt.legend()
+    plt.grid(alpha=0.3)
+    
+    plt.savefig("a10_single_victory.png", dpi=300)
+    print("✅ グラフ保存完了: a10_single_victory.png")
+
+except Exception as e:
+    print(f"❌ 単独計算でも失敗:\n{e}")
+
+a10.struct_cleanup(); a10.empty()import sys
+import os
+from getdist import mcsamples
+
+# チェーンの読み込み（パスに注意）
+chain_root = 'chains/a10_prod_run'
+
+if not os.path.exists(chain_root + '.1.txt'):
+    print(f"Error: {chain_root}.1.txt が見当たりません。")
+    sys.exit()
+
+# サンプルをロード（最初の30%をburn-inとして捨てる設定）
+samples = mcsamples.loadMCSamples(chain_root, settings={'ignore_rows':0.3})
+
+# 統計情報を取得して表示
+stats = samples.getMargeStats()
+param = stats.parWithName('A10_amplitude')
+
+print("\n--- 解析結果 ---")
+print(f"A10_amplitude の平均値: {param.mean}")
+print(f"1-sigma 誤差: {param.err}")
+print("---------------")params = {
+    # --- 基本宇宙論パラメータ ---
+    '100*theta_s': 1.0411,    # 宇宙の角度スケールを固定
+    'omega_b': 0.0224,
+    'omega_cdm': 0.120,
+    'tau_reio': 0.054,
+    'A_s': 2.1e-9,
+    'n_s': 0.965,
+
+    # --- Unified A10 専用パラメータ ---
+    'has_unified_a10': 'yes', # エンジン点火
+    'ua10_n_ax': 2.5,         # ポテンシャルの次数
+    'ua10_f_ax': 0.25,        # アキシオンの崩壊定数スケール
+    'ua10_V0': 1.9e-4,        # エネルギー密度（H0微調整用）
+    'ua10_Gamma0': 0.62,      # 🔴 摩擦係数（S8を0.760に固定する鍵）
+    'ua10_phi_trigger': 1e-6, # 起動タイミング
+    'ua10_Delta_phi': 0.60,   # フィールドの変位量
+    
+    # --- 計算精度・出力設定 ---
+    'output': 'tCl, mPk',
+    'l_max_scalars': 2500
+}import numpy as np
+from getdist import loadMCSamples
+
+# チェーンの読み込み
+samples = loadMCSamples('chains/a10_main_rescue')
+
+# 最小 chi2 の行を特定
+chi2_values = samples.samples[:, samples.index['chi2']]
+best_fit_idx = np.argmin(chi2_values)
+
+# 各観測項目の chi2 内訳を取得
+liks = [
+    'chi2__planck_2018_highl_plik.TTTEEE',
+    'chi2__planck_2018_lowl.TT',
+    'chi2__planck_2018_lowl.EE',
+    'chi2__bao.sdss_dr12_consensus_bao',
+    'chi2__sn.pantheonplus'
+]
+
+print(f"\n" + "="*60)
+print(f"   A10理論：観測データ別不一致（残差）内訳")
+print(f"   (Best chi2: {chi2_values[best_fit_idx]:.4f} 地点での解析)")
+print("-"*60)
+
+for lik in liks:
+    try:
+        val = samples.samples[best_fit_idx, samples.index[lik]]
+        print(f"   {lik:<40} : {val:>10.4f}")
+    except:
+        continue
+
+print("="*60 + "\n")import matplotlib.pyplot as plt
+import numpy as np
+
+# 1. データの読み込み (CLASSの出力ファイル名に合わせてください)
+file_path = 'output/a10_test_background.dat'
+
+# ヘッダーを探して列番号を特定するか、手動で指定します
+# 通常 CLASS の background 出力は 1列目が z (または tau) です
+data = np.loadtxt(file_path)
+
+# カラムのインデックスは background.h で定義した順番に依存します
+# 以前の修正に基づくと、末尾の方に追加されているはずです
+# (例: -3: rho_phi, -2: w_phi, -1: Gamma_drag)
+z = data[:, 0]
+rho_phi = data[:, -3]
+w_phi = data[:, -2]
+gamma_drag = data[:, -1]
+
+# スカラー場の値 phi も読み込む必要があります（もし出力に含めていれば）
+# ここでは一旦、ドラッグの挙動を確認します
+
+fig, ax1 = plt.subplots(figsize=(10, 6))
+
+# 左軸: エネルギー密度の進化
+ax1.set_xlabel('Redshift z')
+ax1.set_ylabel('Energy Density rho_phi', color='tab:blue')
+ax1.loglog(z, rho_phi, label='rho_phi', color='tab:blue', lw=2)
+ax1.tick_params(axis='y', labelcolor='tab:blue')
+ax1.invert_xaxis() # zを大きい方から表示
+
+# 右軸: 137ゲート (Gamma_drag)
+ax2 = ax1.twinx()
+ax2.set_ylabel('Gamma Drag (The 137 Gate)', color='tab:red')
+ax2.semilogx(z, gamma_drag, label='Gamma_drag', color='tab:red', ls='--')
+ax2.tick_params(axis='y', labelcolor='tab:red')
+
+plt.title('Verification of Unified A10: Background Evolution')
+fig.tight_layout()
+plt.grid(True, which="both", ls="-", alpha=0.5)
+plt.savefig('verify_a10_stage1.png')
+plt.show()
+
+print("検証用グラフを出力しました。'Gamma_drag' に鋭いピークが見えますか？")import numpy as np
+import matplotlib.pyplot as plt
+import glob
+import os
+
+# 最新の _cl.dat ファイルを探す
+files = glob.glob('output/a10_test_*_cl.dat')
+if not files:
+    print("CMBデータファイルが見つかりません。")
+    exit()
+latest_cl = max(files, key=os.path.getctime)
+print(f"📡 観測対象: {latest_cl}")
+
+# データの読み込み
+# 1列目: l, 2列目: TTスペクトル
+data = np.genfromtxt(latest_cl, comments='#')
+l = data[:, 0]
+tt = data[:, 1]
+
+plt.figure(figsize=(10, 6))
+plt.plot(l, tt, label='Unified A10 Model', color='blue', linewidth=2)
+
+plt.xscale('log')
+plt.xlabel('Multipole Moment (l)')
+plt.ylabel(r'$l(l+1)C_l^{TT} / 2\pi$ [$\mu K^2$]')
+plt.title('CMB Temperature Power Spectrum with 137 Gate')
+plt.grid(True, which="both", ls="-", alpha=0.3)
+plt.legend()
+
+plt.savefig('cmb_spectrum_a10.png', dpi=300)
+print("🌠 グラフを 'cmb_spectrum_a10.png' に保存しました！")import matplotlib.pyplot as plt
+import numpy as np
+from classy import Class
+
+# 共通パラメータ
+common_params = {
+    'h': 0.674,
+    'omega_b': 0.02237,
+    'omega_cdm': 0.1200,
+    'A_s': 2.1e-9,
+    'n_s': 0.965,
+    'tau_reio': 0.054,
+    'output': 'tCl, mPk',
+    'l_max_scalars': 2500,
+    'P_k_max_1/Mpc': 1.0,
+    'YHe': 'BBN'
+}
+
+# 1. 基準となる Lambda-CDM モデル
+lcdm = Class()
+lcdm.set(common_params)
+lcdm.compute()
+
+# 2. A10 + Factor X (UA10TX) ハイブリッドモデル
+# ※注意: A10を使用するため、必ず newtonian ゲージを指定します。
+hybrid_params = common_params.copy()
+hybrid_params.update({
+    'gauge': 'newtonian',
+    'has_unified_a10': 'yes',
+    'ua10_f_ax': 0.12,
+    'ua10_phi_trigger': 0.5,
+    'Omega_fld': 0.042,           # 暗黒エネルギーの一部を流体として扱う
+    'fluid_equation_of_state': 'ua10tx',
+    'ua10_tx_zt': 0.10,           # 遷移開始の赤方偏移
+    'ua10_tx_sigma': 0.04,        # 遷移の期間（幅）
+    'ua10_tx_dw': -0.40,          # 状態方程式の変化量
+    'use_ppf': 'no',              # PPF近似は使用しない
+    'cs2_fld': 1.0                # 音速を光速に固定し発散を抑制
+})
+
+hybrid = Class()
+hybrid.set(hybrid_params)
+hybrid.compute()
+
+# スペクトルデータの取得
+cl_lcdm = lcdm.raw_cl(2500)
+cl_hybrid = hybrid.raw_cl(2500)
+
+l = cl_lcdm['ell'][2:]
+tt_lcdm = (l * (l + 1) * cl_lcdm['tt'][2:]) / (2 * np.pi)
+tt_hybrid = (l * (l + 1) * cl_hybrid['tt'][2:]) / (2 * np.pi)
+
+k = np.logspace(-4, 0, 500)
+pk_lcdm = np.array([lcdm.pk(ki, 0) for ki in k])
+pk_hybrid = np.array([hybrid.pk(ki, 0) for ki in k])
+
+# 描画設定
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+# --- CMB TT スペクトル ---
+axes[0].plot(l, tt_lcdm, 'k-', label='Lambda-CDM')
+axes[0].plot(l, tt_hybrid, 'r--', label='Hybrid A10 + UA10TX')
+axes[0].set_xlabel('Multipole l', fontsize=14)
+axes[0].set_ylabel('l(l+1)C_l^TT / 2pi', fontsize=14)
+axes[0].set_title('CMB Temperature Anisotropy', fontsize=16)
+axes[0].set_xlim([2, 2500])
+axes[0].legend(fontsize=12)
+axes[0].grid(True, linestyle=':', alpha=0.7)
+
+# --- 物質パワースペクトル P(k) ---
+axes[1].loglog(k, pk_lcdm, 'k-', label='Lambda-CDM')
+axes[1].loglog(k, pk_hybrid, 'r--', label='Hybrid A10 + UA10TX')
+axes[1].set_xlabel('k [h/Mpc]', fontsize=14)
+axes[1].set_ylabel('P(k) [(Mpc/h)^3]', fontsize=14)
+axes[1].set_title('Matter Power Spectrum at z=0', fontsize=16)
+axes[1].legend(fontsize=12)
+axes[1].grid(True, linestyle=':', alpha=0.7)
+
+plt.tight_layout()
+plt.savefig('hybrid_spectra_comparison.png', dpi=300)
+print("プロットの生成が完了し、'hybrid_spectra_comparison.png' として保存されました。")
+
+# メモリの解放
+lcdm.struct_cleanup()
+lcdm.empty()
+hybrid.struct_cleanup()
+hybrid.empty()import matplotlib.pyplot as plt
+from getdist import loadMCSamples, plots
+
+# データの読み込み
+samples = loadMCSamples('./chains_h0_scan/scan_730_unlimit', settings={'ignore_rows': 0.3})
+
+# 山の形（1D分布）と相関（2D）を同時に確認
+g = plots.get_subplot_plotter()
+g.triangle_plot(samples, ['ua10_V0', 'ua10_phi_trigger', 'omega_cdm'], 
+                filled=True, 
+                title_limit=1)
+
+plt.savefig('quick_730_check.png')
+print("画像 'quick_730_check.png' を作成しました。")import numpy as np
+import pandas as pd
+import glob
+import os
+
+# --- 解析設定 ---
+chain_dir = "./chains/" 
+# ログに基づいた正確なインデックス (0始まり)
+CHI2_TOTAL = 1     # minuslogpost
+H0_COL = 2         # Hubble constant
+NS_COL = 6         # n_s
+A10_COL = 11       # A10 scale (chi)
+OMEGA_CDM = 4      # omega_cdm
+
+def deep_diagnosis():
+    files = glob.glob(os.path.join(chain_dir, "*.txt"))
+    if not files: return
+
+    data_list = [pd.read_csv(f, sep='\s+', comment='#', header=None) for f in files]
+    df = pd.concat(data_list, ignore_index=True)
+
+    # H0の範囲を指定してフィルタリング
+    df['h0_bin'] = np.round(df[H0_COL] * 2) / 2
+    
+    print("\n=== A10理論：境界領域ダイアグノシス報告 ===")
+    print(f"{'H0':>5} | {'Total Chi2':>10} | {'A10 (chi)':>10} | {'ns':>10} | {'omega_cdm':>10}")
+    print("-" * 65)
+
+    # 安定領域(72.0)と壁の領域(72.5, 73.0)を比較
+    for target_h0 in [71.5, 72.0, 72.5, 73.0]:
+        subset = df[df['h0_bin'] == target_h0]
+        if not subset.empty:
+            best_fit = subset.loc[subset[CHI2_TOTAL].idxmin()]
+            print(f"{target_h0:5.1f} | {best_fit[CHI2_TOTAL]:10.2f} | {best_fit[A10_COL]:10.2f} | {best_fit[NS_COL]:10.4f} | {best_fit[OMEGA_CDM]:10.5f}")
+
+if __name__ == "__main__":
+    deep_diagnosis()#!/usr/bin/env python3
+import re
+import subprocess
+from pathlib import Path
+
+OUTDIR = Path('chains')
+OUTDIR.mkdir(exist_ok=True)
+SUMMARY = OUTDIR / 'run_C_eval_grid_has_a10_summary.tsv'
+
+PHI_VALUES = [1e-6, 1e-4, 0.5, 137.47]
+V0_VALUES = [1e-4, 1e-2, 1.0]
+
+BASE_YAML = """output: {output_prefix}
+
+theory:
+  classy:
+    path: .
+    extra_args:
+      non_linear: halofit
+      N_ncdm: 1
+      N_ur: 2.0328
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+    path: null
+    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik
+    prior:
+      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+  shoes_H0:
+    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+    requires: [H0]
+
+params:
+  has_unified_a10: 'yes'
+  H0: 68.206
+  omega_b: 0.0223
+  omega_cdm: 0.1194
+  A_s: 2.1e-09
+  n_s: 0.965
+  tau_reio: 0.055
+  ua10_V0: {ua10_V0}
+  ua10_phi_trigger: {ua10_phi_trigger}
+  ua10_f_ax: 0.1
+  ua10_Gamma0: 1.0
+  ua10_n_ax: 2.5
+
+  A_planck: 0.9979438672394767
+  calib_100T: 1.0007215437872674
+  calib_217T: 0.9968033223830819
+  A_pol: 1.0
+  calib_100P: 1.021
+  calib_143P: 0.966
+  calib_217P: 1.04
+  cib_index: -1.3
+  A_cib_217: 47.27189754360289
+  xi_sz_cib: 0.04675702062808247
+  A_sz: 8.84757863791849
+  ksz_norm: 2.476366286151665
+  gal545_A_100: 9.319800029433269
+  gal545_A_143: 12.333491727539368
+  gal545_A_143_217: 22.026422454904782
+  gal545_A_217: 59.80846171972057
+  A_sbpx_100_100_TT: 1.0
+  A_sbpx_143_143_TT: 1.0
+  A_sbpx_143_217_TT: 1.0
+  A_sbpx_217_217_TT: 1.0
+  ps_A_100_100: 276.2863095433778
+  ps_A_143_143: 35.59187410732969
+  ps_A_143_217: 48.771338238159146
+  ps_A_217_217: 140.36394523801764
+  galf_TE_index: -2.4
+  galf_TE_A_100: 0.17216329567074776
+  galf_TE_A_100_143: 0.03694740350221859
+  galf_TE_A_100_217: 0.564368432565184
+  galf_TE_A_143: 0.12421921085928826
+  galf_TE_A_143_217: 0.6947514506576826
+  galf_TE_A_217: 2.0621337529747565
+  galf_EE_index: -2.4
+  galf_EE_A_100: 0.055
+  galf_EE_A_100_143: 0.04
+  galf_EE_A_100_217: 0.094
+  galf_EE_A_143: 0.086
+  galf_EE_A_143_217: 0.21
+  galf_EE_A_217: 0.7
+  A_cnoise_e2e_100_100_EE: 1.0
+  A_cnoise_e2e_143_143_EE: 1.0
+  A_cnoise_e2e_217_217_EE: 1.0
+  A_sbpx_100_100_EE: 1.0
+  A_sbpx_100_143_EE: 1.0
+  A_sbpx_100_217_EE: 1.0
+  A_sbpx_143_143_EE: 1.0
+  A_sbpx_143_217_EE: 1.0
+  A_sbpx_217_217_EE: 1.0
+
+sampler:
+  evaluate: null
+
+debug: True
+stop_at_error: True
+"""
+
+
+def slug(x: float) -> str:
+    s = f"{x:g}"
+    return s.replace('-', 'm').replace('.', 'p')
+
+
+def extract(pattern: str, text: str) -> str:
+    m = re.search(pattern, text)
+    return m.group(1).strip() if m else 'nan'
+
+
+SUMMARY.write_text(
+    'prefix\tphi_trigger\tua10_V0\tloglike\tchi2_shoes\tchi2_CMB\tchi2_SN\tstatus\n',
+    encoding='utf-8'
+)
+
+for phi in PHI_VALUES:
+    for v0 in V0_VALUES:
+        prefix = f"run_C_hasA10_phi_{slug(phi)}_V0_{slug(v0)}"
+        yaml_path = OUTDIR / f"{prefix}.yaml"
+        log_path = OUTDIR / f"{prefix}.stdout.log"
+        yaml_text = BASE_YAML.format(
+            output_prefix=f"chains/{prefix}",
+            ua10_phi_trigger=repr(phi),
+            ua10_V0=repr(v0),
+        )
+        yaml_path.write_text(yaml_text, encoding='utf-8')
+
+        print(f"=== Running {prefix} ===", flush=True)
+        proc = subprocess.run(
+            ['cobaya-run', str(yaml_path), '--force'],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        log_path.write_text(proc.stdout, encoding='utf-8')
+        status = 'ok' if proc.returncode == 0 else 'fail'
+
+        loglike = chi2_shoes = chi2_cmb = chi2_sn = 'nan'
+        if status == 'ok':
+            loglike = extract(r'\[evaluate\] log-likelihood = ([^\n]+)', proc.stdout)
+            chi2_shoes = extract(r'\[evaluate\]\s+chi2_shoes_H0 = ([^\n]+)', proc.stdout)
+            chi2_cmb = extract(r'\[evaluate\]\s+chi2__CMB = ([^\n]+)', proc.stdout)
+            chi2_sn = extract(r'\[evaluate\]\s+chi2__SN = ([^\n]+)', proc.stdout)
+
+        with SUMMARY.open('a', encoding='utf-8') as f:
+            f.write(
+                f"{prefix}\t{phi:g}\t{v0:g}\t{loglike}\t{chi2_shoes}\t{chi2_cmb}\t{chi2_sn}\t{status}\n"
+            )
+
+print(f"Done. Summary written to: {SUMMARY}")
+import re
+import subprocess
+from pathlib import Path
+
+outdir = Path('chains')
+outdir.mkdir(exist_ok=True)
+summary = outdir / 'run_C_eval_grid_has_a10_tinyV0_summary.tsv'
+summary.write_text('prefix\tphi_trigger\tua10_V0\tloglike\tchi2_shoes\tchi2_CMB\tchi2_SN\tstatus\n', encoding='utf-8')
+
+phi_values = [0.5, 137.47]
+v0_values = [1e-8, 1e-7, 1e-6, 1e-5]
+
+base = {
+    'H0': 68.206,
+    'omega_b': 0.0223,
+    'omega_cdm': 0.1194,
+    'A_s': 2.1e-09,
+    'n_s': 0.965,
+    'tau_reio': 0.055,
+    'ua10_f_ax': 0.1,
+    'ua10_Gamma0': 1.0,
+    'ua10_n_ax': 2.5,
+    'A_planck': 0.9997827805983069,
+    'calib_100T': 1.0007215437872674,
+    'calib_217T': 0.9968033223830819,
+    'A_pol': 1.0,
+    'calib_100P': 1.021,
+    'calib_143P': 0.966,
+    'calib_217P': 1.04,
+    'cib_index': -1.3,
+    'A_cib_217': 47.27189754360289,
+    'xi_sz_cib': 0.04675702062808247,
+    'A_sz': 8.84757863791849,
+    'ksz_norm': 2.476366286151665,
+    'gal545_A_100': 9.319800029433269,
+    'gal545_A_143': 12.333491727539368,
+    'gal545_A_143_217': 22.026422454904782,
+    'gal545_A_217': 59.80846171972057,
+    'A_sbpx_100_100_TT': 1.0,
+    'A_sbpx_143_143_TT': 1.0,
+    'A_sbpx_143_217_TT': 1.0,
+    'A_sbpx_217_217_TT': 1.0,
+    'ps_A_100_100': 276.2863095433778,
+    'ps_A_143_143': 35.59187410732969,
+    'ps_A_143_217': 48.771338238159146,
+    'ps_A_217_217': 140.36394523801764,
+    'galf_TE_index': -2.4,
+    'galf_TE_A_100': 0.17216329567074776,
+    'galf_TE_A_100_143': 0.03694740350221859,
+    'galf_TE_A_100_217': 0.564368432565184,
+    'galf_TE_A_143': 0.12421921085928826,
+    'galf_TE_A_143_217': 0.6947514506576826,
+    'galf_TE_A_217': 2.0621337529747565,
+    'galf_EE_index': -2.4,
+    'galf_EE_A_100': 0.055,
+    'galf_EE_A_100_143': 0.04,
+    'galf_EE_A_100_217': 0.094,
+    'galf_EE_A_143': 0.086,
+    'galf_EE_A_143_217': 0.21,
+    'galf_EE_A_217': 0.7,
+    'A_cnoise_e2e_100_100_EE': 1.0,
+    'A_cnoise_e2e_143_143_EE': 1.0,
+    'A_cnoise_e2e_217_217_EE': 1.0,
+    'A_sbpx_100_100_EE': 1.0,
+    'A_sbpx_100_143_EE': 1.0,
+    'A_sbpx_100_217_EE': 1.0,
+    'A_sbpx_143_143_EE': 1.0,
+    'A_sbpx_143_217_EE': 1.0,
+    'A_sbpx_217_217_EE': 1.0,
+}
+
+
+def extract(pattern: str, text: str, default: str = 'nan') -> str:
+    m = re.search(pattern, text, re.MULTILINE)
+    return m.group(1).strip() if m else default
+
+
+for phi in phi_values:
+    for v0 in v0_values:
+        phi_tag = str(phi).replace('-', 'm').replace('.', 'p')
+        v0_tag = f'{v0:.0e}'.replace('-', 'm').replace('+', '').replace('.', 'p')
+        prefix = f'run_C_hasA10_tinyV0_phi_{phi_tag}_V0_{v0_tag}'
+        yaml_path = outdir / f'{prefix}.yaml'
+        stdout_path = outdir / f'{prefix}.stdout.log'
+
+        params = dict(base)
+        params['ua10_phi_trigger'] = phi
+        params['ua10_V0'] = v0
+
+        lines = []
+        lines += [f'output: {outdir}/{prefix}', '']
+        lines += ['theory:', '  classy:', '    path: .', '    extra_args:',
+                  "      has_unified_a10: 'yes'",
+                  '      non_linear: halofit',
+                  '      N_ncdm: 1',
+                  '      N_ur: 2.0328', '']
+        lines += ['likelihood:',
+                  '  planck_2018_highl_plik.TTTEEE:',
+                  '    path: null',
+                  '    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik',
+                  '    prior:',
+                  "      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'",
+                  '  planck_2018_lowl.TT:',
+                  '  planck_2018_lowl.EE:',
+                  '  bao.sdss_dr12_consensus_bao:',
+                  '  sn.pantheonplus:',
+                  '  shoes_H0:',
+                  "    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'",
+                  '    requires: [H0]', '']
+        lines += ['params:']
+        for k, val in params.items():
+            lines.append(f'  {k}: {val!r}' if isinstance(val, str) else f'  {k}: {val}')
+        lines += ['', 'sampler:', '  evaluate: null', '', 'debug: False', 'stop_at_error: True', '']
+        yaml_path.write_text('\n'.join(lines), encoding='utf-8')
+
+        print(f'=== Running {prefix} ===')
+        proc = subprocess.run(
+            ['cobaya-run', str(yaml_path), '--force'],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        stdout_path.write_text(proc.stdout, encoding='utf-8')
+
+        status = 'ok' if proc.returncode == 0 else 'fail'
+        loglike = chi2_shoes = chi2_cmb = chi2_sn = 'nan'
+        if status == 'ok':
+            loglike = extract(r'\[evaluate\] log-likelihood = ([^\n]+)', proc.stdout)
+            chi2_shoes = extract(r'\[evaluate\]\s+chi2_shoes_H0 = ([^\n]+)', proc.stdout)
+            chi2_cmb = extract(r'\[evaluate\]\s+chi2__CMB = ([^\n]+)', proc.stdout)
+            chi2_sn = extract(r'\[evaluate\]\s+chi2__SN = ([^\n]+)', proc.stdout)
+
+        with summary.open('a', encoding='utf-8') as f:
+            f.write(f'{prefix}\t{phi}\t{v0}\t{loglike}\t{chi2_shoes}\t{chi2_cmb}\t{chi2_sn}\t{status}\n')
+
+print(f'\nDone. Summary written to: {summary}')
+import re
+import subprocess
+from pathlib import Path
+
+outdir = Path('chains')
+outdir.mkdir(exist_ok=True)
+summary = outdir / 'run_C_eval_grid_has_a10_ultratinyV0_summary.tsv'
+summary.write_text('prefix\tphi_trigger\tua10_V0\tloglike\tchi2_shoes\tchi2_CMB\tchi2_SN\tstatus\n', encoding='utf-8')
+
+phi_values = [0.5, 137.47]
+v0_values = [1e-16, 1e-14, 1e-12, 1e-10]
+
+base = {
+    'H0': 68.206,
+    'omega_b': 0.0223,
+    'omega_cdm': 0.1194,
+    'A_s': 2.1e-09,
+    'n_s': 0.965,
+    'tau_reio': 0.055,
+    'ua10_f_ax': 0.1,
+    'ua10_Gamma0': 1.0,
+    'ua10_n_ax': 2.5,
+    'A_planck': 0.9979438672394767,
+    'calib_100T': 1.0007215437872674,
+    'calib_217T': 0.9968033223830819,
+    'A_pol': 1.0,
+    'calib_100P': 1.021,
+    'calib_143P': 0.966,
+    'calib_217P': 1.04,
+    'cib_index': -1.3,
+    'A_cib_217': 47.27189754360289,
+    'xi_sz_cib': 0.04675702062808247,
+    'A_sz': 8.84757863791849,
+    'ksz_norm': 2.476366286151665,
+    'gal545_A_100': 9.319800029433269,
+    'gal545_A_143': 12.333491727539368,
+    'gal545_A_143_217': 22.026422454904782,
+    'gal545_A_217': 59.80846171972057,
+    'A_sbpx_100_100_TT': 1.0,
+    'A_sbpx_143_143_TT': 1.0,
+    'A_sbpx_143_217_TT': 1.0,
+    'A_sbpx_217_217_TT': 1.0,
+    'ps_A_100_100': 276.2863095433778,
+    'ps_A_143_143': 35.59187410732969,
+    'ps_A_143_217': 48.771338238159146,
+    'ps_A_217_217': 140.36394523801764,
+    'galf_TE_index': -2.4,
+    'galf_TE_A_100': 0.17216329567074776,
+    'galf_TE_A_100_143': 0.03694740350221859,
+    'galf_TE_A_100_217': 0.564368432565184,
+    'galf_TE_A_143': 0.12421921085928826,
+    'galf_TE_A_143_217': 0.6947514506576826,
+    'galf_TE_A_217': 2.0621337529747565,
+    'galf_EE_index': -2.4,
+    'galf_EE_A_100': 0.055,
+    'galf_EE_A_100_143': 0.04,
+    'galf_EE_A_100_217': 0.094,
+    'galf_EE_A_143': 0.086,
+    'galf_EE_A_143_217': 0.21,
+    'galf_EE_A_217': 0.7,
+    'A_cnoise_e2e_100_100_EE': 1.0,
+    'A_cnoise_e2e_143_143_EE': 1.0,
+    'A_cnoise_e2e_217_217_EE': 1.0,
+    'A_sbpx_100_100_EE': 1.0,
+    'A_sbpx_100_143_EE': 1.0,
+    'A_sbpx_100_217_EE': 1.0,
+    'A_sbpx_143_143_EE': 1.0,
+    'A_sbpx_143_217_EE': 1.0,
+    'A_sbpx_217_217_EE': 1.0,
+}
+
+def yfmt(v):
+    return repr(v) if isinstance(v, float) else str(v)
+
+
+def extract(pattern: str, text: str) -> str:
+    m = re.search(pattern, text, re.MULTILINE)
+    return m.group(1).strip() if m else 'nan'
+
+for phi in phi_values:
+    for v0 in v0_values:
+        phi_tag = str(phi).replace('-', 'm').replace('.', 'p')
+        v0_tag = f'{v0:.0e}'.replace('-', 'm').replace('+', '').replace('.', 'p')
+        prefix = f'run_C_hasA10_ultratiny_phi_{phi_tag}_V0_{v0_tag}'
+        yaml_path = outdir / f'{prefix}.yaml'
+        stdout_path = outdir / f'{prefix}.stdout.log'
+
+        params = dict(base)
+        params['ua10_V0'] = v0
+        params['ua10_phi_trigger'] = phi
+
+        lines = []
+        lines += [f'output: {outdir}/{prefix}', '']
+        lines += ['theory:', '  classy:', '    path: .', '    extra_args:',
+                  "      has_unified_a10: 'yes'",
+                  '      non_linear: halofit', '      N_ncdm: 1', '      N_ur: 2.0328', '']
+        lines += ['likelihood:',
+                  '  planck_2018_highl_plik.TTTEEE:',
+                  '    path: null',
+                  '    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik',
+                  '    prior:',
+                  "      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'",
+                  '  planck_2018_lowl.TT:',
+                  '  planck_2018_lowl.EE:',
+                  '  bao.sdss_dr12_consensus_bao:',
+                  '  sn.pantheonplus:',
+                  '  shoes_H0:',
+                  "    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'",
+                  '    requires: [H0]', '']
+        lines += ['params:']
+        for k, val in params.items():
+            lines.append(f'  {k}: {yfmt(val)}')
+        lines += ['', 'sampler:', '  evaluate: null', '', 'debug: False', 'stop_at_error: True', '']
+        yaml_path.write_text('\n'.join(lines), encoding='utf-8')
+
+        print(f'=== Running {prefix} ===')
+        proc = subprocess.run(['cobaya-run', str(yaml_path), '--force'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        stdout_path.write_text(proc.stdout, encoding='utf-8')
+
+        status = 'ok' if proc.returncode == 0 else 'fail'
+        loglike = chi2_shoes = chi2_cmb = chi2_sn = 'nan'
+        if status == 'ok':
+            loglike = extract(r'\[evaluate\] log-likelihood = ([^\n]+)', proc.stdout)
+            chi2_shoes = extract(r'\[evaluate\]\s+chi2_shoes_H0 = ([^\n]+)', proc.stdout)
+            chi2_cmb = extract(r'\[evaluate\]\s+chi2__CMB = ([^\n]+)', proc.stdout)
+            chi2_sn = extract(r'\[evaluate\]\s+chi2__SN = ([^\n]+)', proc.stdout)
+
+        with summary.open('a', encoding='utf-8') as f:
+            f.write(f'{prefix}\t{phi}\t{v0}\t{loglike}\t{chi2_shoes}\t{chi2_cmb}\t{chi2_sn}\t{status}\n')
+
+print(f'\nDone. Summary written to: {summary}')
+import re
+import subprocess
+from pathlib import Path
+
+outdir = Path('chains')
+outdir.mkdir(exist_ok=True)
+summary = outdir / 'run_C_eval_grid_has_a10_summary_v2.tsv'
+summary.write_text('prefix\tphi_trigger\tua10_V0\tloglike\tchi2_shoes\tchi2_CMB\tchi2_SN\tstatus\n', encoding='utf-8')
+
+phi_values = [1e-6, 1e-4, 0.5, 137.47]
+v0_values = [1e-4, 1e-2, 1.0]
+
+base_params = {
+    'H0': 68.206,
+    'omega_b': 0.0223,
+    'omega_cdm': 0.1194,
+    'A_s': 2.1e-09,
+    'n_s': 0.965,
+    'tau_reio': 0.055,
+    'ua10_f_ax': 0.1,
+    'ua10_Gamma0': 1.0,
+    'ua10_n_ax': 2.5,
+    'A_planck': 0.9979438672394767,
+    'calib_100T': 1.0007215437872674,
+    'calib_217T': 0.9968033223830819,
+    'A_pol': 1.0,
+    'calib_100P': 1.021,
+    'calib_143P': 0.966,
+    'calib_217P': 1.04,
+    'cib_index': -1.3,
+    'A_cib_217': 47.27189754360289,
+    'xi_sz_cib': 0.04675702062808247,
+    'A_sz': 8.84757863791849,
+    'ksz_norm': 2.476366286151665,
+    'gal545_A_100': 9.319800029433269,
+    'gal545_A_143': 12.333491727539368,
+    'gal545_A_143_217': 22.026422454904782,
+    'gal545_A_217': 59.80846171972057,
+    'A_sbpx_100_100_TT': 1.0,
+    'A_sbpx_143_143_TT': 1.0,
+    'A_sbpx_143_217_TT': 1.0,
+    'A_sbpx_217_217_TT': 1.0,
+    'ps_A_100_100': 276.2863095433778,
+    'ps_A_143_143': 35.59187410732969,
+    'ps_A_143_217': 48.771338238159146,
+    'ps_A_217_217': 140.36394523801764,
+    'galf_TE_index': -2.4,
+    'galf_TE_A_100': 0.17216329567074776,
+    'galf_TE_A_100_143': 0.03694740350221859,
+    'galf_TE_A_100_217': 0.564368432565184,
+    'galf_TE_A_143': 0.12421921085928826,
+    'galf_TE_A_143_217': 0.6947514506576826,
+    'galf_TE_A_217': 2.0621337529747565,
+    'galf_EE_index': -2.4,
+    'galf_EE_A_100': 0.055,
+    'galf_EE_A_100_143': 0.04,
+    'galf_EE_A_100_217': 0.094,
+    'galf_EE_A_143': 0.086,
+    'galf_EE_A_143_217': 0.21,
+    'galf_EE_A_217': 0.7,
+    'A_cnoise_e2e_100_100_EE': 1.0,
+    'A_cnoise_e2e_143_143_EE': 1.0,
+    'A_cnoise_e2e_217_217_EE': 1.0,
+    'A_sbpx_100_100_EE': 1.0,
+    'A_sbpx_100_143_EE': 1.0,
+    'A_sbpx_100_217_EE': 1.0,
+    'A_sbpx_143_143_EE': 1.0,
+    'A_sbpx_143_217_EE': 1.0,
+    'A_sbpx_217_217_EE': 1.0,
+}
+
+def fmt(v):
+    if isinstance(v, float):
+        return repr(v)
+    return str(v)
+
+def safe_name(x):
+    return str(x).replace('-', 'm').replace('.', 'p')
+
+def extract(pattern, text):
+    m = re.search(pattern, text, re.MULTILINE)
+    return m.group(1).strip() if m else 'nan'
+
+for phi in phi_values:
+    for v0 in v0_values:
+        prefix = f'run_C_hasA10_v2_phi_{safe_name(phi)}_V0_{safe_name(v0)}'
+        yaml_path = outdir / f'{prefix}.yaml'
+        log_path = outdir / f'{prefix}.stdout.log'
+
+        lines = [
+            f'output: {outdir}/{prefix}',
+            '',
+            'theory:',
+            '  classy:',
+            '    path: .',
+            '    extra_args:',
+            "      has_unified_a10: 'yes'",
+            '      non_linear: halofit',
+            '      N_ncdm: 1',
+            '      N_ur: 2.0328',
+            '',
+            'likelihood:',
+            '  planck_2018_highl_plik.TTTEEE:',
+            '    path: null',
+            '    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik',
+            '    prior:',
+            "      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'",
+            '  planck_2018_lowl.TT:',
+            '  planck_2018_lowl.EE:',
+            '  bao.sdss_dr12_consensus_bao:',
+            '  sn.pantheonplus:',
+            '  shoes_H0:',
+            "    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'",
+            '    requires: [H0]',
+            '',
+            'params:'
+        ]
+        params = dict(base_params)
+        params['ua10_V0'] = v0
+        params['ua10_phi_trigger'] = phi
+        for k, v in params.items():
+            lines.append(f'  {k}: {fmt(v)}')
+        lines += ['', 'sampler:', '  evaluate: null', '', 'debug: False', 'stop_at_error: True', '']
+        yaml_path.write_text('\n'.join(lines), encoding='utf-8')
+
+        proc = subprocess.run(['cobaya-run', str(yaml_path), '--force'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        log_path.write_text(proc.stdout, encoding='utf-8')
+        status = 'ok' if proc.returncode == 0 else 'fail'
+        loglike = chi2_shoes = chi2_cmb = chi2_sn = 'nan'
+        if status == 'ok':
+            loglike = extract(r'\[evaluate\] log-likelihood = ([^\n]+)', proc.stdout)
+            chi2_shoes = extract(r'\[evaluate\]\s+chi2_shoes_H0 = ([^\n]+)', proc.stdout)
+            chi2_cmb = extract(r'\[evaluate\]\s+chi2__CMB = ([^\n]+)', proc.stdout)
+            chi2_sn = extract(r'\[evaluate\]\s+chi2__SN = ([^\n]+)', proc.stdout)
+        with summary.open('a', encoding='utf-8') as f:
+            f.write(f'{prefix}\t{phi}\t{v0}\t{loglike}\t{chi2_shoes}\t{chi2_cmb}\t{chi2_sn}\t{status}\n')
+
+print(f'Done. Summary written to: {summary}')
+import math
+import os
+import re
+import subprocess
+from pathlib import Path
+
+outdir = Path("chains")
+outdir.mkdir(exist_ok=True)
+
+phi_values = [136, 137.47, 139, 142]
+logv_values = [-2, -1, 0]
+
+base = {
+    "H0": 68.206,
+    "omega_b": 0.0223,
+    "omega_cdm": 0.1194,
+    "A_s": 2.1e-09,
+    "n_s": 0.965,
+    "tau_reio": 0.055,
+    "ua10_f_ax": 0.1,
+    "ua10_Gamma0": 1.0,
+    "ua10_n_ax": 2.5,
+    "A_planck": 0.9979438672394767,
+    "calib_100T": 1.0007215437872674,
+    "calib_217T": 0.9968033223830819,
+    "A_pol": 1.0,
+    "calib_100P": 1.021,
+    "calib_143P": 0.966,
+    "calib_217P": 1.04,
+    "cib_index": -1.3,
+    "A_cib_217": 47.27189754360289,
+    "xi_sz_cib": 0.04675702062808247,
+    "A_sz": 8.84757863791849,
+    "ksz_norm": 2.476366286151665,
+    "gal545_A_100": 9.319800029433269,
+    "gal545_A_143": 12.333491727539368,
+    "gal545_A_143_217": 22.026422454904782,
+    "gal545_A_217": 59.80846171972057,
+    "A_sbpx_100_100_TT": 1.0,
+    "A_sbpx_143_143_TT": 1.0,
+    "A_sbpx_143_217_TT": 1.0,
+    "A_sbpx_217_217_TT": 1.0,
+    "ps_A_100_100": 276.2863095433778,
+    "ps_A_143_143": 35.59187410732969,
+    "ps_A_143_217": 48.771338238159146,
+    "ps_A_217_217": 140.36394523801764,
+    "galf_TE_index": -2.4,
+    "galf_TE_A_100": 0.17216329567074776,
+    "galf_TE_A_100_143": 0.03694740350221859,
+    "galf_TE_A_100_217": 0.564368432565184,
+    "galf_TE_A_143": 0.12421921085928826,
+    "galf_TE_A_143_217": 0.6947514506576826,
+    "galf_TE_A_217": 2.0621337529747565,
+    "galf_EE_index": -2.4,
+    "galf_EE_A_100": 0.055,
+    "galf_EE_A_100_143": 0.04,
+    "galf_EE_A_100_217": 0.094,
+    "galf_EE_A_143": 0.086,
+    "galf_EE_A_143_217": 0.21,
+    "galf_EE_A_217": 0.7,
+    "A_cnoise_e2e_100_100_EE": 1.0,
+    "A_cnoise_e2e_143_143_EE": 1.0,
+    "A_cnoise_e2e_217_217_EE": 1.0,
+    "A_sbpx_100_100_EE": 1.0,
+    "A_sbpx_100_143_EE": 1.0,
+    "A_sbpx_100_217_EE": 1.0,
+    "A_sbpx_143_143_EE": 1.0,
+    "A_sbpx_143_217_EE": 1.0,
+    "A_sbpx_217_217_EE": 1.0,
+}
+
+summary = outdir / "run_C_eval_grid_summary_v3.tsv"
+summary.write_text("prefix\tphi_trigger\tlog10_V0\tua10_V0\tloglike\tchi2_shoes\tchi2_CMB\tchi2_SN\tstatus\n", encoding="utf-8")
+
+def yaml_value(v):
+    if isinstance(v, float):
+        return repr(v)
+    return str(v)
+
+def extract(pattern, text):
+    m = re.search(pattern, text, re.MULTILINE)
+    return m.group(1).strip() if m else "nan"
+
+for phi in phi_values:
+    for logv in logv_values:
+        ua10_v0 = 10 ** logv
+        prefix = f"run_C_eval3_phi_{phi}_logV_{logv}"
+        yaml_path = outdir / f"{prefix}.yaml"
+        stdout_path = outdir / f"{prefix}.stdout.log"
+
+        lines = []
+        lines += [f"output: {outdir}/{prefix}", ""]
+        lines += ["theory:", "  classy:", "    path: .", "    extra_args:",
+                  "      non_linear: halofit", "      N_ncdm: 1", "      N_ur: 2.0328", ""]
+        lines += ["likelihood:",
+                  "  planck_2018_highl_plik.TTTEEE:",
+                  "    path: null",
+                  "    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik",
+                  "    prior:",
+                  "      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'",
+                  "  planck_2018_lowl.TT:",
+                  "  planck_2018_lowl.EE:",
+                  "  bao.sdss_dr12_consensus_bao:",
+                  "  sn.pantheonplus:",
+                  "  shoes_H0:",
+                  "    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'",
+                  "    requires: [H0]", ""]
+        lines += ["params:"]
+        params = dict(base)
+        params["ua10_V0"] = ua10_v0
+        params["ua10_phi_trigger"] = phi
+        for k, v in params.items():
+            lines.append(f"  {k}: {yaml_value(v)}")
+        lines += ["", "sampler:", "  evaluate: null", "", "debug: False", "stop_at_error: True", ""]
+        yaml_path.write_text("\n".join(lines), encoding="utf-8")
+
+        print(f"=== Running {prefix} ===")
+        proc = subprocess.run(
+            ["cobaya-run", str(yaml_path), "--force"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
+        stdout_path.write_text(proc.stdout, encoding="utf-8")
+
+        status = "ok" if proc.returncode == 0 else "fail"
+        loglike = chi2_shoes = chi2_cmb = chi2_sn = "nan"
+        if status == "ok":
+            loglike = extract(r"\[evaluate\] log-likelihood = ([^\n]+)", proc.stdout)
+            chi2_shoes = extract(r"\[evaluate\]\s+chi2_shoes_H0 = ([^\n]+)", proc.stdout)
+            chi2_cmb = extract(r"\[evaluate\]\s+chi2__CMB = ([^\n]+)", proc.stdout)
+            chi2_sn = extract(r"\[evaluate\]\s+chi2__SN = ([^\n]+)", proc.stdout)
+
+        with summary.open("a", encoding="utf-8") as f:
+            f.write(f"{prefix}\t{phi}\t{logv}\t{ua10_v0}\t{loglike}\t{chi2_shoes}\t{chi2_cmb}\t{chi2_sn}\t{status}\n")
+
+print(f"\nDone. Summary written to: {summary}")
+from classy import Class
+
+params = {
+    # --- 基本宇宙論（H0を削除し、theta_sを固定！） ---
+    '100*theta_s': 1.0411,   # Planckの観測値
+    'omega_b': 0.0224,       # 物理密度（Ω_b h^2）
+    'omega_cdm': 0.120,      # 物理密度（Ω_c h^2）
+    'tau_reio': 0.054,
+    'A_s': 2.1e-9,
+    'n_s': 0.965,
+
+    # --- 出力と精度 ---
+    'output': 'tCl,pCl,lCl,mPk',
+    'l_max_scalars': 3000,
+    'P_k_max_h/Mpc': 5.0,
+    'z_max_pk': 5.0,
+
+    # --- Unified A10（黄金のパラメータ） ---
+    'has_unified_a10': 'yes',
+
+    'ua10_n_ax': 2.5,
+    'ua10_f_ax': 0.25,
+
+    'ua10_V0': 2.0e-4,
+    'ua10_Gamma0': 0.65,
+
+    'ua10_phi_trigger': 1e-6,
+    'ua10_Delta_phi': 0.60,
+
+    'background_verbose': 1,
+}
+
+# CLASSの初期化と計算
+cosmo = Class()
+cosmo.set(params)
+cosmo.compute()
+
+print("--- Unified A10 最終診断 ---")
+
+# --- H0 の取得 ---
+# ※ChatGPTの「Hubble(0) * 2997.92458」は光速の桁(299792.458)を間違えており
+# バグる危険があるため、CLASS標準の cosmo.h() を使います。
+H0 = cosmo.h() * 100
+print(f"H0 = {H0:.2f}")
+
+# --- theta_s の確認 ---
+#theta_s = cosmo.theta_s() * 100
+#print(f"100*theta_s = {theta_s:.4f} (Input: 1.0411)")
+
+# --- rs_d の取得 ---
+rs_d = cosmo.rs_drag()
+print(f"rs_d = {rs_d:.2f} Mpc")
+
+# --- S8 の取得 ---
+sigma8 = cosmo.sigma8()
+Omega_m = cosmo.Omega_m()
+S8 = sigma8 * (Omega_m / 0.3)**0.5
+print(f"S8 = {S8:.4f}")
+
+# メモリ解放
+cosmo.struct_cleanup()
+cosmo.empty()#!/usr/bin/env python3
+import re
+import subprocess
+from pathlib import Path
+
+yaml_names = [
+    "bridge_A_homotopy_V0_5000.yaml",
+    "bridge_A_homotopy_V0_1000.yaml",
+    "bridge_A_homotopy_V0_100.yaml",
+    "bridge_A_homotopy_V0_10.yaml",
+    "bridge_A_homotopy_V0_1.yaml",
+    "bridge_A_homotopy_V0_1em02.yaml",
+    "bridge_A_homotopy_V0_1em04.yaml",
+    "bridge_A_homotopy_V0_0.yaml",
+]
+
+chains = Path("chains")
+chains.mkdir(exist_ok=True)
+summary = chains / "bridge_A_homotopy_summary.tsv"
+summary.write_text("prefix\tua10_V0\tstatus\tloglike\tchi2_CMB\tchi2_SN\tchi2_shoes\terror_hint\n", encoding="utf-8")
+
+patterns = {
+    "loglike": re.compile(r"\[evaluate\] log-likelihood = ([^\n]+)"),
+    "chi2_CMB": re.compile(r"\[evaluate\]\s+chi2__CMB = ([^\n]+)"),
+    "chi2_SN": re.compile(r"\[evaluate\]\s+chi2__SN = ([^\n]+)"),
+    "chi2_shoes": re.compile(r"\[evaluate\]\s+chi2_shoes_H0 = ([^\n]+)"),
+}
+error_patterns = [
+    re.compile(r"Step size too small:[^\n]+"),
+    re.compile(r"Class did not read input parameter\(s\):[^\n]+"),
+    re.compile(r"Failed to load external function:[^\n]+"),
+]
+
+def extract(pat, text):
+    m = pat.search(text)
+    return m.group(1).strip() if m else "nan"
+
+for yaml_name in yaml_names:
+    prefix = yaml_name.replace(".yaml","")
+    stdout_log = chains / f"{prefix}.stdout.log"
+    proc = subprocess.run(["cobaya-run", yaml_name, "--force"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    stdout_log.write_text(proc.stdout, encoding="utf-8")
+    status = "ok" if proc.returncode == 0 else "fail"
+    values = {k: extract(p, proc.stdout) for k,p in patterns.items()}
+    error_hint = ""
+    for ep in error_patterns:
+        m = ep.search(proc.stdout)
+        if m:
+            error_hint = m.group(0)
+            break
+    v0_token = prefix.split("_V0_")[-1]
+    summary.open("a", encoding="utf-8").write(
+        f"{prefix}\t{v0_token}\t{status}\t{values['loglike']}\t{values['chi2_CMB']}\t{values['chi2_SN']}\t{values['chi2_shoes']}\t{error_hint}\n"
+    )
+    print(f"=== {prefix}: {status} ===")
+
+print(f"\nWrote {summary}")
+#!/usr/bin/env python3
+import subprocess, re
+from pathlib import Path
+
+cases = [
+    "bridge_eval_C_runB_fixed137_control_v3.yaml",
+    "bridge_AC_interp_t0p0.yaml",
+    "bridge_AC_interp_t0p25.yaml",
+    "bridge_AC_interp_t0p5.yaml",
+    "bridge_AC_interp_t0p75.yaml",
+    "bridge_AC_interp_t1p0.yaml",
+]
+outdir = Path("chains")
+summary = outdir / "bridge_C_and_AC_summary.tsv"
+summary.write_text("case\tstatus\tloglike\tchi2_CMB\tchi2_SN\tchi2_shoes\terror_hint\n", encoding="utf-8")
+
+patterns = {
+    "loglike": re.compile(r"\[evaluate\] log-likelihood = ([^\n]+)"),
+    "chi2_CMB": re.compile(r"\[evaluate\]\s+chi2__CMB = ([^\n]+)"),
+    "chi2_SN": re.compile(r"\[evaluate\]\s+chi2__SN = ([^\n]+)"),
+    "chi2_shoes": re.compile(r"\[evaluate\]\s+chi2_shoes_H0 = ([^\n]+)"),
+}
+errpat = re.compile(r"(Step size too small:[^\n]+|classy\._classy\.[A-Za-z]+Error:|Error in Class:[^\n]+)")
+
+for case in cases:
+    log = outdir / (Path(case).stem + ".stdout.log")
+    proc = subprocess.run(["cobaya-run", case, "--force"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    log.write_text(proc.stdout, encoding="utf-8")
+    status = "ok" if proc.returncode == 0 else "fail"
+    vals = {k:"nan" for k in patterns}
+    if status == "ok":
+        for k,p in patterns.items():
+            m = p.search(proc.stdout)
+            if m: vals[k] = m.group(1).strip()
+    err = ""
+    m = errpat.search(proc.stdout)
+    if m:
+        err = m.group(1).strip()
+    with summary.open("a", encoding="utf-8") as f:
+        f.write(f"{Path(case).stem}\t{status}\t{vals['loglike']}\t{vals['chi2_CMB']}\t{vals['chi2_SN']}\t{vals['chi2_shoes']}\t{err}\n")
+
+print(f"Wrote {summary}")
+print(summary.read_text(encoding='utf-8'))
+import matplotlib.pyplot as plt
+import numpy as np
+from classy import Class
+
+def get_cl_tt(params, label):
+    print(f"⌛ {label} を計算中...")
+    cosmo = Class()
+    cosmo.set(params)
+    try:
+        cosmo.compute()
+        cl = cosmo.raw_cl(2500)
+        ell = cl['ell'][2:] 
+        cl_tt = cl['tt'][2:]
+        print(f"   Done.")
+        return ell, cl_tt
+    finally:
+        cosmo.struct_cleanup()
+        cosmo.empty()
+
+# --- 1. 標準モデル (mPkを削除し軽量化) ---
+params_lcdm = {
+    'H0': 67.4, 'omega_b': 0.0224, 'omega_cdm': 0.120,
+    'tau_reio': 0.054, 'A_s': 2.1e-9, 'n_s': 0.965,
+    'output': 'tCl', 'l_max_scalars': 2500 # mPkを消しました
+}
+
+# --- 2. 究極の Unified A10 (mPkを削除し軽量化) ---
+params_a10 = {
+    '100*theta_s': 1.0415, 'omega_b': 0.0224, 'omega_cdm': 0.120,
+    'tau_reio': 0.054, 'A_s': 2.1e-9, 'n_s': 0.965,
+    'has_unified_a10': 'yes', 'ua10_n_ax': 2.5, 'ua10_f_ax': 0.25,
+    'ua10_V0': 1.9e-4, 'ua10_Gamma0': 0.55,
+    'ua10_phi_trigger': 1e-6, 'ua10_Delta_phi': 0.60,
+    'output': 'tCl', 'l_max_scalars': 2500 # mPkを消しました
+}
+
+# 計算実行
+ell, cl_lcdm = get_cl_tt(params_lcdm, "Standard LCDM")
+_, cl_a10 = get_cl_tt(params_a10, "Unified A10")
+
+# --- Ratio プロット ---
+ratio = cl_a10 / cl_lcdm
+plt.figure(figsize=(10, 6))
+plt.plot(ell, ratio, 'm-', lw=2, label=r'$R_\ell \equiv C_\ell^{\rm A10} / C_\ell^{\rm \Lambda CDM}$')
+plt.axhline(1.0, color='k', linestyle='-')
+plt.axhline(1.02, color='r', linestyle='--', alpha=0.3)
+plt.axhline(0.98, color='r', linestyle='--', alpha=0.3)
+plt.fill_between(ell, 0.98, 1.02, color='gray', alpha=0.1, label='Planck Safe Zone (2%)')
+plt.ylim(0.95, 1.05)
+plt.title("The Ultimate Test: CMB Ratio Plot")
+plt.legend()
+plt.grid(alpha=0.2)
+plt.savefig("the_ratio_test.png", dpi=300)
+print("\n✅ 'the_ratio_test.png' を生成しました。今度こそ通ったはずです！")from classy import Class
+import numpy as np
+
+# 1. 基準となる標準理論 (Lambda-CDM)
+cosmo_lcdm = Class()
+params_lcdm = {
+    'h': 0.674, 'omega_b': 0.02237, 'omega_cdm': 0.1200,
+    'A_s': 2.1e-9, 'n_s': 0.965, 'tau_reio': 0.054
+}
+cosmo_lcdm.set(params_lcdm)
+cosmo_lcdm.compute()
+rs_lcdm = cosmo_lcdm.rs_drag()
+H0_lcdm = cosmo_lcdm.h() * 100.
+
+# 2. 関数：暗黒物質(ocdm)も調整できるように改良
+def get_residuals(f_ax, tx_w0, tx_zt, tx_sig, tx_dw, h_val=0.731, ocdm=0.1200):
+    cosmo = Class()
+    cosmo.set({
+        'h': h_val, 'omega_b': 0.02237, 'omega_cdm': ocdm,  # ← ここが重要！
+        'A_s': 2.1e-9, 'n_s': 0.965, 'tau_reio': 0.054,
+        'has_unified_a10': 'yes', 'ua10_f_ax': f_ax, 'ua10_phi_trigger': 0.5,
+        'has_ua10_tx': 'yes', 'ua10_tx_omega0': tx_w0, 'ua10_tx_zt': tx_zt,
+        'ua10_tx_sigma': tx_sig, 'ua10_tx_dw': tx_dw
+    })
+    cosmo.compute()
+    rs = cosmo.rs_drag()
+    H0 = cosmo.h() * 100.
+    
+    z_list = [0.01, 0.52, 1.03, 2.04]
+    res = {'rs_ratio': rs / rs_lcdm, 'z': [], 'E_diff': [], 'DM_diff': [], 'DH_diff': []}
+    
+    for z in z_list:
+        Ez_lcdm = cosmo_lcdm.Hubble(z) / H0_lcdm
+        DM_lcdm = cosmo_lcdm.angular_distance(z) * (1.+z)
+        DH_lcdm = 1. / cosmo_lcdm.Hubble(z)
+        
+        Ez_mod = cosmo.Hubble(z) / H0
+        DM_mod = cosmo.angular_distance(z) * (1.+z)
+        DH_mod = 1. / cosmo.Hubble(z)
+        
+        res['z'].append(z)
+        res['E_diff'].append( (Ez_mod/Ez_lcdm - 1.) * 100 )
+        res['DM_diff'].append( (DM_mod/DM_lcdm - 1.) * 100 )
+        res['DH_diff'].append( (DH_mod/DH_lcdm - 1.) * 100 )
+        
+    cosmo.struct_cleanup()
+    cosmo.empty()
+    return res
+
+print("--- A10 ハイブリッド：真の物理的補償スキャン ---")
+
+# 【大本命】 暗黒物質を増やし(0.1400)、H0を72.4でキープ。
+# 暗黒物質が増えるとrsが自然に縮むので、A10(f_ax)は少し控えめの 0.12 に設定！
+res_mod1 = get_residuals(0.12, 0.042, 0.10, 0.08, -0.40, h_val=0.724, ocdm=0.1400)
+print(f"\n[Test 1] 暗黒物質増強版 (ocdm=0.1400, f_ax=0.12) | rs/rs_LCDM = {res_mod1['rs_ratio']:.4f}")
+print(" z    | E(z) Diff | D_M (純粋距離) Diff | D_H (純粋距離) Diff")
+for i, z in enumerate(res_mod1['z']):
+    print(f"{z:<4.2f} | {res_mod1['E_diff'][i]:>+8.2f}% | {res_mod1['DM_diff'][i]:>+17.2f}% | {res_mod1['DH_diff'][i]:>+17.2f}%")
+
+cosmo_lcdm.struct_cleanup()
+cosmo_lcdm.empty()from classy import Class
+import numpy as np
+
+# 共通設定
+z_arr = np.linspace(0.01, 2.5, 50) # z=0.01 から 2.5 までを50等分して調べる
+
+# ==========================================
+# 1. 基準となる標準理論 (Lambda-CDM) の計算
+# ==========================================
+cosmo_lcdm = Class()
+params_lcdm = {
+    'h': 0.674, 'omega_b': 0.02237, 'omega_cdm': 0.1200,
+    'A_s': 2.1e-9, 'n_s': 0.965, 'tau_reio': 0.054
+}
+cosmo_lcdm.set(params_lcdm)
+cosmo_lcdm.compute()
+rs_lcdm = cosmo_lcdm.rs_drag()
+
+# ==========================================
+# 2. 吉村 A10 ハイブリッド (H0=73.1) の計算
+# ==========================================
+cosmo_a10 = Class()
+params_a10 = {
+    'h': 0.731, 'omega_b': 0.02237, 'omega_cdm': 0.1200,
+    'A_s': 2.1e-9, 'n_s': 0.965, 'tau_reio': 0.054,
+    'has_unified_a10': 'yes',
+    'ua10_f_ax': 0.22, 'ua10_phi_trigger': 0.5,
+    'has_ua10_tx': 'yes',
+    'ua10_tx_omega0': 0.042, 'ua10_tx_zt': 0.035,
+    'ua10_tx_sigma': 0.04, 'ua10_tx_dw': -0.60
+}
+cosmo_a10.set(params_a10)
+cosmo_a10.compute()
+rs_a10 = cosmo_a10.rs_drag()
+
+# ==========================================
+# 3. 残差 (Residual) の計算と出力
+# ==========================================
+print(f"{'z':<5} | {'H(z) Diff':<10} | {'D_M/rd Diff':<12} | {'D_H/rd Diff':<12}")
+print("-" * 45)
+
+for z in z_arr:
+    # LCDMの計算
+    Hz_lcdm = cosmo_lcdm.Hubble(z)
+    DM_lcdm = cosmo_lcdm.angular_distance(z) * (1.+z)
+    DH_lcdm = 1. / Hz_lcdm
+    
+    # A10の計算
+    Hz_a10 = cosmo_a10.Hubble(z)
+    DM_a10 = cosmo_a10.angular_distance(z) * (1.+z)
+    DH_a10 = 1. / Hz_a10
+    
+    # 差分（パーセント）を計算
+    diff_Hz = (Hz_a10 / Hz_lcdm - 1.0) * 100
+    diff_DM_rd = ((DM_a10/rs_a10) / (DM_lcdm/rs_lcdm) - 1.0) * 100
+    diff_DH_rd = ((DH_a10/rs_a10) / (DH_lcdm/rs_lcdm) - 1.0) * 100
+    
+    # z=0.01, 0.1, 0.5, 1.0, 2.0 付近だけピックアップして表示
+    if abs(z - 0.01) < 0.03 or abs(z - 0.11) < 0.03 or abs(z - 0.51) < 0.03 or abs(z - 1.02) < 0.03 or abs(z - 2.04) < 0.03:
+        print(f"{z:.2f}  | {diff_Hz:>+8.2f}%  | {diff_DM_rd:>+10.2f}% | {diff_DH_rd:>+10.2f}%")
+
+cosmo_lcdm.struct_cleanup()
+cosmo_lcdm.empty()
+cosmo_a10.struct_cleanup()
+cosmo_a10.empty()from setuptools import setup, Extension
+from Cython.Distutils import build_ext
+
+import numpy as np
+import os
+import subprocess as sbp
+import sys
+
+def binaries_directory():
+    path = "."
+
+    if '--target' in sys.argv:
+      path = os.path.abspath(sys.argv[sys.argv.index('--target')+1])
+
+    if 'editable_wheel' in sys.argv:
+      path = os.path.dirname(os.path.abspath(__file__))
+
+    if path == ".":
+      print('no installation path found', file=sys.stderr)
+    return path
+
+bin_dir = binaries_directory()
+print("BIN_DIR",bin_dir)
+
+# Get the root folder of the CLASS installation -- this setup.py should be in that folder
+root_folder = os.path.dirname(os.path.abspath(__file__))
+
+# Recover the gcc compiler
+GCCPATH_STRING = sbp.Popen(
+    ['gcc', '-print-libgcc-file-name'],
+    stdout=sbp.PIPE).communicate()[0]
+GCCPATH = os.path.normpath(os.path.dirname(GCCPATH_STRING)).decode()
+
+liblist = ["class"]
+MVEC_STRING = sbp.Popen(
+    ['gcc', '-lmvec'],
+    stderr=sbp.PIPE).communicate()[1]
+if b"mvec" not in MVEC_STRING:
+    liblist += ["mvec","m"]
+
+# define absolute paths
+include_folder = os.path.join(root_folder, "include")
+classy_folder = os.path.join(root_folder, "python")
+heat_folder = os.path.join(os.path.join(root_folder, "external"),"heating")
+recfast_folder = os.path.join(os.path.join(root_folder, "external"),"RecfastCLASS")
+hyrec_folder = os.path.join(os.path.join(root_folder, "external"),"HyRec2020")
+
+# Recover the CLASS version
+with open(os.path.join(include_folder, 'common.h'), 'r') as v_file:
+    for line in v_file:
+        if line.find("_VERSION_") != -1:
+            # get rid of the " and the v
+            VERSION = line.split()[-1][2:-1]+".0" # Always set a sub-version number here for subsequent uploads (!)
+            break
+
+# Define cython extension and fix Python version
+classy_ext = Extension("classy._classy", [os.path.join("python", "classy.pyx")],
+                       include_dirs=[np.get_include(), include_folder, heat_folder, recfast_folder, hyrec_folder],
+                       libraries=liblist,
+                       library_dirs=[root_folder, GCCPATH],
+                       language="c++",
+                       extra_compile_args=["-std=c++11"],
+                       depends=["libclass.a","python/cclassy.pxd"]
+                       )
+
+classy_ext.cython_directives = {'language_level': "3" if sys.version_info.major>=3 else "2"}
+
+
+
+
+# 2. Check what files to include
+def package_files(directory):
+    paths = []
+    direcs = []
+    wanted_paths = {os.path.join(directory, d) for d in ["tools", "source", "main", "python", "include"]}
+    for (path, directories, filenames) in os.walk(directory):
+        # Only include those directories that we actually want
+        if (path in wanted_paths or
+            (path.startswith(os.path.join(directory,"external")) and not 'RealSpaceInterface' in path)):
+          print("INCLUDING", path, filenames)
+          for filename in filenames:
+              paths.append(os.path.join(path, filename))
+    return paths
+
+pck_files = package_files(".")
+pck_files.append("./Makefile")
+# Debug print (only occurs when executed with the -v option)
+print("Included files : ", pck_files)
+
+
+# Make a custom builder in order to compile the C code as well, using the makefile
+class classy_builder(build_ext):
+
+    def build_extension(self, ext):
+      # Make sure to put the current python version into the 'PYTHON' variable
+      env = os.environ.copy()
+      if not 'PYTHON' in env:
+        env['PYTHON'] = sys.executable
+
+      # We need to put the actual files somewhere (e.g. the BBN file -- the easiest is just to copy the full class folder (although in the future we could imagine just copying the necessary files)
+
+      # 1. Check where to install class to
+      print("Running installation with arguments = ",sys.argv)
+      path_install = binaries_directory()
+      print("Selected corresponding installation path : ", path_install)
+
+      env['CLASSDIR'] = path_install
+
+      # Compile the C code only
+      returncode = sbp.call(["make","libclass.a","-j"], env=env)
+      if returncode!=0:
+        raise RuntimeError("Unknown error occurred -- the Makefile compilation of class failed (return code %i). Run the installation with '-v' and check why this is the case from the makefile command output"%returncode)
+      super().build_extension(ext)
+
+# Finally, perform the actual setup
+setup(
+    name='classy',
+    version=VERSION,
+    description='Python interface to the Cosmological Boltzmann code CLASS',
+    url='http://www.class-code.net',
+    cmdclass={'build_ext': classy_builder},
+    ext_modules=[classy_ext],
+    packages = ["classy"],
+    package_dir={"classy":"."},
+    package_data={'classy': pck_files},
+    include_package_data=True,
+    zip_safe=False
+)
+import numpy as np
+from classy import Class
+
+lcdm = Class()
+lcdm.set({
+    'H0': 67.4, 'omega_b': 0.0224, 'omega_cdm': 0.120,
+    'tau_reio': 0.054, 'A_s': 2.1e-9, 'n_s': 0.965,
+    'output': 'tCl', 'l_max_scalars': 2500
+})
+lcdm.compute()
+cl = lcdm.raw_cl(2500)
+# データをファイルに保存
+np.savez("lcdm_data.npz", ell=cl['ell'], tt=cl['tt'])
+print("✅ LCDMのデータを 'lcdm_data.npz' に保存しました。")
+lcdm.struct_cleanup(); lcdm.empty()import matplotlib.pyplot as plt
+import numpy as np
+from classy import Class
+
+print("🔬 最終診断：A10 + Massive Neutrino の CMB Ratio を確認します...")
+
+# --- 1. 基準となる LCDM ---
+lcdm = Class()
+lcdm.set({'H0': 67.4, 'omega_b': 0.0224, 'omega_cdm': 0.120, 'output': 'tCl', 'l_max_scalars': 2500})
+lcdm.compute()
+cl_l = lcdm.raw_cl(2500)
+ell_l = cl_l['ell'][2:]
+tt_l = cl_l['tt'][2:]
+lcdm.struct_cleanup()
+lcdm.empty()
+
+# --- 2. 黄金の Unified A10 + Neutrino (YAMLのref値) ---
+a10 = Class()
+params_a10 = {
+    '100*theta_s': 1.0411, 'omega_b': 0.0224, 'omega_cdm': 0.117,
+    'tau_reio': 0.054, 'A_s': 2.1e-9, 'n_s': 0.965,
+    'has_unified_a10': 'yes',
+    'ua10_phi_trigger': 1e-4, 'ua10_Delta_phi': 0.8, 'ua10_n_ax': 2.5,
+    'ua10_f_ax': 0.30, 'ua10_V0': 0.03, 'ua10_Gamma0': 0.005,
+    'N_ur': 2.0328, 'N_ncdm': 1, 'm_ncdm': 0.15, 'T_ncdm': 0.71611,
+    'output': 'tCl', 'l_max_scalars': 2500
+}
+a10.set(params_a10)
+a10.compute()
+cl_a = a10.raw_cl(2500)
+tt_a = cl_a['tt'][2:]
+a10.struct_cleanup()
+a10.empty()
+
+# --- 3. Ratio のプロット ---
+limit = min(len(tt_a), len(tt_l))
+ratio = tt_a[:limit] / tt_l[:limit]
+
+plt.figure(figsize=(10, 6))
+plt.plot(ell_l[:limit], ratio, 'm-', lw=2)
+plt.axhline(1.0, color='k', ls='-')
+plt.axhline(1.02, color='r', ls='--', label='+2% Limit')
+plt.axhline(0.98, color='b', ls='--', label='-2% Limit')
+plt.axvspan(1000, 2500, color='gray', alpha=0.1, label='Planck High-l Zone')
+plt.ylim(0.95, 1.05)
+plt.xlim(2, 2500)
+plt.xlabel('Multipole $\ell$')
+plt.ylabel('Ratio $C_\ell^{TT} (A10+\\nu) / C_\ell^{TT} (\Lambda CDM)$')
+plt.title('CMB Power Spectrum Ratio (A10 + $\sum m_\\nu$)')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.savefig("final_cmb_ratio.png", dpi=300)
+print("✅ final_cmb_ratio.png を保存しました！ これをPIに見せましょう。")#!/usr/bin/env python3
+import sys
+from pathlib import Path
+import numpy as np
+import pandas as pd
+
+ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path.home() / "class_hybrid_a10"
+prefix = sys.argv[2] if len(sys.argv) > 2 else "repaired_unified_highH0_narrow"
+chains_dir = ROOT / "chains"
+
+files = sorted(chains_dir.glob(f"{prefix}.[0-9]*.txt"))
+if not files:
+    raise SystemExit(f"No chain files found for prefix {prefix!r} in {chains_dir}")
+
+dfs = []
+for f in files:
+    df = pd.read_csv(f, delim_whitespace=True, comment="#")
+    df["__source_file__"] = f.name
+    dfs.append(df)
+
+df = pd.concat(dfs, ignore_index=True)
+
+required = ["weight", "minuslogpost"]
+for c in required:
+    if c not in df.columns:
+        raise SystemExit(f"Required column missing: {c}")
+
+summary_cols = [
+    "H0", "omega_b", "omega_cdm", "A_s", "n_s", "tau_reio",
+    "log10_ua10_V0", "chi2__BAO", "chi2__CMB", "chi2__SN", "chi2__shoes_H0"
+]
+summary_cols = [c for c in summary_cols if c in df.columns]
+
+w = df["weight"].to_numpy(dtype=float)
+w = np.where(np.isfinite(w) & (w > 0), w, 0.0)
+if w.sum() <= 0:
+    raise SystemExit("Non-positive total weight")
+
+def weighted_quantile(x, w, qs):
+    order = np.argsort(x)
+    x = x[order]
+    w = w[order]
+    cdf = np.cumsum(w)
+    cdf = cdf / cdf[-1]
+    return np.interp(qs, cdf, x)
+
+rows = []
+for col in summary_cols:
+    x = df[col].to_numpy(dtype=float)
+    mask = np.isfinite(x) & np.isfinite(w) & (w > 0)
+    if not mask.any():
+        continue
+    xm = x[mask]
+    wm = w[mask]
+    mean = np.average(xm, weights=wm)
+    var = np.average((xm - mean) ** 2, weights=wm)
+    q16, q50, q84 = weighted_quantile(xm, wm, [0.16, 0.50, 0.84])
+    rows.append({
+        "parameter": col,
+        "weighted_mean": mean,
+        "weighted_std": np.sqrt(var),
+        "q16": q16,
+        "q50": q50,
+        "q84": q84,
+        "minus_q16": q50 - q16,
+        "plus_q84": q84 - q50,
+    })
+
+summary = pd.DataFrame(rows)
+
+best_idx = df["minuslogpost"].astype(float).idxmin()
+best = df.loc[[best_idx]].copy()
+
+out_summary = chains_dir / f"{prefix}.summary.tsv"
+out_best = chains_dir / f"{prefix}.bestpoint.tsv"
+summary.to_csv(out_summary, sep="\t", index=False)
+best.to_csv(out_best, sep="\t", index=False)
+
+print(f"Wrote {out_summary}")
+print(f"Wrote {out_best}")
+print()
+print(summary.to_string(index=False))
+print()
+print("Best point:")
+print(best.to_string(index=False))
+from classy import Class
+import sys
+
+# ベース（共通）設定
+base = {
+    'h': 0.724, 'omega_b': 0.02237, 'omega_cdm': 0.1400,
+    'A_s': 2.1e-9, 'n_s': 0.965, 'tau_reio': 0.054,
+    'gauge': 'newtonian',  # ←★追加！CDMが動くA10には必須の測り方！
+}
+
+# A10とFactor Xの部品
+a10 = {'has_unified_a10': 'yes', 'ua10_f_ax': 0.12, 'ua10_phi_trigger': 0.5}
+tx = {'Omega_fld': 0.042, 'fluid_equation_of_state': 'ua10tx', 'ua10_tx_zt': 0.10, 'ua10_tx_sigma': 0.04, 'ua10_tx_dw': -0.40, 'use_ppf': 'no', 'cs2_fld': 1.0}
+pert = {'output': 'tCl,pCl,lCl,mPk', 'l_max_scalars': 2500, 'P_k_max_1/Mpc': 1.0}
+
+def run_step(step_name, params_dict):
+    print(f"\n--- {step_name} ---")
+    sys.stdout.flush() # 画面にすぐ表示させる
+    cosmo = Class()
+    try:
+        cosmo.set(params_dict)
+        cosmo.compute()
+        print("✅ 成功！")
+    except Exception as e:
+        print(f"❌ エラー: {e}")
+    cosmo.struct_cleanup()
+    cosmo.empty()
+
+print("🚨 衝突地点特定チキンレース開始 🚨")
+
+# Step 1: ハイブリッドで背景膨張だけ計算する（揺らぎ無し）
+p1 = {**base, **a10, **tx}
+run_step("Step 1: ハイブリッド（背景膨張のみ）", p1)
+
+# Step 2: ハイブリッドで揺らぎを計算する（再結合モデルはデフォルト）
+p2 = {**base, **a10, **tx, **pert}
+run_step("Step 2: ハイブリッド（摂動あり・デフォルト再結合）", p2)
+
+# Step 3: ハイブリッドで揺らぎを計算する（recfast指定）
+p3 = {**base, **a10, **tx, **pert, 'recombination': 'recfast'}
+run_step("Step 3: ハイブリッド（摂動あり ＋ recfast指定）", p3)
+
+print("\n🎉 すべてのステップを完走しました！")from classy import Class
+
+# 共通のベースパラメータ
+base_params = {
+    'h': 0.724, 
+    'omega_b': 0.02237, 
+    'omega_cdm': 0.1400,
+    'A_s': 2.1e-9, 
+    'n_s': 0.965, 
+    'tau_reio': 0.054,
+    'output': 'tCl,pCl,lCl,mPk',
+    'l_max_scalars': 2500,
+    'P_k_max_1/Mpc': 1.0,
+}
+
+def run_test(test_name, extra_params):
+    print(f"--- 実行中: {test_name} ---")
+    cosmo = Class()
+    params = base_params.copy()
+    params.update(extra_params)
+    try:
+        cosmo.set(params)
+        cosmo.compute()
+        print(f"✅ {test_name}: 正常クリア！")
+    except Exception as e:
+        print(f"❌ {test_name}: エラーまたはクラッシュ！\n詳細: {e}")
+    
+    cosmo.struct_cleanup()
+    cosmo.empty()
+    print("-" * 40)
+
+# 【容疑者A】 A10 初期ブーストのみON
+params_a10_only = {
+    'has_unified_a10': 'yes',
+    'ua10_f_ax': 0.12, 
+    'ua10_phi_trigger': 0.5,
+}
+
+# 【容疑者B】 Factor X (UA10TX) のみON
+params_tx_only = {
+    'Omega_fld': 0.042,
+    'fluid_equation_of_state': 'ua10tx',
+    'ua10_tx_zt': 0.10,
+    'ua10_tx_sigma': 0.04,
+    'ua10_tx_dw': -0.40,
+    'use_ppf': 'no',
+    'cs2_fld': 1.0,
+}
+
+# 順番にテストを実行
+run_test("容疑者A: A10 初期ブースト単独テスト", params_a10_only)
+run_test("容疑者B: Factor X (UA10TX) 単独テスト", params_tx_only)from classy import Class
+
+cosmo = Class()
+params = {
+    'h': 0.674,
+    'omega_b': 0.02237,
+    'omega_cdm': 0.1200,
+    'A_s': 2.1e-9,
+    'n_s': 0.965,
+    'tau_reio': 0.054,
+    'output': 'tCl'
+}
+
+print("--- 基準テスト：Lambda-CDM ---")
+try:
+    cosmo.set(params)
+    cosmo.compute()
+    print("正常に計算が完了しました。")
+except Exception as e:
+    print("エラー発生:", e)
+
+cosmo.struct_cleanup()
+cosmo.empty()from classy import Class
+
+cosmo = Class()
+params = {
+    # --- 基本パラメータ ---
+    'h': 0.724, 
+    'omega_b': 0.02237, 
+    'omega_cdm': 0.1400, # ChatGPT指摘の高cdm
+    'A_s': 2.1e-9, 
+    'n_s': 0.965, 
+    'tau_reio': 0.054,
+    
+    # --- A10 初期ブースト ---
+    'has_unified_a10': 'yes',
+    'ua10_f_ax': 0.12, 
+    'ua10_phi_trigger': 0.5,
+
+    # --- 乗っ取った公式 fld (Factor X) ---
+    'Omega_fld': 0.042,                 # これが昔の ua10_tx_omega0
+    'fluid_equation_of_state': 'ua10tx',# 新たに定義したUA10TXモード
+    'ua10_tx_zt': 0.10,
+    'ua10_tx_sigma': 0.04,
+    'ua10_tx_dw': -0.40,
+    
+    # --- 摂動(揺らぎ)を安全に計算するための魔法のお守り ---
+    'use_ppf': 'no',                    # 爆弾（不良品）なので OFF！
+    'cs2_fld': 1.0,                     # 音速を光速（1.0）にして揺らぎの発散を防ぐ！
+    'recombination': 'recfast',
+    
+    # 出力設定
+    'output': 'tCl,pCl,lCl,mPk',
+    'l_max_scalars': 2500,
+    'P_k_max_1/Mpc': 1.0,
+}
+
+print("--- A10 ハイブリッド：摂動(Perturbations) 突破テスト ---")
+try:
+    cosmo.set(params)
+    cosmo.compute()
+    print("✅ 大成功！摂動(CMB・物質パワースペクトル)の計算をエラーなしで突破しました！")
+    print(f"H0: {cosmo.h()*100:.2f}")
+    print(f"rs: {cosmo.rs_drag():.2f}")
+except Exception as e:
+    print("❌ エラー発生:")
+    print(e)
+
+cosmo.struct_cleanup()
+cosmo.empty()from classy import Class
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 1. 標準モデル (ΛCDM) の計算
+lcdm = Class()
+lcdm.set({'H0': 67.4, 'Omega_b': 0.0224, 'Omega_cdm': 0.120, 'tau_reio': 0.054, 'output': 'tCl,pCl,lCl'})
+lcdm.compute()
+cl_lcdm = lcdm.raw_cl(2500)
+
+# 2. 吉村流 A10モデル の計算 (ベストフィット値を入力)
+a10 = Class()
+# verify_residual.py の修正
+# verify_residual.py の a10.set 部分を以下のように書き換えてください
+a10.set({
+    'H0': 68.531777,
+    'omega_b': 0.020029673,      # さっきの1行から抜き出した正確な値
+    'omega_cdm': 0.12590406,     # 同上
+    'tau_reio': 0.040045122,     # 同上
+    'ua10_f_ax': 0.099217841,
+    'ua10_V0': 0.026205356,
+    'ua10_Gamma0': 0.013718803,
+    'output': 'tCl,pCl,lCl'
+})
+a10.compute()
+cl_a10 = a10.raw_cl(2500)
+
+# 3. 残差（差分）の計算とプロット
+l = cl_lcdm['ell']
+# 温度ゆらぎの差分を表示 (l(l+1)Cl / 2pi 形式)
+factor = l * (l + 1) / (2 * np.pi)
+residual = (cl_a10['tt'] - cl_lcdm['tt']) * factor
+
+plt.plot(l, residual)
+plt.title("Residual: A10 Model vs Standard Lambda-CDM")
+plt.xlabel("Multipole moment (l)")
+plt.ylabel("Delta Dl_TT [uK^2]")
+plt.grid(True)
+plt.savefig("residual_plot.png")

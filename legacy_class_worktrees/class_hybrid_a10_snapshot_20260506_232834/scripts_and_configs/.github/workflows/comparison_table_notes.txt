@@ -1,0 +1,22 @@
+Comparison table notes template
+
+1. baseline_LCDM_bestfit
+   - use the fair-comparison baseline best-fit under the same external likelihood set
+
+2. legacy_fixed137_representative
+   - use the representative fixed-137 / Run B point
+   - clarify whether this is a chain sample or a local minimum
+
+3. legacy_scan730_representative
+   - use the high-H0 representative from scan_730_unlimit / scan_730_unlimit_v2
+
+4. repaired_unified_narrow_posterior
+   - fill with posterior mean / median / 16-84% values from repaired_unified_highH0_narrow
+
+5. repaired_unified_narrow_bestpoint
+   - fill with the minimum minuslogpost sampled point from repaired_unified_highH0_narrow
+
+6. repaired_unified_narrow_rerun
+   - fill only after the independent rerun finishes
+   - the main criterion is reproducibility of the high-H0 basin:
+     H0 ~ 72.8-73.0, log10V0 ~ -10, chi2_CMB ~ 2840-2850, tiny SHOES penalty
