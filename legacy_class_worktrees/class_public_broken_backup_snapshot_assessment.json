@@ -1,0 +1,311 @@
+{
+  "created_utc": "2026-05-06T14:54:08.233483+00:00",
+  "label": "class_public_broken_backup",
+  "source_snapshot_tar": {
+    "name": "class_public_broken_backup_snapshot_20260506_235118.tar.gz",
+    "sha256": "a3242783560071c1706aa3ac0810c4cf31f76a8b2bd69e242e2a03e69c2740e6",
+    "size_bytes": 423291
+  },
+  "snapshot_file_count": 74,
+  "snapshot_total_size_bytes": 2038253,
+  "worktree_total_size_reported": "879M",
+  "upstream_or_worktree_HEAD": "e85808324f51fc694d12e3ed7439552a3c3f9540",
+  "git_log_1": "e8580832 (HEAD -> master, tag: v3.3.4, origin/master, origin/HEAD) Fixed shoorting bug (negative dx); store Omega_m(z) and Omega_r(z) in background table.",
+  "git_remote": "origin\thttps://github.com/lesgourg/class_public.git (fetch)\norigin\thttps://github.com/lesgourg/class_public.git (push)",
+  "local_diff_info": [
+    {
+      "path": "legacy_class_worktrees/class_public_broken_backup_snapshot_20260506/class_public_broken_backup_local_diff.patch",
+      "size_bytes": 796,
+      "contains_a10_keywords": false,
+      "diff_file_count": 1,
+      "diff_files_preview": [
+        {
+          "a": "source/background.c",
+          "b": "source/background.c"
+        }
+      ]
+    }
+  ],
+  "large_git_artifacts_preview": [
+    {
+      "size_bytes": 841981679,
+      "path": "/home/kei/class_public_broken_backup/.git/objects/pack/pack-5e49e2e09b8ef64a0e788582c6a0cf52cd9aaa32.pack"
+    },
+    {
+      "size_bytes": 878508,
+      "path": "/home/kei/class_public_broken_backup/.git/objects/pack/pack-5e49e2e09b8ef64a0e788582c6a0cf52cd9aaa32.idx"
+    },
+    {
+      "size_bytes": 125400,
+      "path": "/home/kei/class_public_broken_backup/.git/objects/pack/pack-5e49e2e09b8ef64a0e788582c6a0cf52cd9aaa32.rev"
+    },
+    {
+      "size_bytes": 30358,
+      "path": "/home/kei/class_public_broken_backup/.git/index"
+    },
+    {
+      "size_bytes": 4898,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/pre-rebase.sample"
+    },
+    {
+      "size_bytes": 4726,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/fsmonitor-watchman.sample"
+    },
+    {
+      "size_bytes": 4660,
+      "path": "/home/kei/class_public_broken_backup/.git/packed-refs"
+    },
+    {
+      "size_bytes": 3650,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/update.sample"
+    },
+    {
+      "size_bytes": 2783,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/push-to-checkout.sample"
+    },
+    {
+      "size_bytes": 2308,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/sendemail-validate.sample"
+    },
+    {
+      "size_bytes": 1643,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/pre-commit.sample"
+    },
+    {
+      "size_bytes": 1492,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/prepare-commit-msg.sample"
+    },
+    {
+      "size_bytes": 1374,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/pre-push.sample"
+    },
+    {
+      "size_bytes": 896,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/commit-msg.sample"
+    },
+    {
+      "size_bytes": 544,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/pre-receive.sample"
+    },
+    {
+      "size_bytes": 478,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/applypatch-msg.sample"
+    },
+    {
+      "size_bytes": 424,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/pre-applypatch.sample"
+    },
+    {
+      "size_bytes": 416,
+      "path": "/home/kei/class_public_broken_backup/.git/hooks/pre-merge-commit.sample"
+    },
+    {
+      "size_bytes": 269,
+      "path": "/home/kei/class_public_broken_backup/.git/config"
+    },
+    {
+      "size_bytes": 240,
+      "path": "/home/kei/class_public_broken_backup/.git/info/exclude"
+    }
+  ],
+  "large_build_artifacts_preview": [
+    {
+      "size_bytes": 841981679,
+      "path": "/home/kei/class_public_broken_backup/.git/objects/pack/pack-5e49e2e09b8ef64a0e788582c6a0cf52cd9aaa32.pack"
+    },
+    {
+      "size_bytes": 23080779,
+      "path": "/home/kei/class_public_broken_backup/output/a10_s8_test00_background.dat"
+    },
+    {
+      "size_bytes": 11689930,
+      "path": "/home/kei/class_public_broken_backup/external/distortions/Greens_data.dat"
+    },
+    {
+      "size_bytes": 9913880,
+      "path": "/home/kei/class_public_broken_backup/class"
+    },
+    {
+      "size_bytes": 5196968,
+      "path": "/home/kei/class_public_broken_backup/build/lensing.opp"
+    },
+    {
+      "size_bytes": 2402072,
+      "path": "/home/kei/class_public_broken_backup/build/perturbations.opp"
+    },
+    {
+      "size_bytes": 1848912,
+      "path": "/home/kei/class_public_broken_backup/build/hyperspherical.opp"
+    },
+    {
+      "size_bytes": 1662120,
+      "path": "/home/kei/class_public_broken_backup/build/transfer.opp"
+    },
+    {
+      "size_bytes": 1567560,
+      "path": "/home/kei/class_public_broken_backup/build/arrays.opp"
+    },
+    {
+      "size_bytes": 1567248,
+      "path": "/home/kei/class_public_broken_backup/build/hmcode.opp"
+    },
+    {
+      "size_bytes": 1492768,
+      "path": "/home/kei/class_public_broken_backup/build/primordial.opp"
+    },
+    {
+      "size_bytes": 1386552,
+      "path": "/home/kei/class_public_broken_backup/build/harmonic.opp"
+    },
+    {
+      "size_bytes": 1323944,
+      "path": "/home/kei/class_public_broken_backup/build/input.o"
+    },
+    {
+      "size_bytes": 1069275,
+      "path": "/home/kei/class_public_broken_backup/doc/manual/CLASS_MANUAL.pdf"
+    },
+    {
+      "size_bytes": 878508,
+      "path": "/home/kei/class_public_broken_backup/.git/objects/pack/pack-5e49e2e09b8ef64a0e788582c6a0cf52cd9aaa32.idx"
+    },
+    {
+      "size_bytes": 689003,
+      "path": "/home/kei/class_public_broken_backup/external/bbn/sBBN_2025.dat"
+    },
+    {
+      "size_bytes": 546507,
+      "path": "/home/kei/class_public_broken_backup/output/explanatory01_cl.dat"
+    },
+    {
+      "size_bytes": 546507,
+      "path": "/home/kei/class_public_broken_backup/output/explanatory00_cl.dat"
+    },
+    {
+      "size_bytes": 455514,
+      "path": "/home/kei/class_public_broken_backup/output/explanatory01_cl_lensed.dat"
+    },
+    {
+      "size_bytes": 455514,
+      "path": "/home/kei/class_public_broken_backup/output/explanatory00_cl_lensed.dat"
+    },
+    {
+      "size_bytes": 455507,
+      "path": "/home/kei/class_public_broken_backup/output/a10_s8_test00_cl.dat"
+    },
+    {
+      "size_bytes": 422469,
+      "path": "/home/kei/class_public_broken_backup/source/perturbations.c"
+    },
+    {
+      "size_bytes": 404584,
+      "path": "/home/kei/class_public_broken_backup/build/thermodynamics.o"
+    },
+    {
+      "size_bytes": 381832,
+      "path": "/home/kei/class_public_broken_backup/build/output.o"
+    },
+    {
+      "size_bytes": 366893,
+      "path": "/home/kei/class_public_broken_backup/external/HyRec2020/output_xe.dat"
+    },
+    {
+      "size_bytes": 300472,
+      "path": "/home/kei/class_public_broken_backup/build/distortions.o"
+    },
+    {
+      "size_bytes": 287912,
+      "path": "/home/kei/class_public_broken_backup/build/fourier.o"
+    },
+    {
+      "size_bytes": 280864,
+      "path": "/home/kei/class_public_broken_backup/build/background.o"
+    },
+    {
+      "size_bytes": 272000,
+      "path": "/home/kei/class_public_broken_backup/external/HyRec2020/Alpha_inf.dat"
+    },
+    {
+      "size_bytes": 238719,
+      "path": "/home/kei/class_public_broken_backup/source/input.c"
+    }
+  ],
+  "large_data_likelihood_preview": [
+    {
+      "size_bytes": 1453,
+      "path": "/home/kei/class_public_broken_backup/base_2018_plikHM_TTTEEE_lowl_lowE_lensing.ini"
+    },
+    {
+      "size_bytes": 1440,
+      "path": "/home/kei/class_public_broken_backup/base_2015_plikHM_TT_lowTEB_lensing.ini"
+    }
+  ],
+  "keyword_categories": {
+    "ua10_": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "A10": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "repaired_unified": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "phi_trigger": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "log10_ua10": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "SH0ES": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "Pantheon": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "plik": {
+      "count_preview": 3,
+      "preview": [
+        "/home/kei/class_public_broken_backup/base_2015_plikHM_TT_lowTEB_lensing.ini",
+        "/home/kei/class_public_broken_backup/base_2018_plikHM_TTTEEE_lowl_lowE_lensing.ini",
+        "/home/kei/class_public_broken_backup/source/input.c"
+      ]
+    },
+    "BAO": {
+      "count_preview": 23,
+      "preview": [
+        "/home/kei/class_public_broken_backup/cpp/ClassEngine.hh",
+        "/home/kei/class_public_broken_backup/python/classy.pyx",
+        "/home/kei/class_public_broken_backup/scripts/cl_ST.py",
+        "/home/kei/class_public_broken_backup/scripts/warmup.py",
+        "/home/kei/class_public_broken_backup/scripts/varying_pann.py",
+        "/home/kei/class_public_broken_backup/scripts/one_k.py",
+        "/home/kei/class_public_broken_backup/scripts/varying_neff.py",
+        "/home/kei/class_public_broken_backup/scripts/all_code.txt",
+        "/home/kei/class_public_broken_backup/scripts/many_times.py",
+        "/home/kei/class_public_broken_backup/scripts/one_time.py",
+        "/home/kei/class_public_broken_backup/scripts/cltt_terms.py",
+        "/home/kei/class_public_broken_backup/doc/input/chap2.md",
+        "/home/kei/class_public_broken_backup/external/heating/noninjection.c",
+        "/home/kei/class_public_broken_backup/include/precisions.h",
+        "/home/kei/class_public_broken_backup/notebooks/one_time.ipynb",
+        "/home/kei/class_public_broken_backup/notebooks/one_k.ipynb",
+        "/home/kei/class_public_broken_backup/notebooks/warmup.ipynb",
+        "/home/kei/class_public_broken_backup/notebooks/cl_ST.ipynb",
+        "/home/kei/class_public_broken_backup/notebooks/cltt_terms.ipynb",
+        "/home/kei/class_public_broken_backup/notebooks/varying_neff.ipynb",
+        "/home/kei/class_public_broken_backup/notebooks/many_times.ipynb",
+        "/home/kei/class_public_broken_backup/notebooks/varying_pann.ipynb",
+        "/home/kei/class_public_broken_backup/source/thermodynamics.c"
+      ]
+    }
+  },
+  "interpretation": "class_public_broken_backup is a broken/backup CLASS worktree snapshot. It is preserved only as cleanup provenance, not as a primary A10 cosmology reproducibility source.",
+  "cleanup_status": "snapshot_protected; original full folder can be moved to cleanup_candidates and later deleted after review."
+}

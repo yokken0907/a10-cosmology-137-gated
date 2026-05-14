@@ -1,0 +1,293 @@
+{
+  "created_utc": "2026-05-06T14:54:06.936934+00:00",
+  "label": "class_public_broken",
+  "source_snapshot_tar": {
+    "name": "class_public_broken_snapshot_20260506_235112.tar.gz",
+    "sha256": "dc4d2f5cad84657c5962a3a96022ab6ad203c11e707166661bb9845b6e9be164",
+    "size_bytes": 783155
+  },
+  "snapshot_file_count": 202,
+  "snapshot_total_size_bytes": 3364830,
+  "worktree_total_size_reported": "1.7G",
+  "upstream_or_worktree_HEAD": "e85808324f51fc694d12e3ed7439552a3c3f9540",
+  "git_log_1": "e8580832 (HEAD -> master, tag: v3.3.4, origin/master, origin/HEAD) Fixed shoorting bug (negative dx); store Omega_m(z) and Omega_r(z) in background table.",
+  "git_remote": "origin\thttps://github.com/lesgourg/class_public.git (fetch)\norigin\thttps://github.com/lesgourg/class_public.git (push)",
+  "local_diff_info": [
+    {
+      "path": "legacy_class_worktrees/class_public_broken_snapshot_20260506/class_public_broken_local_diff.patch",
+      "size_bytes": 1050491,
+      "contains_a10_keywords": false,
+      "diff_file_count": 7,
+      "diff_files_preview": [
+        {
+          "a": "explanatory.ini",
+          "b": "explanatory.ini"
+        },
+        {
+          "a": "include/background.h",
+          "b": "include/background.h"
+        },
+        {
+          "a": "output/explanatory00_cl.dat",
+          "b": "output/explanatory00_cl.dat"
+        },
+        {
+          "a": "output/explanatory00_cl_lensed.dat",
+          "b": "output/explanatory00_cl_lensed.dat"
+        },
+        {
+          "a": "output/explanatory00_parameters.ini",
+          "b": "output/explanatory00_parameters.ini"
+        },
+        {
+          "a": "output/explanatory00_pk.dat",
+          "b": "output/explanatory00_pk.dat"
+        },
+        {
+          "a": "source/background.c",
+          "b": "source/background.c"
+        }
+      ]
+    }
+  ],
+  "large_git_artifacts_preview": [
+    {
+      "size_bytes": 841980762,
+      "path": "/home/kei/class_public_broken/.git/objects/pack/pack-614b7970677217703b1be58ab527b070d88dc5c7.pack"
+    },
+    {
+      "size_bytes": 878508,
+      "path": "/home/kei/class_public_broken/.git/objects/pack/pack-614b7970677217703b1be58ab527b070d88dc5c7.idx"
+    },
+    {
+      "size_bytes": 125400,
+      "path": "/home/kei/class_public_broken/.git/objects/pack/pack-614b7970677217703b1be58ab527b070d88dc5c7.rev"
+    },
+    {
+      "size_bytes": 30358,
+      "path": "/home/kei/class_public_broken/.git/index"
+    }
+  ],
+  "large_build_artifacts_preview": [
+    {
+      "size_bytes": 841980762,
+      "path": "/home/kei/class_public_broken/.git/objects/pack/pack-614b7970677217703b1be58ab527b070d88dc5c7.pack"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory43_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory42_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory41_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory40_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory37_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory36_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory35_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory34_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory32_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory31_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory30_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory24_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory23_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory22_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory21_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory20_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory19_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory18_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory17_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory16_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory15_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory14_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/explanatory13_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/YOSHIMURA_TEST_03_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/YOSHIMURA_TEST_02_background.dat"
+    },
+    {
+      "size_bytes": 25080829,
+      "path": "/home/kei/class_public_broken/output/YOSHIMURA_TEST_01_background.dat"
+    },
+    {
+      "size_bytes": 23080779,
+      "path": "/home/kei/class_public_broken/A10_test_result_final_01_background.dat"
+    },
+    {
+      "size_bytes": 21187074,
+      "path": "/home/kei/class_public_broken/libclass.a"
+    },
+    {
+      "size_bytes": 21080729,
+      "path": "/home/kei/class_public_broken/output/test_01_background.dat"
+    }
+  ],
+  "large_data_likelihood_preview": [],
+  "keyword_categories": {
+    "ua10_": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "A10": {
+      "count_preview": 56,
+      "preview": [
+        "/home/kei/class_public_broken/A10_test_result_01_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_06_unused_parameters",
+        "/home/kei/class_public_broken/output/A10_test_final_10_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_00_unused_parameters",
+        "/home/kei/class_public_broken/output/A10_test_final_04_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_12_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_00_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_03_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_00_parameters.ini",
+        "/home/kei/class_public_broken/output/yoshimura_A10_v1_01_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_01_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_10_unused_parameters",
+        "/home/kei/class_public_broken/output/A10_test_final_18_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_04_unused_parameters",
+        "/home/kei/class_public_broken/output/A10_test_final_03_unused_parameters",
+        "/home/kei/class_public_broken/output/A10_test_final_05_unused_parameters",
+        "/home/kei/class_public_broken/output/A10_test_final_11_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_16_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_13_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_02_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_08_unused_parameters",
+        "/home/kei/class_public_broken/output/A10_test_final_07_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_09_unused_parameters",
+        "/home/kei/class_public_broken/output/yoshimura_A10_v1_00_parameters.ini",
+        "/home/kei/class_public_broken/output/A10_test_final_02_unused_parameters"
+      ]
+    },
+    "repaired_unified": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "phi_trigger": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "log10_ua10": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "SH0ES": {
+      "count_preview": 0,
+      "preview": []
+    },
+    "Pantheon": {
+      "count_preview": 2,
+      "preview": [
+        "/home/kei/class_public_broken/plot_test/yoshimura_jxiv_submission/manuscript_A10.md",
+        "/home/kei/class_public_broken/plot_test/yoshimura_results/A10_Technical_Note.txt"
+      ]
+    },
+    "plik": {
+      "count_preview": 3,
+      "preview": [
+        "/home/kei/class_public_broken/base_2015_plikHM_TT_lowTEB_lensing.ini",
+        "/home/kei/class_public_broken/base_2018_plikHM_TTTEEE_lowl_lowE_lensing.ini",
+        "/home/kei/class_public_broken/source/input.c"
+      ]
+    },
+    "BAO": {
+      "count_preview": 25,
+      "preview": [
+        "/home/kei/class_public_broken/cpp/ClassEngine.hh",
+        "/home/kei/class_public_broken/python/classy.cpp",
+        "/home/kei/class_public_broken/python/classy.pyx",
+        "/home/kei/class_public_broken/scripts/cl_ST.py",
+        "/home/kei/class_public_broken/scripts/warmup.py",
+        "/home/kei/class_public_broken/scripts/varying_pann.py",
+        "/home/kei/class_public_broken/scripts/one_k.py",
+        "/home/kei/class_public_broken/scripts/varying_neff.py",
+        "/home/kei/class_public_broken/scripts/many_times.py",
+        "/home/kei/class_public_broken/scripts/one_time.py",
+        "/home/kei/class_public_broken/scripts/cltt_terms.py",
+        "/home/kei/class_public_broken/doc/input/chap2.md",
+        "/home/kei/class_public_broken/external/heating/noninjection.c",
+        "/home/kei/class_public_broken/include/precisions.h",
+        "/home/kei/class_public_broken/notebooks/one_time.ipynb",
+        "/home/kei/class_public_broken/notebooks/one_k.ipynb",
+        "/home/kei/class_public_broken/notebooks/warmup.ipynb",
+        "/home/kei/class_public_broken/notebooks/cl_ST.ipynb",
+        "/home/kei/class_public_broken/notebooks/cltt_terms.ipynb",
+        "/home/kei/class_public_broken/notebooks/varying_neff.ipynb",
+        "/home/kei/class_public_broken/notebooks/many_times.ipynb",
+        "/home/kei/class_public_broken/notebooks/varying_pann.ipynb",
+        "/home/kei/class_public_broken/source/thermodynamics.c",
+        "/home/kei/class_public_broken/plot_test/yoshimura_jxiv_submission/manuscript_A10.md",
+        "/home/kei/class_public_broken/plot_test/yoshimura_results/A10_Technical_Note.txt"
+      ]
+    }
+  },
+  "interpretation": "class_public_broken is a broken/backup CLASS worktree snapshot. It is preserved only as cleanup provenance, not as a primary A10 cosmology reproducibility source.",
+  "cleanup_status": "snapshot_protected; original full folder can be moved to cleanup_candidates and later deleted after review."
+}
