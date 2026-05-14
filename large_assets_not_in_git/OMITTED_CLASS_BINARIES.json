@@ -1,0 +1,15 @@
+{
+  "class": {
+    "sha256": "95b90def4c3a7eae0ef5b96beac6e0651ad5dd86a7d20267adb8570b07c7f128",
+    "size_bytes": 9941112,
+    "reason": "Compiled ELF executable omitted from GitHub-ready source repository."
+  },
+  "_classy.cpython-312-x86_64-linux-gnu.so": {
+    "sha256": "d6ab26d715d7dea21906a54ee62438980bdd18453ee5837a65ba302b0b7fc3a2",
+    "size_bytes": 15452360,
+    "reason": "Compiled Python extension omitted from GitHub-ready source repository."
+  },
+  ".git": {
+    "reason": "Local git history omitted. Create a fresh GitHub repository instead of uploading local .git."
+  }
+}

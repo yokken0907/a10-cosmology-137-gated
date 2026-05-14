@@ -1,0 +1,31 @@
+{
+  "created_utc": "2026-05-06T11:29:12.584021+00:00",
+  "assessment": "These files do not identify an exact upstream CLASS commit. The CLASS manual is useful context for approximate vintage; git hook samples are not useful for reproducibility.",
+  "files": {
+    "CLASS_MANUAL.pdf": {
+      "sha256": "ed39459dc63c60b35c46be7131e80bbdf61e12468a643e0aee48dc42e574431e",
+      "size_bytes": 1069275,
+      "classification": "reference_only_do_not_commit_full_pdf"
+    },
+    "pre-merge-commit.sample": {
+      "sha256": "d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53",
+      "size_bytes": 416,
+      "classification": "generic_git_hook_sample_do_not_use"
+    },
+    "prepare-commit-msg.sample": {
+      "sha256": "e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619",
+      "size_bytes": 1492,
+      "classification": "generic_git_hook_sample_do_not_use"
+    },
+    "commit-msg.sample": {
+      "sha256": "1f74d5e9292979b573ebd59741d46cb93ff391acdd083d340b94370753d92437",
+      "size_bytes": 896,
+      "classification": "generic_git_hook_sample_do_not_use"
+    },
+    "pre-commit.sample": {
+      "sha256": "f9af7d95eb1231ecf2eba9770fedfa8d4797a12b02d7240e98d568201251244a",
+      "size_bytes": 1643,
+      "classification": "generic_git_hook_sample_do_not_use"
+    }
+  }
+}
