@@ -1,0 +1,36 @@
+ M explanatory.ini
+ M include/background.h
+ D output/explanatory00_cl.dat
+ D output/explanatory00_cl_lensed.dat
+ M output/explanatory00_parameters.ini
+ D output/explanatory00_pk.dat
+ M source/background.c
+?? A10_test_result_00_cl.dat
+?? A10_test_result_00_pk.dat
+?? A10_test_result_00_tk.dat
+?? A10_test_result_00_unused_parameters
+?? A10_test_result_01_unused_parameters
+?? A10_test_result_02_unused_parameters
+?? A10_test_result_03_unused_parameters
+?? A10_test_result_04_unused_parameters
+?? A10_test_result_final_00_unused_parameters
+?? A10_test_result_final_01_background.dat
+?? A10_test_result_final_01_unused_parameters
+?? classy.egg-info/
+?? draw_only.py
+?? grid_run.py
+?? my_backup.txt
+?? patch_yoshimura_a9.py
+?? plot_cl.py
+?? plot_final.py
+?? plot_test/
+?? plot_theory.py
+?? std_00_cl.dat
+?? std_01_cl.dat
+?? std_02_cl.dat
+?? std_03_cl.dat
+?? yoshi_00_cl.dat
+?? yoshi_01_cl.dat
+?? yoshi_02_cl.dat
+?? yoshi_03_cl.dat
+?? yoshimura_theory_plot.png
