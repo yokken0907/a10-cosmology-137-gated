@@ -1,0 +1,33 @@
+theory:
+  classy:
+    path: /home/kei/class_a10_2f
+    extra_args:
+      has_a10_2f: 'yes'
+      lensing: 'yes'
+      non_linear: hmcode
+likelihood:
+  planck_2018_lowl.TT: null
+  planck_2018_lowl.EE: null
+params:
+  h: 0.6736
+  omega_b: 0.02237
+  omega_cdm: 0.12
+  tau_reio: 0.0544
+  n_s: 0.9649
+  logA:
+    prior:
+      min: 1.61
+      max: 3.91
+    ref: 3.044
+    proposal: 0.014
+    drop: true
+  A_s:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+  a10_fede_peak: 0.1
+  a10_log10zc: 3.5
+  a10_dlogatrig: 0.1
+  a10_npost: 2.0
+  a10_xi137: 137.036
+sampler:
+  evaluate: null
+output: a10_2f_ef

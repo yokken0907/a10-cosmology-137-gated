@@ -1,0 +1,124 @@
+theory:
+  classy:
+    path: /home/kei/class_a10_2f
+    speed: 0.2
+    stop_at_error: false
+    extra_args:
+      has_a10_2f: 'yes'
+      lensing: 'yes'
+      non_linear: hmcode
+    ignore_obsolete: false
+    renames:
+      As: A_s
+      ns: n_s
+      nrun: alpha_s
+      nrunrun: beta_s
+      nt: n_t
+      ntrun: alpha_t
+      rdrag: rs_drag
+      omegak: Omega_k
+      omegal: Omega_Lambda
+      w: w0_fld
+      wa: wa_fld
+      omegabh2: omega_b
+      omegab: Omega_b
+      omegach2: omega_cdm
+      omegac: Omega_cdm
+      omegam: Omega_m
+      omegan: Omega_nu
+      tau: tau_reio
+      zrei: z_reio
+      deltazrei: reionization_width
+      helium_redshift: helium_fullreio_redshift
+      helium_delta_redshift: helium_fullreio_width
+      yhe: YHe
+      yheused: YHe
+    version: v3.3.4
+    input_params:
+    - h
+    - omega_b
+    - omega_cdm
+    - tau_reio
+    - n_s
+    - A_s
+    - a10_fede_peak
+    - a10_log10zc
+    - a10_dlogatrig
+    - a10_npost
+    - a10_xi137
+    output_params: []
+likelihood:
+  planck_2018_lowl.TT:
+    lmin: 2
+    lmax: 29
+    type: CMB
+    aliases:
+    - lowT
+    speed: -1
+    stop_at_error: false
+    version: null
+    input_params: []
+    output_params: []
+  planck_2018_lowl.EE:
+    type: CMB
+    aliases:
+    - lowE
+    speed: -1
+    stop_at_error: false
+    version: null
+    input_params: []
+    output_params: []
+params:
+  h:
+    value: 0.6736
+  omega_b:
+    value: 0.02237
+    renames:
+    - omegabh2
+  omega_cdm:
+    value: 0.12
+    renames:
+    - omegach2
+  tau_reio:
+    value: 0.0544
+    renames:
+    - tau
+  n_s:
+    value: 0.9649
+    renames:
+    - ns
+  logA:
+    prior:
+      min: 1.61
+      max: 3.91
+    ref: 3.044
+    proposal: 0.014
+    drop: true
+  A_s:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+    derived: true
+    renames:
+    - As
+  a10_fede_peak:
+    value: 0.1
+  a10_log10zc:
+    value: 3.5
+  a10_dlogatrig:
+    value: 0.1
+  a10_npost:
+    value: 2.0
+  a10_xi137:
+    value: 137.036
+  chi2__CMB:
+    latex: \chi^2_\mathrm{CMB}
+    derived: true
+sampler:
+  evaluate:
+    sampler_type: uncorrelated
+    N: 1
+    override: null
+    seed: null
+    version: null
+    supports_periodic_params: false
+output: a10_2f_ef
+version: 3.6.1

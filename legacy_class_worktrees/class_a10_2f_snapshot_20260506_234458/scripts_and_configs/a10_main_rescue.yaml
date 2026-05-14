@@ -1,0 +1,75 @@
+theory:
+  classy:
+    path: /home/kei/class_hybrid_a10
+    extra_args:
+      non_linear: 'halofit'
+      N_ncdm: 1
+      N_ur: 2.0328
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+
+params:
+  # --- 基本宇宙論パラメータ (別動体の成功に基づき初期位置を最適化) ---
+  H0:
+    prior: [60, 80]
+    ref: 68.2
+    proposal: 0.1  # 探索幅を狭めて確実に歩を進める
+  omega_b:
+    prior: [0.02, 0.025]
+    ref: 0.0224
+    proposal: 0.0001
+  omega_cdm:
+    prior: [0.10, 0.14]
+    ref: 0.120
+    proposal: 0.0005
+  A_s:
+    prior: [1.5e-9, 3.0e-9]
+    ref: 2.1e-9
+    proposal: 0.02e-9
+  n_s:
+    prior: [0.92, 1.0]
+    ref: 0.965
+    proposal: 0.002
+  tau_reio:
+    prior: [0.04, 0.08]
+    ref: 0.054
+    proposal: 0.002
+
+  m_ncdm: 0.06
+
+  # --- A10 スカラー場パラメータ (137ゲートを精密にスキャンする設定) ---
+  ua10_f_ax:
+    prior: [0.001, 0.2]
+    ref: 0.012
+    proposal: 0.002 # 浮力を慎重に測定
+  ua10_V0:
+    prior: [0.001, 0.1]
+    ref: 0.01
+    proposal: 0.002
+  ua10_Gamma0:
+    prior: [0.001, 0.05]
+    ref: 0.001
+    proposal: 0.0002
+  ua10_phi_trigger:
+    prior: [135, 140] # 門の周辺に集中させる
+    ref: 137.036     # UFTの核心定数
+    proposal: 0.01   # 1.9倍されても0.019。これなら門を外さない
+  ua10_n_ax: 2.5
+
+sampler:
+  mcmc:
+    drag: true
+    oversample_power: 0.4
+    # ここが最重要：ジャンプの歩幅を小さくし、採択率を20%付近まで引き上げる
+    proposal_scale: 0.8 
+    covmat: auto
+    Rminus1_stop: 0.01 # より厳密な収束を要求
+    burn_in: 200      # 最初の200個は行列学習に使う
+    max_tries: 10000   # 失敗しても粘り強く試行させる
+
+output: chains/a10_main_rescue

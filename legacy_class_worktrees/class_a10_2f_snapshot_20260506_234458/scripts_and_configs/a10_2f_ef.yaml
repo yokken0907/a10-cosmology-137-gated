@@ -1,0 +1,39 @@
+theory:
+  classy:
+    path: /home/kei/class_a10_2f
+    extra_args:
+      has_a10_2f: 'yes'  # 一旦モデルを完全にオフにする
+      lensing: 'yes'
+      non_linear: 'hmcode'
+      #parallel: 'no'
+
+params:
+  h: 0.6736
+  omega_b: 0.02237
+  omega_cdm: 0.12
+  tau_reio: 0.0544
+  n_s: 0.9649
+  # A_s の変換処理はそのまま残す
+  logA:
+    prior:
+      min: 1.61
+      max: 3.91
+    ref: 3.044
+    proposal: 0.014
+    drop: true
+  A_s:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+
+  # --- 以下の A10 モデル用パラメータを追記 ---
+  a10_fede_peak: 0.1      # 例：ピーク時の f_ede 値（0より大きい値）
+  a10_log10zc: 3.5        # 例：相転移時期の z_c の log10
+  a10_dlogatrig: 0.1
+  a10_npost: 2.0
+  a10_xi137: 137.036
+
+likelihood:
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+
+sampler:
+  evaluate:
