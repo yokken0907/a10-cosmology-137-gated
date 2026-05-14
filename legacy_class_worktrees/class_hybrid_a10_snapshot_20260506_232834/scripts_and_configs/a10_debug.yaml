@@ -1,0 +1,33 @@
+theory:
+  classy:
+    extra_args:
+      non_linear: 'halofit'
+      N_ncdm: 1
+      N_ur: 2.0328
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+
+params:
+  # すべて固定値にして、1点だけを計算させます
+  H0: 67.5
+  omega_b: 0.0224
+  omega_cdm: 0.120
+  A_s: 2.1e-9
+  n_s: 0.965
+  tau_reio: 0.054
+  m_ncdm: 0.06
+  ua10_f_ax: 0.01
+  ua10_V0: 0.01
+  ua10_Gamma0: 0.005
+  ua10_phi_trigger: 1e-4
+  ua10_n_ax: 2.5
+
+sampler:
+  evaluate:
+
+output: chains/a10_debug
