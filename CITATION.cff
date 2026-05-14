@@ -1,11 +1,11 @@
 cff-version: 1.2.0
 message: "If you use these materials, please cite the corresponding 
 Jxiv preprint once the DOI is available."
-title: "A10 Cosmology 137-Gated"
 authors:
   - family-names: Yoshimura
     given-names: Keiji
     affiliation: Independent Researcher
+title: "A10 Cosmology 137-Gated"
 version: "v0.1.1-public-gate"
 date-released: "2026-05-07"
 abstract: "AI-assisted independent research archive for the A10 137-gated cosmology candidate mechanism relevant to the Hubble tension."
