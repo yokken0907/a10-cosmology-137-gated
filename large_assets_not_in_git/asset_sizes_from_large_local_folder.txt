@@ -1,7 +1,0 @@
-=== size check ===
-1.7M	source
-484K	include
-4.1M	python
-89M	packages/data/planck_2018
-4.0K	repaired_unified_highH0_narrow_rerun.yaml
-4.0K	repaired_unified_highH0_narrow_rerun_run.sh
