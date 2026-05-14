@@ -1,0 +1,8 @@
+=== Best ΔN_eff-equivalent run ===
+run = run_Neff3.20_h0.700
+score = 245.2337
+N_eff = 3.2
+H0 = 70.0
+100theta_s = 1.048183
+z_reio = 7.651108
+z_d = 1059.904971
