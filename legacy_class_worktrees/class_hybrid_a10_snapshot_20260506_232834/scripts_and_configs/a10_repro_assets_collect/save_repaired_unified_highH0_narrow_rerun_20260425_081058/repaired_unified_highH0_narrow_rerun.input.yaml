@@ -1,0 +1,234 @@
+theory:
+  classy:
+    path: .
+    extra_args:
+      non_linear: halofit
+      N_ncdm: 1
+      N_ur: 2.0328
+      has_unified_a10: 'yes'
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+    path: null
+    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik
+    prior:
+      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'
+  planck_2018_lowl.TT: null
+  planck_2018_lowl.EE: null
+  bao.sdss_dr12_consensus_bao: null
+  sn.pantheonplus: null
+  shoes_H0:
+    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+    requires:
+    - H0
+params:
+  H0:
+    prior:
+      min: 72.6
+      max: 73.3
+    ref: 72.92
+    proposal: 0.03
+  omega_b:
+    prior:
+      min: 0.0231
+      max: 0.0239
+    ref: 0.0233
+    proposal: 3.0e-05
+  omega_cdm:
+    prior:
+      min: 0.1076
+      max: 0.1089
+    ref: 0.10872
+    proposal: 7.0e-05
+  A_s:
+    prior:
+      min: 2.0e-09
+      max: 2.24e-09
+    ref: 2.12e-09
+    proposal: 1.0e-11
+  n_s:
+    prior:
+      min: 0.991
+      max: 1.0025
+    ref: 0.996
+    proposal: 0.0007
+  tau_reio:
+    prior:
+      min: 0.066
+      max: 0.0765
+    ref: 0.0705
+    proposal: 0.0009
+  log10_ua10_V0:
+    prior:
+      min: -10.6
+      max: -9.0
+    ref: -10.1
+    proposal: 0.08
+    drop: true
+  ua10_V0:
+    value: 'lambda log10_ua10_V0: 10**log10_ua10_V0'
+  ua10_phi_trigger: 137.90903
+  ua10_f_ax: 0.11552662
+  ua10_Gamma0: 0.047755317
+  ua10_n_ax: 2.5
+  A_planck:
+    prior:
+      min: 0.995
+      max: 1.008
+    ref: 1.003
+    proposal: 0.0008
+  calib_100T:
+    prior:
+      min: 0.996
+      max: 1.002
+    ref: 0.998
+    proposal: 0.0005
+  calib_217T:
+    prior:
+      min: 0.99
+      max: 0.997
+    ref: 0.995
+    proposal: 0.0007
+  A_cib_217:
+    prior:
+      min: 25
+      max: 60
+    ref: 45.0
+    proposal: 1.5
+  xi_sz_cib:
+    prior:
+      min: 0.2
+      max: 0.8
+    ref: 0.55
+    proposal: 0.04
+  A_sz:
+    prior:
+      min: 4.0
+      max: 10.5
+    ref: 5.8
+    proposal: 0.25
+  ksz_norm:
+    prior:
+      min: 0.0
+      max: 1.5
+    ref: 0.55
+    proposal: 0.08
+  gal545_A_100:
+    prior:
+      min: 6.0
+      max: 13.0
+    ref: 9.5
+    proposal: 0.4
+  gal545_A_143:
+    prior:
+      min: 11.0
+      max: 18.0
+    ref: 14.5
+    proposal: 0.4
+  gal545_A_143_217:
+    prior:
+      min: 9.0
+      max: 17.0
+    ref: 15.0
+    proposal: 0.5
+  gal545_A_217:
+    prior:
+      min: 60.0
+      max: 90.0
+    ref: 84.0
+    proposal: 1.2
+  A_sbpx_100_100_TT: 1.0
+  A_sbpx_143_143_TT: 1.0
+  A_sbpx_143_217_TT: 1.0
+  A_sbpx_217_217_TT: 1.0
+  ps_A_100_100:
+    prior:
+      min: 200
+      max: 280
+    ref: 235.0
+    proposal: 4.0
+  ps_A_143_143:
+    prior:
+      min: 20
+      max: 45
+    ref: 34.0
+    proposal: 1.5
+  ps_A_143_217:
+    prior:
+      min: 34
+      max: 58
+    ref: 43.0
+    proposal: 1.5
+  ps_A_217_217:
+    prior:
+      min: 105
+      max: 150
+    ref: 120.0
+    proposal: 2.5
+  galf_TE_index: -2.4
+  galf_TE_A_100:
+    prior:
+      min: 0.1
+      max: 0.28
+    ref: 0.13
+    proposal: 0.01
+  galf_TE_A_100_143:
+    prior:
+      min: 0.03
+      max: 0.12
+    ref: 0.06
+    proposal: 0.006
+  galf_TE_A_100_217:
+    prior:
+      min: 0.38
+      max: 0.6
+    ref: 0.49
+    proposal: 0.015
+  galf_TE_A_143:
+    prior:
+      min: 0.0
+      max: 0.08
+    ref: 0.05
+    proposal: 0.006
+  galf_TE_A_143_217:
+    prior:
+      min: 0.2
+      max: 0.5
+    ref: 0.36
+    proposal: 0.02
+  galf_TE_A_217:
+    prior:
+      min: 1.2
+      max: 2.0
+    ref: 1.7
+    proposal: 0.04
+  A_pol: 1.0
+  calib_100P: 1.021
+  calib_143P: 0.966
+  calib_217P: 1.04
+  cib_index: -1.3
+  galf_EE_index: -2.4
+  galf_EE_A_100: 0.055
+  galf_EE_A_100_143: 0.04
+  galf_EE_A_100_217: 0.094
+  galf_EE_A_143: 0.086
+  galf_EE_A_143_217: 0.21
+  galf_EE_A_217: 0.7
+  A_cnoise_e2e_100_100_EE: 1.0
+  A_cnoise_e2e_143_143_EE: 1.0
+  A_cnoise_e2e_217_217_EE: 1.0
+  A_sbpx_100_100_EE: 1.0
+  A_sbpx_100_143_EE: 1.0
+  A_sbpx_100_217_EE: 1.0
+  A_sbpx_143_143_EE: 1.0
+  A_sbpx_143_217_EE: 1.0
+  A_sbpx_217_217_EE: 1.0
+sampler:
+  mcmc:
+    covmat: auto
+    max_tries: 4000
+    Rminus1_stop: 0.05
+    Rminus1_cl_stop: 0.1
+    burn_in: 0
+    learn_every: 40d
+output: repaired_unified_highH0_narrow_rerun
+stop_at_error: false
