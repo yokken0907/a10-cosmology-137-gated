@@ -1,0 +1,2 @@
+origin	https://github.com/lesgourg/class_public.git (fetch)
+origin	https://github.com/lesgourg/class_public.git (push)

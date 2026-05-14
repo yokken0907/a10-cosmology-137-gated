@@ -1,0 +1,167 @@
+# Provenance
+
+target=/home/kei/class_a10_2f
+label=class_a10_2f
+generated=2026-05-06T23:44:58+09:00
+
+## du
+2.6G	/home/kei/class_a10_2f
+
+## git
+e85808324f51fc694d12e3ed7439552a3c3f9540
+e8580832 (HEAD -> master, tag: v3.3.4, origin/master, origin/HEAD) Fixed shoorting bug (negative dx); store Omega_m(z) and Omega_r(z) in background table.
+origin	https://github.com/lesgourg/class_public.git (fetch)
+origin	https://github.com/lesgourg/class_public.git (push)
+ M include/background.h
+ M include/perturbations.h
+ D output/explanatory00_cl.dat
+ D output/explanatory00_cl_lensed.dat
+ D output/explanatory00_pk.dat
+ M source/background.c
+ M source/input.c
+ M source/perturbations.c
+?? 137_gate_evolution.png
+?? The_Final_Universe.png
+?? The_Final_Universe.py
+?? _classy.cpython-312-x86_64-linux-gnu.so
+?? a10_2f_ef.input.yaml
+?? a10_2f_ef.input.yaml.locked
+?? a10_2f_ef.updated.yaml
+?? a10_2f_ef.yaml
+?? a10_2f_ef_safe.yaml
+?? a10_bao_run.1.txt
+?? a10_bao_run.checkpoint
+?? a10_bao_run.converge
+?? a10_bao_run.corr
+?? a10_bao_run.covmat
+?? a10_bao_run.input.yaml
+?? a10_bao_run.input.yaml.locked
+?? a10_bao_run.likestats
+?? a10_bao_run.log
+?? a10_bao_run.margestats
+?? a10_bao_run.progress
+?? a10_bao_run.updated.yaml
+?? a10_bao_test.input.yaml
+?? a10_debug.yaml
+?? a10_env/
+?? a10_main_rescue.converge
+?? a10_main_rescue.corr
+?? a10_main_rescue.covmat
+?? a10_main_rescue.likestats
+?? a10_main_rescue.log
+?? a10_main_rescue.log.BAK
+?? a10_main_rescue.margestats
+?? a10_main_rescue.yaml
+?? a10_phase4_shoes.yaml
+?? a10_prod_run.2.txt.bak
+?? a10_prod_run.converge
+?? a10_prod_run.corr
+?? a10_prod_run.covmat
+?? a10_prod_run.likestats
+?? a10_prod_run.margestats
+?? a10_production.yaml
+?? a10_profile_68.yaml
+?? a10_profile_69.yaml
+?? a10_profile_70.yaml
+?? a10_profile_71.yaml
+?? a10_profile_72.yaml
+?? a10_profile_73.yaml
+?? a10_rescue.yaml
+?? a10_safe_plot.png
+?? a10_scout_H0_72.yaml
+?? a10_single_victory.png
+?? a10_test_00_background.dat
+?? a10_test_00_cl.dat
+?? a10_test_00_pk.dat
+?? a10_test_00_tk.dat
+?? a10_triangle_plot.png
+?? a10_wp0.yaml
+?? a10_wp0_valley.converge
+?? a10_wp0_valley.corr
+?? a10_wp0_valley.covmat
+?? a10_wp0_valley.likestats
+?? a10_wp0_valley.margestats
+?? all_code.txt
+?? analyze_gate.py
+?? analyze_matter.py
+?? auto_fix.py
+?? auto_test_a10.py
+?? build_error.log
+?? chains/
+?? check_73.py
+?? classy.egg-info/
+?? cmb_comparison.png
+?? cmb_spectrum_a10.png
+?? cmb_validation_golden_model.py
+?? cobaya_packages/
+?? compare_cmb.py
+?? daf
+?? debug_a10_point.py
+?? diagnostic_final_ignition.png
+?? diagnostic_rs_ignition.png
+?? diagnostic_rs_single.png
+?? diagnostic_true_mountain.png
+?? final_audit.py
+?? fix_class_args.py
+?? fix_segfault_a10.py
+?? fix_yaml.py
+?? free_a10_parser.py
+?? full_debug_log.txt
+?? generate_a10_only.py
+?? get_bestfit.py
+?? hybrid_a10_tx_run.1.txt
+?? hybrid_a10_tx_run.checkpoint
+?? hybrid_a10_tx_run.covmat
+?? hybrid_a10_tx_run.input.yaml
+?? hybrid_a10_tx_run.progress
+?? hybrid_a10_tx_run.updated.yaml
+?? hybrid_spectra_comparison.png
+?? hybrid_v2.yaml
+?? include/background.h.a10_bak
+?? lcdm_data.npz
+?? matter_analysis.png
+?? my_old_classy_script.py
+?? packages/
+?? plot_a10.py
+?? plot_background.py
+?? plot_cmb.py
+?? plot_hybrid_spectra.py
+?? python/classy.egg-info/
+?? remove_drop.py
+?? rescue_a10.py
+?? residual_plot.png
+?? rs_evolution.png
+?? run_a10_final.py
+?? run_a10_h0_free.py
+?? run_a10_success.py
+?? run_ratio_test.py
+?? sanity_check.png
+?? scan_jacobian.py
+?? scan_residual.py
+?? scientific_analysis.png
+?? step1_lcdm.py
+?? step2_a10_ratio.py
+?? test_H0_70.19.png
+?? test_H0_72.69.png
+?? test_H0_73.26.png
+?? test_H0_73.83.png
+?? test_H0_74.47.png
+?? test_H0_75.94.png
+?? test_a10.py
+?? test_a10_evaluation.py
+?? test_a10_final.py
+?? test_hybrid_collision.py
+?? test_isolate.py
+?? test_lcdm.py
+?? test_perturbations.py
+?? the_ratio_test.png
+?? unified_a10.yaml
+?? verify_residual.py
+count: 0
+size: 0 bytes
+in-pack: 31337
+packs: 1
+size-pack: 803.81 MiB
+prune-packable: 0
+garbage: 0
+size-garbage: 0 bytes
