@@ -1,0 +1,36 @@
+debug: True
+output: chains/run_A_eval
+theory:
+  classy:
+    path: .
+    extra_args: {non_linear: halofit, N_ncdm: 1, N_ur: 2.0328}
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+    path: null
+    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik
+    prior:
+      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+  shoes_H0:
+    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+    requires: [H0]
+
+# --- 省略（上部はそのまま） ---
+params:
+  H0: 67.36
+  omega_b: 0.02237
+  omega_cdm: 0.1200
+  A_s: 2.1e-9
+  n_s: 0.9649
+  tau_reio: 0.0544
+  ua10_V0: 0
+  ua10_phi_trigger: 137.47
+  ua10_f_ax: 0.1
+  ua10_Gamma0: 0
+  ua10_n_ax: 2.5
+
+sampler:
+  evaluate: null

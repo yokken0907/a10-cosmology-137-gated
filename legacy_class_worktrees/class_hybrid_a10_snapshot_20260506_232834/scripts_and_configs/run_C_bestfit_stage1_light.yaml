@@ -1,0 +1,72 @@
+output: chains/run_C_bestfit_stage1_light
+
+theory:
+  classy:
+    path: .
+    extra_args:
+      # Stage-1 light run: disable halofit first to avoid slow/stiff regions.
+      N_ncdm: 1
+      N_ur: 2.0328
+
+likelihood:
+  # Lighter CMB block than TTTEEE. Keep low-l EE for tau information.
+  planck_2018_highl_plik.TT:
+    prior:
+      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+  shoes_H0:
+    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+    requires: [H0]
+
+params:
+  H0:
+    prior: {min: 66.0, max: 72.0}
+    ref: 68.206
+  omega_b:
+    prior: {min: 0.0215, max: 0.0235}
+    ref: 0.0223
+  omega_cdm:
+    prior: {min: 0.112, max: 0.126}
+    ref: 0.1194
+  A_s:
+    prior: {min: 1.8e-9, max: 2.4e-9}
+    ref: 2.1e-9
+  n_s:
+    prior: {min: 0.94, max: 0.99}
+    ref: 0.965
+  tau_reio:
+    prior: {min: 0.045, max: 0.070}
+    ref: 0.055
+
+  # Sample V0 in log-space for numerical stability.
+  log10_ua10_V0:
+    prior: {min: -6, max: 2}
+    ref: 0.0
+    proposal: 0.3
+    drop: true
+  ua10_V0:
+    value: 'lambda log10_ua10_V0: 10**log10_ua10_V0'
+
+  # Use only the native CLASS parameter name.
+  ua10_phi_trigger:
+    prior: {min: 130.0, max: 145.0}
+    ref: 137.47
+    proposal: 0.5
+
+  # Keep these fixed for the light diagnostic pass.
+  ua10_f_ax: 0.1
+  ua10_Gamma0: 1.0
+  ua10_n_ax: 2.5
+
+sampler:
+  minimize:
+    method: bobyqa
+    ignore_prior: True
+    max_evals: 300
+
+# Extra verbosity is useful here because the previous run spent a long time before emitting output.
+debug: True
+stop_at_error: True

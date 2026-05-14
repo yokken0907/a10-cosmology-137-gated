@@ -1,0 +1,50 @@
+# ==============================================================================
+# Run A: Baseline Verification (A10 Theory OFF / LambdaCDM equivalent)
+# ==============================================================================
+
+output: chains/run_A_no_gate
+
+theory:
+  classy:
+    path: .
+    extra_args:
+      non_linear: 'halofit'
+      N_ncdm: 1
+      N_ur: 2.0328
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+    path: null
+    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik
+    prior:
+      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+  shoes_H0:
+    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+    requires: [H0]
+
+params:
+  H0:
+    prior: {min: 60, max: 80}
+    ref: {min: 67.0, max: 68.0} # ← RunBと同じでも通るように、少し下限を下げる手もありますが、まずは
+  # --- 修正箇所 ---
+  omega_b:
+    prior: {min: 0.02, max: 0.025}
+    ref: {min: 0.0222, max: 0.0226} # 範囲を広げる
+    proposal: 0.0001
+  omega_cdm:
+    prior: {min: 0.10, max: 0.14}
+    ref: {min: 0.118, max: 0.122} # 範囲を広げる
+    proposal: 0.001
+  # ---------------
+
+sampler:
+  mcmc:
+    covmat: chains/run_B_fixed137.covmat
+    learn_proposal: true
+    proposal_scale: 1.9
+    burn_in: 50
+    Rminus1_stop: 0.01

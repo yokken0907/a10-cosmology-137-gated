@@ -1,0 +1,59 @@
+theory:
+  classy:
+    extra_args:
+      non_linear: 'halofit'
+      N_ncdm: 1
+      N_ur: 2.0328
+
+likelihood:
+  # 本番環境：Planck 2018 および BAO/SN データの有効化
+  planck_2018_highl_plik.TTTEEE:
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  planck_2018_lensing.clik:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+
+params:
+  H0:
+    prior: [65, 75]
+    ref: 70.0
+  omega_b:
+    prior: [0.022, 0.023]
+    ref: 0.0224
+  omega_cdm:
+    prior: [0.11, 0.12]
+    ref: 0.117
+
+  # ベースパラメータの固定
+  A_s: 2.1e-9
+  n_s: 0.965
+  tau_reio: 0.054
+  m_ncdm: 0.06
+
+# --- A10-137 V2.0 探索パラメータ（安全な範囲に調整） ---
+  # エネルギー注入量（前回実績の0.06近辺を狙う）
+  ua10_f_ax:
+    prior: [0.03, 0.15]
+    ref: 0.06
+  # ポテンシャル強度
+  ua10_V0:
+    prior: [0.01, 0.08]
+    ref: 0.03
+  # 【新規解放】エネルギーの減衰スピード（極端な小ささを避ける）
+  ua10_Gamma0:
+    prior: [0.005, 0.05]
+    ref: 0.01
+
+  # 固定パラメータ
+  ua10_phi_trigger: 1e-4
+  ua10_n_ax: 2.5
+
+sampler:
+  mcmc:
+    burn_in: 10
+    max_tries: 1000
+    learn_proposal: true
+    Rminus1_stop: 0.01
+
+output: chains/a10_run2

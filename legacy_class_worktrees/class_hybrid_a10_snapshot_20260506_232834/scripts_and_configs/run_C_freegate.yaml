@@ -1,0 +1,65 @@
+theory:
+  classy:
+    path: .
+    extra_args:
+      non_linear: 'halofit'
+      N_ncdm: 1
+      N_ur: 2.0328
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+  shoes_H0:
+    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+    requires: [H0]
+
+params:
+  # Standard Params
+  H0:
+    prior: {min: 60, max: 80}
+    ref: {min: 72.9, max: 73.1}
+    proposal: 0.2
+  omega_b:
+    prior: {min: 0.02, max: 0.025}
+    ref: {min: 0.0223, max: 0.0224}
+    proposal: 0.0001
+  omega_cdm:
+    prior: {min: 0.10, max: 0.14}
+    ref: {min: 0.118, max: 0.120}
+    proposal: 0.001
+  A_s: {prior: {min: 1.5e-9, max: 3.0e-9}, ref: 2.1e-9, proposal: 0.01e-9}
+  n_s: {prior: {min: 0.92, max: 1.0}, ref: 0.965, proposal: 0.001}
+  tau_reio: {prior: {min: 0.04, max: 0.08}, ref: 0.055, proposal: 0.001}
+
+  # A10 Core (Log-scaled)
+  ua10_log10V0:
+    prior: {min: 2.0, max: 6.5}
+    ref: {min: 4.55, max: 4.65}
+    proposal: 0.05
+    drop: true
+  ua10_V0:
+    value: "lambda ua10_log10V0: 10**ua10_log10V0"
+    derived: false
+
+  # --- A10 Trigger (FREE SEARCH) ---
+  ua10_phi_trigger:
+    prior: {min: 120, max: 155}
+    ref: {min: 137.0, max: 138.0}
+    proposal: 0.5
+    latex: \chi_{gate}
+  
+  ua10_f_ax: {prior: {min: 0.001, max: 0.2}, ref: 0.12, proposal: 0.005}
+  ua10_Gamma0: {prior: {min: 0.001, max: 0.05}, ref: 0.016, proposal: 0.001}
+  ua10_n_ax: 2.5
+
+sampler:
+  mcmc:
+    covmat: chains/run_B_fixed137.covmat
+    learn_every: 40d
+    proposal_scale: 1.9
+    Rminus1_stop: 0.01
+
+output: chains/run_C_freegate

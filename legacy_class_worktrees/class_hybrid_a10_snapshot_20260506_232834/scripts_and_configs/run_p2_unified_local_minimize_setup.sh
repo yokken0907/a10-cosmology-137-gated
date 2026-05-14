@@ -1,0 +1,219 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="${1:-$HOME/class_hybrid_a10}"
+BEST_V0="${2:-3e-10}"
+cd "$ROOT"
+
+OUTDIR="chains"
+mkdir -p "$OUTDIR"
+YAML="p2_unified_local_minimize.yaml"
+
+cat > "$YAML" <<YAML
+output: ${OUTDIR}/p2_unified_local_minimize
+
+theory:
+  classy:
+    path: .
+    extra_args:
+      non_linear: halofit
+      N_ncdm: 1
+      N_ur: 2.0328
+      has_unified_a10: 'yes'
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+    path: null
+    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik
+    prior:
+      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+  shoes_H0:
+    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+    requires: [H0]
+
+params:
+  H0: 72.999169
+
+  omega_b:
+    prior: {min: 0.0228, max: 0.0242}
+    ref: 0.023437102
+    proposal: 5e-5
+
+  omega_cdm:
+    prior: {min: 0.106, max: 0.1115}
+    ref: 0.10867378
+    proposal: 2e-4
+
+  A_s:
+    prior: {min: 1.8e-9, max: 2.5e-9}
+    ref: 2.1207673e-09
+    proposal: 2e-11
+
+  n_s:
+    prior: {min: 0.97, max: 1.01}
+    ref: 0.99455865
+    proposal: 0.002
+
+  tau_reio:
+    prior: {min: 0.05, max: 0.085}
+    ref: 0.071083465
+    proposal: 0.002
+
+  ua10_V0: ${BEST_V0}
+  ua10_phi_trigger: 137.90903
+  ua10_f_ax: 0.11552662
+  ua10_Gamma0: 0.047755317
+  ua10_n_ax: 2.5
+
+  A_planck:
+    prior: {min: 0.97, max: 1.03}
+    ref: 0.9979438672394767
+    proposal: 0.001
+
+  calib_100T:
+    prior: {min: 0.98, max: 1.02}
+    ref: 1.0007215437872674
+    proposal: 0.001
+
+  calib_217T:
+    prior: {min: 0.98, max: 1.02}
+    ref: 0.9968033223830819
+    proposal: 0.001
+
+  A_cib_217:
+    prior: {min: 0, max: 100}
+    ref: 47.27189754360289
+    proposal: 2.0
+
+  xi_sz_cib:
+    prior: {min: 0, max: 1}
+    ref: 0.04675702062808247
+    proposal: 0.05
+
+  A_sz:
+    prior: {min: 0, max: 15}
+    ref: 8.84757863791849
+    proposal: 0.5
+
+  ksz_norm:
+    prior: {min: 0, max: 10}
+    ref: 2.476366286151665
+    proposal: 0.5
+
+  gal545_A_100:
+    prior: {min: 0, max: 20}
+    ref: 9.319800029433269
+    proposal: 0.5
+
+  gal545_A_143:
+    prior: {min: 0, max: 25}
+    ref: 12.333491727539368
+    proposal: 0.5
+
+  gal545_A_143_217:
+    prior: {min: 0, max: 40}
+    ref: 22.026422454904782
+    proposal: 1.0
+
+  gal545_A_217:
+    prior: {min: 0, max: 100}
+    ref: 59.80846171972057
+    proposal: 2.0
+
+  A_sbpx_100_100_TT: 1.0
+  A_sbpx_143_143_TT: 1.0
+  A_sbpx_143_217_TT: 1.0
+  A_sbpx_217_217_TT: 1.0
+
+  ps_A_100_100:
+    prior: {min: 0, max: 400}
+    ref: 276.2863095433778
+    proposal: 10.0
+
+  ps_A_143_143:
+    prior: {min: 0, max: 100}
+    ref: 35.59187410732969
+    proposal: 5.0
+
+  ps_A_143_217:
+    prior: {min: 0, max: 100}
+    ref: 48.771338238159146
+    proposal: 5.0
+
+  ps_A_217_217:
+    prior: {min: 0, max: 250}
+    ref: 140.36394523801764
+    proposal: 10.0
+
+  galf_TE_index: -2.4
+
+  galf_TE_A_100:
+    prior: {min: 0, max: 1}
+    ref: 0.17216329567074776
+    proposal: 0.02
+
+  galf_TE_A_100_143:
+    prior: {min: 0, max: 1}
+    ref: 0.03694740350221859
+    proposal: 0.02
+
+  galf_TE_A_100_217:
+    prior: {min: 0, max: 2}
+    ref: 0.564368432565184
+    proposal: 0.05
+
+  galf_TE_A_143:
+    prior: {min: 0, max: 1}
+    ref: 0.12421921085928826
+    proposal: 0.02
+
+  galf_TE_A_143_217:
+    prior: {min: 0, max: 2}
+    ref: 0.6947514506576826
+    proposal: 0.05
+
+  galf_TE_A_217:
+    prior: {min: 0, max: 4}
+    ref: 2.0621337529747565
+    proposal: 0.1
+
+  A_pol: 1.0
+  calib_100P: 1.021
+  calib_143P: 0.966
+  calib_217P: 1.04
+  cib_index: -1.3
+  galf_EE_index: -2.4
+  galf_EE_A_100: 0.055
+  galf_EE_A_100_143: 0.04
+  galf_EE_A_100_217: 0.094
+  galf_EE_A_143: 0.086
+  galf_EE_A_143_217: 0.21
+  galf_EE_A_217: 0.7
+  A_cnoise_e2e_100_100_EE: 1.0
+  A_cnoise_e2e_143_143_EE: 1.0
+  A_cnoise_e2e_217_217_EE: 1.0
+  A_sbpx_100_100_EE: 1.0
+  A_sbpx_100_143_EE: 1.0
+  A_sbpx_100_217_EE: 1.0
+  A_sbpx_143_143_EE: 1.0
+  A_sbpx_143_217_EE: 1.0
+  A_sbpx_217_217_EE: 1.0
+
+sampler:
+  minimize:
+    method: bobyqa
+    max_evals: 2500
+    ignore_prior: False
+
+debug: False
+stop_at_error: False
+YAML
+
+echo "Wrote ${YAML}"
+echo "Run with:"
+echo "  source .venv_a10build/bin/activate"
+echo "  cobaya-run ${YAML} --force"
