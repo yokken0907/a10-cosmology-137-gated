@@ -1,0 +1,206 @@
+{
+  "created_utc": "2026-05-06T14:31:24.239479+00:00",
+  "source_inventory_tar": {
+    "name": "a10_root_loose_file_inventory_20260506_232931.tar.gz",
+    "sha256": "b022b253861b3bec5d7e34fcaa460a7d3d2b44b7b51130359669a31dc10f6c80",
+    "size_bytes": 1396
+  },
+  "top_level_file_count": 48,
+  "python_loose_count": 34,
+  "archives_loose_count": 4,
+  "python_loose_preview": [
+    {
+      "size_bytes": 25279,
+      "date": "2026-03-13 01:20",
+      "path": "/home/kei/ucf_alpha_sheet_separation.py"
+    },
+    {
+      "size_bytes": 24472,
+      "date": "2026-03-13 01:42",
+      "path": "/home/kei/ucf_alpha_adaptive_packet_graph.py"
+    },
+    {
+      "size_bytes": 23503,
+      "date": "2026-03-12 21:25",
+      "path": "/home/kei/e8_ucf_alpha_privileged_only.py"
+    },
+    {
+      "size_bytes": 22258,
+      "date": "2026-03-13 00:37",
+      "path": "/home/kei/ucf_alpha_phase_cocycle.py"
+    },
+    {
+      "size_bytes": 22094,
+      "date": "2026-03-15 00:56",
+      "path": "/home/kei/e8_integrated_viability_scan.py"
+    },
+    {
+      "size_bytes": 21491,
+      "date": "2026-03-13 01:05",
+      "path": "/home/kei/ucf_alpha_orbit_aware_cocycle.py"
+    },
+    {
+      "size_bytes": 21479,
+      "date": "2026-03-12 22:19",
+      "path": "/home/kei/e8_ucf_alpha_annealing.py"
+    },
+    {
+      "size_bytes": 19407,
+      "date": "2026-03-14 14:32",
+      "path": "/home/kei/least_coupling_viability_scan.py"
+    },
+    {
+      "size_bytes": 17956,
+      "date": "2026-03-12 21:14",
+      "path": "/home/kei/e8_ucf_alpha_balanced_projection.py"
+    },
+    {
+      "size_bytes": 17956,
+      "date": "2026-03-12 20:48",
+      "path": "/home/kei/e8_simulation.py"
+    },
+    {
+      "size_bytes": 16656,
+      "date": "2026-03-12 21:38",
+      "path": "/home/kei/e8_ucf_alpha_symmetry_breaking.py"
+    },
+    {
+      "size_bytes": 16195,
+      "date": "2026-03-13 00:25",
+      "path": "/home/kei/ucf_alpha_projective_60line.py"
+    },
+    {
+      "size_bytes": 14064,
+      "date": "2026-03-14 14:40",
+      "path": "/home/kei/e8_geometric_leakage.py"
+    },
+    {
+      "size_bytes": 12659,
+      "date": "2026-03-12 23:57",
+      "path": "/home/kei/complex_ucf_alpha_final.py"
+    },
+    {
+      "size_bytes": 10633,
+      "date": "2026-03-14 16:59",
+      "path": "/home/kei/golden_point_search.py"
+    },
+    {
+      "size_bytes": 8020,
+      "date": "2026-03-13 14:18",
+      "path": "/home/kei/erbft_final_judgment.py"
+    },
+    {
+      "size_bytes": 4600,
+      "date": "2026-03-13 11:29",
+      "path": "/home/kei/backup_0312.py"
+    },
+    {
+      "size_bytes": 4590,
+      "date": "2026-03-21 00:48",
+      "path": "/home/kei/samd_fss_v2.py"
+    },
+    {
+      "size_bytes": 4203,
+      "date": "2026-03-21 01:16",
+      "path": "/home/kei/samd_correlation.py"
+    },
+    {
+      "size_bytes": 4097,
+      "date": "2026-03-13 15:00",
+      "path": "/home/kei/erbft_crossover_test.py"
+    },
+    {
+      "size_bytes": 4084,
+      "date": "2026-03-21 00:25",
+      "path": "/home/kei/samd_v23.py"
+    },
+    {
+      "size_bytes": 4035,
+      "date": "2026-03-21 00:44",
+      "path": "/home/kei/samd_fss.py"
+    },
+    {
+      "size_bytes": 4005,
+      "date": "2026-03-21 00:20",
+      "path": "/home/kei/samd_sim.py"
+    },
+    {
+      "size_bytes": 3650,
+      "date": "2026-03-21 00:23",
+      "path": "/home/kei/samd_v22.py"
+    },
+    {
+      "size_bytes": 3540,
+      "date": "2026-03-21 00:30",
+      "path": "/home/kei/samd_extreme.py"
+    },
+    {
+      "size_bytes": 3461,
+      "date": "2026-03-21 00:27",
+      "path": "/home/kei/samd_phase.py"
+    },
+    {
+      "size_bytes": 3319,
+      "date": "2026-03-13 16:11",
+      "path": "/home/kei/erbft_universal_control.py"
+    },
+    {
+      "size_bytes": 3172,
+      "date": "2026-03-13 13:32",
+      "path": "/home/kei/ucf_alpha_discovery_137.py"
+    },
+    {
+      "size_bytes": 3172,
+      "date": "2026-03-13 13:14",
+      "path": "/home/kei/ucf_alpha_final_target.py"
+    },
+    {
+      "size_bytes": 2500,
+      "date": "2026-03-15 21:39",
+      "path": "/home/kei/unified_137_solver.py"
+    },
+    {
+      "size_bytes": 2206,
+      "date": "2026-03-21 00:34",
+      "path": "/home/kei/samd_diagnosis.py"
+    },
+    {
+      "size_bytes": 2158,
+      "date": "2026-03-13 14:02",
+      "path": "/home/kei/erbft_diagnostic.py"
+    },
+    {
+      "size_bytes": 1664,
+      "date": "2026-03-14 18:10",
+      "path": "/home/kei/stability.py"
+    },
+    {
+      "size_bytes": 290,
+      "date": "2026-03-14 17:43",
+      "path": "/home/kei/couplings.py"
+    }
+  ],
+  "archives_loose_preview": [
+    {
+      "size_bytes": 2493479,
+      "date": "2026-05-06 23:28",
+      "path": "/home/kei/class_hybrid_a10_snapshot_20260506_232834.tar.gz"
+    },
+    {
+      "size_bytes": 604661,
+      "date": "2026-05-06 23:18",
+      "path": "/home/kei/legacy_class_public_mess_snapshot.tar.gz"
+    },
+    {
+      "size_bytes": 7827,
+      "date": "2026-05-06 23:12",
+      "path": "/home/kei/a10_inventory_class_20260506_231201.tar.gz"
+    },
+    {
+      "size_bytes": 45,
+      "date": "2026-03-21 16:01",
+      "path": "/home/kei/class_pre_unified_a10_stable.tar.gz"
+    }
+  ],
+  "interpretation": "Root loose files are mostly early E8/UCF-alpha/SAMD/ERBFT scripts and small archive snapshots. They should be moved into a legacy_loose_files folder after inventory, not deleted immediately."
+}

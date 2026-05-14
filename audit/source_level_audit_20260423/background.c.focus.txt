@@ -1,0 +1,949 @@
+# Focused windows for /home/kei/class_hybrid_a10/source/background.c
+
+## pattern: has_unified_a10
+--- lines 556-606 around has_unified_a10 ---
+  }
+
+  /* relativistic neutrinos (and all relativistic relics) */
+  if (pba->has_ur == _TRUE_) {
+    pvecback[pba->index_bg_rho_ur] = pba->Omega0_ur * pow(pba->H0,2) / pow(a,4);
+    rho_tot += pvecback[pba->index_bg_rho_ur];
+    p_tot += (1./3.) * pvecback[pba->index_bg_rho_ur];
+    dp_dloga += -(4./3.) * pvecback[pba->index_bg_rho_ur];
+    rho_r += pvecback[pba->index_bg_rho_ur];
+  }
+
+  /* interacting dark radiation */
+  if (pba->has_idr == _TRUE_) {
+    pvecback[pba->index_bg_rho_idr] = pba->Omega0_idr * pow(pba->H0,2) / pow(a,4);
+    rho_tot += pvecback[pba->index_bg_rho_idr];
+    p_tot += (1./3.) * pvecback[pba->index_bg_rho_idr];
+    rho_r += pvecback[pba->index_bg_rho_idr];
+  }
+
+/* 1. 各成分の密度計算（既存のループ内） */
+    if (pba->has_unified_a10 == _TRUE_) {
+        /* 積分変数 y からではなく、ここでは受け渡された pvecback_B 等から取得 */
+        double phi = pvecback_B[pba->index_bi_phi];
+        double phi_prime = pvecback_B[pba->index_bi_phidot];
+
+        double f_ax = pba->ua10_f_ax;
+        double one_minus_cos = 1.0 - cos(phi / f_ax);
+        double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+
+        /* 密度の計算：運動エネルギー + ポテンシャルエネルギー */
+        double rho_phi = (0.5 * phi_prime * phi_prime / (a * a)) + V;
+        double p_phi   = (0.5 * phi_prime * phi_prime / (a * a)) - V;
+
+        /* 合計密度 rho_tot に A10 の寄与をしっかりと加算 */
+        rho_tot += rho_phi;
+        p_tot += p_phi;
+
+        /* 出力用データの保存 */
+        pvecback[pba->index_bg_rho_phi] = rho_phi;
+        /* ゼロ割りを防ぐ安全な状態方程式パラメータ w の計算 */
+        pvecback[pba->index_bg_w_phi] = (rho_phi != 0.0) ? (p_phi / rho_phi) : -1.0;
+    }
+
+/* 2. --- YOSHIMURA A-LINE V2-PRIME REBOOT --- (H の計算の直前) */
+if (pba->has_unified_a10 == _TRUE_) {
+    double a_star = 1. / (1. + 3000.);
+    double x_aline = a / a_star;
+    double f_star = pba->ua10_f_ax; 
+    
+    /* 局所的ブースト: x * exp(1-x) により z=3000 で最大になり、現代では完全にゼロに消える */
+    double bump = x_aline * exp(1.0 - x_aline);
+--- lines 580-630 around has_unified_a10 ---
+
+        double f_ax = pba->ua10_f_ax;
+        double one_minus_cos = 1.0 - cos(phi / f_ax);
+        double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+
+        /* 密度の計算：運動エネルギー + ポテンシャルエネルギー */
+        double rho_phi = (0.5 * phi_prime * phi_prime / (a * a)) + V;
+        double p_phi   = (0.5 * phi_prime * phi_prime / (a * a)) - V;
+
+        /* 合計密度 rho_tot に A10 の寄与をしっかりと加算 */
+        rho_tot += rho_phi;
+        p_tot += p_phi;
+
+        /* 出力用データの保存 */
+        pvecback[pba->index_bg_rho_phi] = rho_phi;
+        /* ゼロ割りを防ぐ安全な状態方程式パラメータ w の計算 */
+        pvecback[pba->index_bg_w_phi] = (rho_phi != 0.0) ? (p_phi / rho_phi) : -1.0;
+    }
+
+/* 2. --- YOSHIMURA A-LINE V2-PRIME REBOOT --- (H の計算の直前) */
+if (pba->has_unified_a10 == _TRUE_) {
+    double a_star = 1. / (1. + 3000.);
+    double x_aline = a / a_star;
+    double f_star = pba->ua10_f_ax; 
+    
+    /* 局所的ブースト: x * exp(1-x) により z=3000 で最大になり、現代では完全にゼロに消える */
+    double bump = x_aline * exp(1.0 - x_aline);
+    rho_tot *= (1.0 + f_star * bump);
+}
+
+//if (pba->ua10_tx_omega0 > 0.0) rho_tot += ua10_tx_rho(a, pba);
+
+  /** - compute expansion rate H from Friedmann equation: this is the
+      only place where the Friedmann equation is assumed. Remember
+      that densities are all expressed in units of \f$ [3c^2/8\pi G] \f$, ie
+      \f$ \rho_{class} = [8 \pi G \rho_{physical} / 3 c^2]\f$ */
+  pvecback[pba->index_bg_H] = sqrt(rho_tot-pba->K/a/a);
+
+  /** - compute derivative of H with respect to conformal time */
+  pvecback[pba->index_bg_H_prime] = - (3./2.) * (rho_tot + p_tot) * a + pba->K/a;
+
+  /* Total energy density*/
+  pvecback[pba->index_bg_rho_tot] = rho_tot;
+
+  /* Total pressure */
+  pvecback[pba->index_bg_p_tot] = p_tot;
+
+  /* Derivative of total pressure w.r.t. conformal time */
+  pvecback[pba->index_bg_p_tot_prime] = a*pvecback[pba->index_bg_H]*dp_dloga;
+  if (pba->has_scf == _TRUE_) {
+    /** The contribution of scf was not added to dp_dloga, add p_scf_prime here: */
+--- lines 1012-1062 around has_unified_a10 ---
+  if (pba->Omega0_ur != 0.)
+    pba->has_ur = _TRUE_;
+
+  if (pba->Omega0_idr != 0.)
+    pba->has_idr = _TRUE_;
+
+  if (pba->sgnK != 0)
+    pba->has_curvature = _TRUE_;
+
+  if (pba->varconst_dep != varconst_none)
+    pba->has_varconst = _TRUE_;
+
+  /** - initialize all indices */
+
+  index_bg=0;
+
+  /* index for scale factor */
+  class_define_index(pba->index_bg_a,_TRUE_,index_bg,1);
+
+/* Unified A10 用の出力インデックスを順番に割り振る */
+  if (pba->has_unified_a10 == _TRUE_) {
+    class_define_index(pba->index_bg_rho_phi, _TRUE_, index_bg, 1);
+    class_define_index(pba->index_bg_w_phi, _TRUE_, index_bg, 1);
+    class_define_index(pba->index_bg_Gamma_drag, _TRUE_, index_bg, 1);
+  }
+
+  /* - indices for H and its conformal-time-derivative */
+  class_define_index(pba->index_bg_H,_TRUE_,index_bg,1);
+  class_define_index(pba->index_bg_H_prime,_TRUE_,index_bg,1);
+
+  /* - end of indices in the short vector of background values */
+  pba->bg_size_short = index_bg;
+
+  /* - index for rho_g (photon density) */
+  class_define_index(pba->index_bg_rho_g,_TRUE_,index_bg,1);
+
+  /* - index for rho_b (baryon density) */
+  class_define_index(pba->index_bg_rho_b,_TRUE_,index_bg,1);
+
+  /* - index for rho_cdm */
+  class_define_index(pba->index_bg_rho_cdm,pba->has_cdm,index_bg,1);
+
+  /* - index for rho_idm  */
+  class_define_index(pba->index_bg_rho_idm,pba->has_idm,index_bg,1);
+
+  /* - indices for ncdm. We only define the indices for ncdm1
+     (density, pressure, pseudo-pressure), the other ncdm indices
+     are contiguous */
+  class_define_index(pba->index_bg_rho_ncdm1,pba->has_ncdm,index_bg,pba->N_ncdm);
+  class_define_index(pba->index_bg_p_ncdm1,pba->has_ncdm,index_bg,pba->N_ncdm);
+  class_define_index(pba->index_bg_pseudo_p_ncdm1,pba->has_ncdm,index_bg,pba->N_ncdm);
+--- lines 1144-1194 around has_unified_a10 ---
+
+  /* -> varying fundamental constant -- me (effective electron mass) */
+  class_define_index(pba->index_bg_varc_me,pba->has_varconst,index_bg,1);
+
+  /* -> put here additional quantities describing background */
+  /*    */
+  /*    */
+
+  /* -> end of indices in the long vector of background values */
+  pba->bg_size = index_bg;
+
+  /* - now, indices in vector of variables to integrate.
+     First {B} variables, then {C} variables. */
+
+  index_bi=0;
+
+  /* -> index for conformal time in vector of variables to integrate */
+  class_define_index(pba->index_bi_tau,_TRUE_,index_bi,1);
+
+/* 2. 次に Unified A10 の変数に席をあげる */
+  if (pba->has_unified_a10 == _TRUE_) {
+    /* class_define_index が自動的に index_bi をカウントアップしてくれます */
+    class_define_index(pba->index_bi_phi, _TRUE_, index_bi, 1);
+    class_define_index(pba->index_bi_phidot, _TRUE_, index_bi, 1);
+  }
+
+  /* -> energy density in DCDM */
+  class_define_index(pba->index_bi_rho_dcdm,pba->has_dcdm,index_bi,1);
+
+  /* -> energy density in DR */
+  class_define_index(pba->index_bi_rho_dr,pba->has_dr,index_bi,1);
+
+  /* -> energy density in fluid */
+  class_define_index(pba->index_bi_rho_fld,pba->has_fld,index_bi,1);
+
+  /* -> scalar field and its derivative wrt conformal time (Zuma) */
+  class_define_index(pba->index_bi_phi_scf,pba->has_scf,index_bi,1);
+  class_define_index(pba->index_bi_phi_prime_scf,pba->has_scf,index_bi,1);
+
+  /* End of {B} variables */
+  pba->bi_B_size = index_bi;
+
+  /* now continue with {C} variables */
+
+  /* -> proper time (for age of the Universe) */
+  class_define_index(pba->index_bi_time,_TRUE_,index_bi,1);
+
+  /* -> sound horizon */
+  class_define_index(pba->index_bi_rs,_TRUE_,index_bi,1);
+
+  /* -> Second order equation for growth factor */
+--- lines 2204-2254 around has_unified_a10 ---
+      }
+      else {
+        a *= _SCALE_BACK_;
+      }
+    }
+    class_test(counter == _MAX_IT_,
+               pba->error_message,
+               "Search for initial scale factor a such that all ncdm species are relativistic failed.");
+  }
+
+  /* Set initial values of {B} variables: */
+  Omega_rad = pba->Omega0_g;
+  if (pba->has_ur == _TRUE_) {
+    Omega_rad += pba->Omega0_ur;
+  }
+  if (pba->has_idr == _TRUE_) {
+    Omega_rad += pba->Omega0_idr;
+  }
+
+/* A10モデルの初期条件の強制ハードコード（坂の上スタート） */
+    if (pba->has_unified_a10 == _TRUE_) {
+        // 🎯 0.65 などの固定値ではなく、「f_ax × 2.6」で常に坂の上に配置する！
+        pvecback_integration[pba->index_bi_phi] = 2.6 * pba->ua10_f_ax; 
+        pvecback_integration[pba->index_bi_phidot] = 0.0;
+    }
+
+  rho_rad = Omega_rad*pow(pba->H0,2)/pow(a,4);
+  if (pba->has_ncdm == _TRUE_) {
+    /** - We must add the relativistic contribution from NCDM species */
+    rho_rad += rho_ncdm_rel_tot;
+  }
+  if (pba->has_dcdm == _TRUE_) {
+    /* Remember that the critical density today in CLASS conventions is H0^2 */
+    pvecback_integration[pba->index_bi_rho_dcdm] =
+      pba->Omega_ini_dcdm*pba->H0*pba->H0*pow(a,-3);
+    if (pba->background_verbose > 3)
+      printf("Density is %g. Omega_ini=%g\n",pvecback_integration[pba->index_bi_rho_dcdm],pba->Omega_ini_dcdm);
+  }
+
+  if (pba->has_dr == _TRUE_) {
+    if (pba->has_dcdm == _TRUE_) {
+      /**  - f is the critical density fraction of DR. The exact solution is:
+       *
+       * `f = -Omega_rad+pow(pow(Omega_rad,3./2.)+0.5*pow(a,6)*pvecback_integration[pba->index_bi_rho_dcdm]*pba->Gamma_dcdm/pow(pba->H0,3),2./3.);`
+       *
+       * but it is not numerically stable for very small f which is always the case.
+       * Instead we use the Taylor expansion of this equation, which is equivalent to
+       * ignoring f(a) in the Hubble rate.
+       */
+      f = 1./3.*pow(a,6)*pvecback_integration[pba->index_bi_rho_dcdm]*pba->Gamma_dcdm/pow(pba->H0,3)/sqrt(Omega_rad);
+      pvecback_integration[pba->index_bi_rho_dr] = f*pba->H0*pba->H0/pow(a,4);
+--- lines 2486-2536 around has_unified_a10 ---
+  class_store_columntitle(titles,"phi_scf",pba->has_scf);
+  class_store_columntitle(titles,"phi'_scf",pba->has_scf);
+  class_store_columntitle(titles,"V_scf",pba->has_scf);
+  class_store_columntitle(titles,"V'_scf",pba->has_scf);
+  class_store_columntitle(titles,"V''_scf",pba->has_scf);
+
+  class_store_columntitle(titles,"(.)rho_tot",_TRUE_);
+  class_store_columntitle(titles,"(.)p_tot",_TRUE_);
+  class_store_columntitle(titles,"(.)p_tot_prime",_TRUE_);
+
+  class_store_columntitle(titles,"Omega_r(z)",_TRUE_);
+  class_store_columntitle(titles,"Omega_m(z)",_TRUE_);
+
+  class_store_columntitle(titles,"gr.fac. D",_TRUE_);
+  class_store_columntitle(titles,"gr.fac. f",_TRUE_);
+
+  class_store_columntitle(titles,"rel. alpha",pba->has_varconst);
+  class_store_columntitle(titles,"rel. m_e",pba->has_varconst);
+
+/* --- ここから修正：CLASS専用マクロを使う --- */
+  if (pba->has_unified_a10 == _TRUE_) {
+    class_store_columntitle(titles, "(.)rho_phi", _TRUE_);
+    class_store_columntitle(titles, "w_phi", _TRUE_);
+    class_store_columntitle(titles, "Gamma_drag", _TRUE_);
+  }
+
+  return _SUCCESS_;
+}
+
+/**
+ * Subroutine for writing the background output
+ *
+ * @param pba                  Input: pointer to background structure
+ * @param number_of_titles     Input: number of background quantities to print at each time step
+ * @param data                 Ouput: 1d array storing all the background table
+ * @return the error status
+ */
+
+int background_output_data(
+                           struct background *pba,
+                           int number_of_titles,
+                           double *data
+                           ) {
+
+  int index_tau, storeidx, n;
+  double *dataptr, *pvecback;
+
+  /** Stores quantities */
+  for (index_tau=0; index_tau<pba->bt_size; index_tau++) {
+    dataptr = data + index_tau*number_of_titles;
+    pvecback = pba->background_table + index_tau*pba->bg_size;
+--- lines 2569-2619 around has_unified_a10 ---
+    class_store_double(dataptr,pvecback[pba->index_bg_phi_scf],pba->has_scf,storeidx);
+    class_store_double(dataptr,pvecback[pba->index_bg_phi_prime_scf],pba->has_scf,storeidx);
+    class_store_double(dataptr,pvecback[pba->index_bg_V_scf],pba->has_scf,storeidx);
+    class_store_double(dataptr,pvecback[pba->index_bg_dV_scf],pba->has_scf,storeidx);
+    class_store_double(dataptr,pvecback[pba->index_bg_ddV_scf],pba->has_scf,storeidx);
+
+    class_store_double(dataptr,pvecback[pba->index_bg_rho_tot],_TRUE_,storeidx);
+    class_store_double(dataptr,pvecback[pba->index_bg_p_tot],_TRUE_,storeidx);
+    class_store_double(dataptr,pvecback[pba->index_bg_p_tot_prime],_TRUE_,storeidx);
+
+    class_store_double(dataptr,pvecback[pba->index_bg_Omega_r],_TRUE_,storeidx);
+    class_store_double(dataptr,pvecback[pba->index_bg_Omega_m],_TRUE_,storeidx);
+
+    class_store_double(dataptr,pvecback[pba->index_bg_D],_TRUE_,storeidx);
+    class_store_double(dataptr,pvecback[pba->index_bg_f],_TRUE_,storeidx);
+
+    class_store_double(dataptr,pvecback[pba->index_bg_varc_alpha],pba->has_varconst,storeidx);
+    class_store_double(dataptr,pvecback[pba->index_bg_varc_me],pba->has_varconst,storeidx);
+
+/* --- ここから修正：必ず for ループの「中」に入れる！ --- */
+    if (pba->has_unified_a10 == _TRUE_) {
+      class_store_double(dataptr, pvecback[pba->index_bg_rho_phi], _TRUE_, storeidx);
+      class_store_double(dataptr, pvecback[pba->index_bg_w_phi], _TRUE_, storeidx);
+      class_store_double(dataptr, pvecback[pba->index_bg_Gamma_drag], _TRUE_, storeidx);
+    }
+  } /* <-- 【超重要】この閉じカッコ（forループの終了）の「直前」に書くこと！ */
+
+  return _SUCCESS_;
+}
+
+
+/**
+ * Subroutine evaluating the derivative with respect to loga
+ * of quantities which are integrated (tau, t, etc).
+ *
+ * This is one of the few functions in the code which is passed to
+ * the generic_integrator() routine.  Since generic_integrator()
+ * should work with functions passed from various modules, the format
+ * of the arguments is a bit special:
+ *
+ * - fixed input parameters and workspaces are passed through a generic
+ * pointer. Here, this is just a pointer to the background structure
+ * and to a background vector, but generic_integrator() doesn't know
+ * its fine structure.
+ *
+ * - the error management is a bit special: errors are not written as
+ * usual to pba->error_message, but to a generic error_message passed
+ * in the list of arguments.
+ *
+ * @param loga                     Input: current value of log(a)
+ * @param y                        Input: vector of variable
+--- lines 2653-2703 around has_unified_a10 ---
+             error_message);
+
+  /** - Short hand notation for Hubble */
+  H = pvecback[pba->index_bg_H];
+
+  /** - calculate derivative of cosmological time \f$ dt/dloga = 1/H \f$ */
+  dy[pba->index_bi_time] = 1./H;
+
+  /** - calculate derivative of conformal time \f$ d\tau/dloga = 1/aH \f$ */
+  dy[pba->index_bi_tau] = 1./a/H;
+
+  class_test(pvecback[pba->index_bg_rho_g] <= 0.,
+             error_message,
+             "rho_g = %e instead of strictly positive",pvecback[pba->index_bg_rho_g]);
+
+  /** - calculate detivative of sound horizon \f$ drs/dloga = drs/dtau * dtau/dloga = c_s/aH \f$*/
+  dy[pba->index_bi_rs] = 1./a/H/sqrt(3.*(1.+3.*pvecback[pba->index_bg_rho_b]/4./pvecback[pba->index_bg_rho_g]))*sqrt(1.-pba->K*y[pba->index_bi_rs]*y[pba->index_bi_rs]); // TBC: curvature correction
+
+
+/* Unified A10 の進化方程式 (d/d_lna) */
+if (pba->has_unified_a10 == _TRUE_) {
+
+    /* 変数の取得（この関数では y から取るのが CLASS の鉄則） */
+    double phi = y[pba->index_bi_phi];
+    double phi_prime = y[pba->index_bi_phidot];
+
+    /* ポテンシャルの傾き dV/dphi の計算 */
+    double f_ax = pba->ua10_f_ax;
+    
+    // 安全対策：f_ax が 0 または極端に小さい場合のゼロ除算を防ぐ
+    if (f_ax < 1e-10) f_ax = 1e-10; 
+
+    double arg = phi / f_ax;
+    double one_minus_cos = 1.0 - cos(arg);
+    
+    /* V' = V0 * n * (1-cos)^(n-1) * (1/f) * sin(phi/f) */
+    double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);
+
+    /* --- 修正箇所：Delta_phi の安全な定義 --- */
+    /* YAMLから値が渡ってこない場合のゼロ除算を防ぐため、ハードコードで安全な幅を定義 */
+    double safe_delta_phi = 0.05; // 適切な幅（適宜調整可能ですが、一旦これで固定します）
+    
+    /* ドラッグ項（gate）の計算 */
+    double diff = phi - pba->ua10_phi_trigger;
+    double gate = exp(- (diff * diff) / (2.0 * safe_delta_phi * safe_delta_phi));
+    double gamma_drag = pba->ua10_Gamma0 * gate;
+
+    /* --- 運動方程式のセット（究極の凍結ロジック追加版） --- */
+    /* z=4000 (a=0.00025) 近傍をターゲットとして開始時期を遅らせる */
+    double a_thaw = 2.5e-4; 
+    
+
+## pattern: ua10_V0
+--- lines 563-613 around ua10_V0 ---
+    dp_dloga += -(4./3.) * pvecback[pba->index_bg_rho_ur];
+    rho_r += pvecback[pba->index_bg_rho_ur];
+  }
+
+  /* interacting dark radiation */
+  if (pba->has_idr == _TRUE_) {
+    pvecback[pba->index_bg_rho_idr] = pba->Omega0_idr * pow(pba->H0,2) / pow(a,4);
+    rho_tot += pvecback[pba->index_bg_rho_idr];
+    p_tot += (1./3.) * pvecback[pba->index_bg_rho_idr];
+    rho_r += pvecback[pba->index_bg_rho_idr];
+  }
+
+/* 1. 各成分の密度計算（既存のループ内） */
+    if (pba->has_unified_a10 == _TRUE_) {
+        /* 積分変数 y からではなく、ここでは受け渡された pvecback_B 等から取得 */
+        double phi = pvecback_B[pba->index_bi_phi];
+        double phi_prime = pvecback_B[pba->index_bi_phidot];
+
+        double f_ax = pba->ua10_f_ax;
+        double one_minus_cos = 1.0 - cos(phi / f_ax);
+        double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+
+        /* 密度の計算：運動エネルギー + ポテンシャルエネルギー */
+        double rho_phi = (0.5 * phi_prime * phi_prime / (a * a)) + V;
+        double p_phi   = (0.5 * phi_prime * phi_prime / (a * a)) - V;
+
+        /* 合計密度 rho_tot に A10 の寄与をしっかりと加算 */
+        rho_tot += rho_phi;
+        p_tot += p_phi;
+
+        /* 出力用データの保存 */
+        pvecback[pba->index_bg_rho_phi] = rho_phi;
+        /* ゼロ割りを防ぐ安全な状態方程式パラメータ w の計算 */
+        pvecback[pba->index_bg_w_phi] = (rho_phi != 0.0) ? (p_phi / rho_phi) : -1.0;
+    }
+
+/* 2. --- YOSHIMURA A-LINE V2-PRIME REBOOT --- (H の計算の直前) */
+if (pba->has_unified_a10 == _TRUE_) {
+    double a_star = 1. / (1. + 3000.);
+    double x_aline = a / a_star;
+    double f_star = pba->ua10_f_ax; 
+    
+    /* 局所的ブースト: x * exp(1-x) により z=3000 で最大になり、現代では完全にゼロに消える */
+    double bump = x_aline * exp(1.0 - x_aline);
+    rho_tot *= (1.0 + f_star * bump);
+}
+
+//if (pba->ua10_tx_omega0 > 0.0) rho_tot += ua10_tx_rho(a, pba);
+
+  /** - compute expansion rate H from Friedmann equation: this is the
+      only place where the Friedmann equation is assumed. Remember
+--- lines 2669-2719 around ua10_V0 ---
+  dy[pba->index_bi_rs] = 1./a/H/sqrt(3.*(1.+3.*pvecback[pba->index_bg_rho_b]/4./pvecback[pba->index_bg_rho_g]))*sqrt(1.-pba->K*y[pba->index_bi_rs]*y[pba->index_bi_rs]); // TBC: curvature correction
+
+
+/* Unified A10 の進化方程式 (d/d_lna) */
+if (pba->has_unified_a10 == _TRUE_) {
+
+    /* 変数の取得（この関数では y から取るのが CLASS の鉄則） */
+    double phi = y[pba->index_bi_phi];
+    double phi_prime = y[pba->index_bi_phidot];
+
+    /* ポテンシャルの傾き dV/dphi の計算 */
+    double f_ax = pba->ua10_f_ax;
+    
+    // 安全対策：f_ax が 0 または極端に小さい場合のゼロ除算を防ぐ
+    if (f_ax < 1e-10) f_ax = 1e-10; 
+
+    double arg = phi / f_ax;
+    double one_minus_cos = 1.0 - cos(arg);
+    
+    /* V' = V0 * n * (1-cos)^(n-1) * (1/f) * sin(phi/f) */
+    double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);
+
+    /* --- 修正箇所：Delta_phi の安全な定義 --- */
+    /* YAMLから値が渡ってこない場合のゼロ除算を防ぐため、ハードコードで安全な幅を定義 */
+    double safe_delta_phi = 0.05; // 適切な幅（適宜調整可能ですが、一旦これで固定します）
+    
+    /* ドラッグ項（gate）の計算 */
+    double diff = phi - pba->ua10_phi_trigger;
+    double gate = exp(- (diff * diff) / (2.0 * safe_delta_phi * safe_delta_phi));
+    double gamma_drag = pba->ua10_Gamma0 * gate;
+
+    /* --- 運動方程式のセット（究極の凍結ロジック追加版） --- */
+    /* z=4000 (a=0.00025) 近傍をターゲットとして開始時期を遅らせる */
+    double a_thaw = 2.5e-4; 
+    
+    if (a < a_thaw) {
+        // 凍結フェーズ：ピクリとも動かさず、積分器のパニックを防ぐ
+        dy[pba->index_bi_phi] = 0.0;
+        dy[pba->index_bi_phidot] = 0.0;
+    } else {
+        // 稼働フェーズ：ハッブル摩擦が下がり、安全に計算できる時代
+        /* d(phi) / d(lna) = phi' / (a*H) */
+        dy[pba->index_bi_phi] = phi_prime / (a * H);
+
+        /* d(phi') / d(lna) = -2*phi' - (a^2/H)*dV - (gamma_drag/H)*phi' */
+        dy[pba->index_bi_phidot] = -2.0 * phi_prime - (a * a / H) * dV - (gamma_drag / H) * phi_prime;
+    }
+
+    /* 出力用データの更新 */
+    pvecback[pba->index_bg_Gamma_drag] = gamma_drag;
+}
+
+## pattern: ua10_phi_trigger
+--- lines 2676-2726 around ua10_phi_trigger ---
+    double phi = y[pba->index_bi_phi];
+    double phi_prime = y[pba->index_bi_phidot];
+
+    /* ポテンシャルの傾き dV/dphi の計算 */
+    double f_ax = pba->ua10_f_ax;
+    
+    // 安全対策：f_ax が 0 または極端に小さい場合のゼロ除算を防ぐ
+    if (f_ax < 1e-10) f_ax = 1e-10; 
+
+    double arg = phi / f_ax;
+    double one_minus_cos = 1.0 - cos(arg);
+    
+    /* V' = V0 * n * (1-cos)^(n-1) * (1/f) * sin(phi/f) */
+    double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);
+
+    /* --- 修正箇所：Delta_phi の安全な定義 --- */
+    /* YAMLから値が渡ってこない場合のゼロ除算を防ぐため、ハードコードで安全な幅を定義 */
+    double safe_delta_phi = 0.05; // 適切な幅（適宜調整可能ですが、一旦これで固定します）
+    
+    /* ドラッグ項（gate）の計算 */
+    double diff = phi - pba->ua10_phi_trigger;
+    double gate = exp(- (diff * diff) / (2.0 * safe_delta_phi * safe_delta_phi));
+    double gamma_drag = pba->ua10_Gamma0 * gate;
+
+    /* --- 運動方程式のセット（究極の凍結ロジック追加版） --- */
+    /* z=4000 (a=0.00025) 近傍をターゲットとして開始時期を遅らせる */
+    double a_thaw = 2.5e-4; 
+    
+    if (a < a_thaw) {
+        // 凍結フェーズ：ピクリとも動かさず、積分器のパニックを防ぐ
+        dy[pba->index_bi_phi] = 0.0;
+        dy[pba->index_bi_phidot] = 0.0;
+    } else {
+        // 稼働フェーズ：ハッブル摩擦が下がり、安全に計算できる時代
+        /* d(phi) / d(lna) = phi' / (a*H) */
+        dy[pba->index_bi_phi] = phi_prime / (a * H);
+
+        /* d(phi') / d(lna) = -2*phi' - (a^2/H)*dV - (gamma_drag/H)*phi' */
+        dy[pba->index_bi_phidot] = -2.0 * phi_prime - (a * a / H) * dV - (gamma_drag / H) * phi_prime;
+    }
+
+    /* 出力用データの更新 */
+    pvecback[pba->index_bg_Gamma_drag] = gamma_drag;
+}
+
+
+  /** - solve second order growth equation \f$ [D''(\tau)=-aHD'(\tau)+3/2 a^2 \rho_M D(\tau) \f$
+      written as \f$ dD/dloga = D' / (aH) \f$ and \f$ dD'/dloga = -D' + (3/2) (a/H) \rho_M D \f$ */
+  rho_M = pvecback[pba->index_bg_rho_b];
+  if (pba->has_cdm == _TRUE_) {
+    rho_M += pvecback[pba->index_bg_rho_cdm];
+
+## pattern: ua10_f_ax
+--- lines 561-611 around ua10_f_ax ---
+    rho_tot += pvecback[pba->index_bg_rho_ur];
+    p_tot += (1./3.) * pvecback[pba->index_bg_rho_ur];
+    dp_dloga += -(4./3.) * pvecback[pba->index_bg_rho_ur];
+    rho_r += pvecback[pba->index_bg_rho_ur];
+  }
+
+  /* interacting dark radiation */
+  if (pba->has_idr == _TRUE_) {
+    pvecback[pba->index_bg_rho_idr] = pba->Omega0_idr * pow(pba->H0,2) / pow(a,4);
+    rho_tot += pvecback[pba->index_bg_rho_idr];
+    p_tot += (1./3.) * pvecback[pba->index_bg_rho_idr];
+    rho_r += pvecback[pba->index_bg_rho_idr];
+  }
+
+/* 1. 各成分の密度計算（既存のループ内） */
+    if (pba->has_unified_a10 == _TRUE_) {
+        /* 積分変数 y からではなく、ここでは受け渡された pvecback_B 等から取得 */
+        double phi = pvecback_B[pba->index_bi_phi];
+        double phi_prime = pvecback_B[pba->index_bi_phidot];
+
+        double f_ax = pba->ua10_f_ax;
+        double one_minus_cos = 1.0 - cos(phi / f_ax);
+        double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+
+        /* 密度の計算：運動エネルギー + ポテンシャルエネルギー */
+        double rho_phi = (0.5 * phi_prime * phi_prime / (a * a)) + V;
+        double p_phi   = (0.5 * phi_prime * phi_prime / (a * a)) - V;
+
+        /* 合計密度 rho_tot に A10 の寄与をしっかりと加算 */
+        rho_tot += rho_phi;
+        p_tot += p_phi;
+
+        /* 出力用データの保存 */
+        pvecback[pba->index_bg_rho_phi] = rho_phi;
+        /* ゼロ割りを防ぐ安全な状態方程式パラメータ w の計算 */
+        pvecback[pba->index_bg_w_phi] = (rho_phi != 0.0) ? (p_phi / rho_phi) : -1.0;
+    }
+
+/* 2. --- YOSHIMURA A-LINE V2-PRIME REBOOT --- (H の計算の直前) */
+if (pba->has_unified_a10 == _TRUE_) {
+    double a_star = 1. / (1. + 3000.);
+    double x_aline = a / a_star;
+    double f_star = pba->ua10_f_ax; 
+    
+    /* 局所的ブースト: x * exp(1-x) により z=3000 で最大になり、現代では完全にゼロに消える */
+    double bump = x_aline * exp(1.0 - x_aline);
+    rho_tot *= (1.0 + f_star * bump);
+}
+
+//if (pba->ua10_tx_omega0 > 0.0) rho_tot += ua10_tx_rho(a, pba);
+
+--- lines 583-633 around ua10_f_ax ---
+        double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+
+        /* 密度の計算：運動エネルギー + ポテンシャルエネルギー */
+        double rho_phi = (0.5 * phi_prime * phi_prime / (a * a)) + V;
+        double p_phi   = (0.5 * phi_prime * phi_prime / (a * a)) - V;
+
+        /* 合計密度 rho_tot に A10 の寄与をしっかりと加算 */
+        rho_tot += rho_phi;
+        p_tot += p_phi;
+
+        /* 出力用データの保存 */
+        pvecback[pba->index_bg_rho_phi] = rho_phi;
+        /* ゼロ割りを防ぐ安全な状態方程式パラメータ w の計算 */
+        pvecback[pba->index_bg_w_phi] = (rho_phi != 0.0) ? (p_phi / rho_phi) : -1.0;
+    }
+
+/* 2. --- YOSHIMURA A-LINE V2-PRIME REBOOT --- (H の計算の直前) */
+if (pba->has_unified_a10 == _TRUE_) {
+    double a_star = 1. / (1. + 3000.);
+    double x_aline = a / a_star;
+    double f_star = pba->ua10_f_ax; 
+    
+    /* 局所的ブースト: x * exp(1-x) により z=3000 で最大になり、現代では完全にゼロに消える */
+    double bump = x_aline * exp(1.0 - x_aline);
+    rho_tot *= (1.0 + f_star * bump);
+}
+
+//if (pba->ua10_tx_omega0 > 0.0) rho_tot += ua10_tx_rho(a, pba);
+
+  /** - compute expansion rate H from Friedmann equation: this is the
+      only place where the Friedmann equation is assumed. Remember
+      that densities are all expressed in units of \f$ [3c^2/8\pi G] \f$, ie
+      \f$ \rho_{class} = [8 \pi G \rho_{physical} / 3 c^2]\f$ */
+  pvecback[pba->index_bg_H] = sqrt(rho_tot-pba->K/a/a);
+
+  /** - compute derivative of H with respect to conformal time */
+  pvecback[pba->index_bg_H_prime] = - (3./2.) * (rho_tot + p_tot) * a + pba->K/a;
+
+  /* Total energy density*/
+  pvecback[pba->index_bg_rho_tot] = rho_tot;
+
+  /* Total pressure */
+  pvecback[pba->index_bg_p_tot] = p_tot;
+
+  /* Derivative of total pressure w.r.t. conformal time */
+  pvecback[pba->index_bg_p_tot_prime] = a*pvecback[pba->index_bg_H]*dp_dloga;
+  if (pba->has_scf == _TRUE_) {
+    /** The contribution of scf was not added to dp_dloga, add p_scf_prime here: */
+    pvecback[pba->index_bg_p_prime_scf] = pvecback[pba->index_bg_phi_prime_scf]*
+      (-pvecback[pba->index_bg_phi_prime_scf]*pvecback[pba->index_bg_H]/a-2./3.*pvecback[pba->index_bg_dV_scf]);
+    pvecback[pba->index_bg_p_tot_prime] += pvecback[pba->index_bg_p_prime_scf];
+--- lines 2206-2256 around ua10_f_ax ---
+        a *= _SCALE_BACK_;
+      }
+    }
+    class_test(counter == _MAX_IT_,
+               pba->error_message,
+               "Search for initial scale factor a such that all ncdm species are relativistic failed.");
+  }
+
+  /* Set initial values of {B} variables: */
+  Omega_rad = pba->Omega0_g;
+  if (pba->has_ur == _TRUE_) {
+    Omega_rad += pba->Omega0_ur;
+  }
+  if (pba->has_idr == _TRUE_) {
+    Omega_rad += pba->Omega0_idr;
+  }
+
+/* A10モデルの初期条件の強制ハードコード（坂の上スタート） */
+    if (pba->has_unified_a10 == _TRUE_) {
+        // 🎯 0.65 などの固定値ではなく、「f_ax × 2.6」で常に坂の上に配置する！
+        pvecback_integration[pba->index_bi_phi] = 2.6 * pba->ua10_f_ax; 
+        pvecback_integration[pba->index_bi_phidot] = 0.0;
+    }
+
+  rho_rad = Omega_rad*pow(pba->H0,2)/pow(a,4);
+  if (pba->has_ncdm == _TRUE_) {
+    /** - We must add the relativistic contribution from NCDM species */
+    rho_rad += rho_ncdm_rel_tot;
+  }
+  if (pba->has_dcdm == _TRUE_) {
+    /* Remember that the critical density today in CLASS conventions is H0^2 */
+    pvecback_integration[pba->index_bi_rho_dcdm] =
+      pba->Omega_ini_dcdm*pba->H0*pba->H0*pow(a,-3);
+    if (pba->background_verbose > 3)
+      printf("Density is %g. Omega_ini=%g\n",pvecback_integration[pba->index_bi_rho_dcdm],pba->Omega_ini_dcdm);
+  }
+
+  if (pba->has_dr == _TRUE_) {
+    if (pba->has_dcdm == _TRUE_) {
+      /**  - f is the critical density fraction of DR. The exact solution is:
+       *
+       * `f = -Omega_rad+pow(pow(Omega_rad,3./2.)+0.5*pow(a,6)*pvecback_integration[pba->index_bi_rho_dcdm]*pba->Gamma_dcdm/pow(pba->H0,3),2./3.);`
+       *
+       * but it is not numerically stable for very small f which is always the case.
+       * Instead we use the Taylor expansion of this equation, which is equivalent to
+       * ignoring f(a) in the Hubble rate.
+       */
+      f = 1./3.*pow(a,6)*pvecback_integration[pba->index_bi_rho_dcdm]*pba->Gamma_dcdm/pow(pba->H0,3)/sqrt(Omega_rad);
+      pvecback_integration[pba->index_bi_rho_dr] = f*pba->H0*pba->H0/pow(a,4);
+    }
+    else{
+--- lines 2660-2710 around ua10_f_ax ---
+
+  /** - calculate derivative of conformal time \f$ d\tau/dloga = 1/aH \f$ */
+  dy[pba->index_bi_tau] = 1./a/H;
+
+  class_test(pvecback[pba->index_bg_rho_g] <= 0.,
+             error_message,
+             "rho_g = %e instead of strictly positive",pvecback[pba->index_bg_rho_g]);
+
+  /** - calculate detivative of sound horizon \f$ drs/dloga = drs/dtau * dtau/dloga = c_s/aH \f$*/
+  dy[pba->index_bi_rs] = 1./a/H/sqrt(3.*(1.+3.*pvecback[pba->index_bg_rho_b]/4./pvecback[pba->index_bg_rho_g]))*sqrt(1.-pba->K*y[pba->index_bi_rs]*y[pba->index_bi_rs]); // TBC: curvature correction
+
+
+/* Unified A10 の進化方程式 (d/d_lna) */
+if (pba->has_unified_a10 == _TRUE_) {
+
+    /* 変数の取得（この関数では y から取るのが CLASS の鉄則） */
+    double phi = y[pba->index_bi_phi];
+    double phi_prime = y[pba->index_bi_phidot];
+
+    /* ポテンシャルの傾き dV/dphi の計算 */
+    double f_ax = pba->ua10_f_ax;
+    
+    // 安全対策：f_ax が 0 または極端に小さい場合のゼロ除算を防ぐ
+    if (f_ax < 1e-10) f_ax = 1e-10; 
+
+    double arg = phi / f_ax;
+    double one_minus_cos = 1.0 - cos(arg);
+    
+    /* V' = V0 * n * (1-cos)^(n-1) * (1/f) * sin(phi/f) */
+    double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);
+
+    /* --- 修正箇所：Delta_phi の安全な定義 --- */
+    /* YAMLから値が渡ってこない場合のゼロ除算を防ぐため、ハードコードで安全な幅を定義 */
+    double safe_delta_phi = 0.05; // 適切な幅（適宜調整可能ですが、一旦これで固定します）
+    
+    /* ドラッグ項（gate）の計算 */
+    double diff = phi - pba->ua10_phi_trigger;
+    double gate = exp(- (diff * diff) / (2.0 * safe_delta_phi * safe_delta_phi));
+    double gamma_drag = pba->ua10_Gamma0 * gate;
+
+    /* --- 運動方程式のセット（究極の凍結ロジック追加版） --- */
+    /* z=4000 (a=0.00025) 近傍をターゲットとして開始時期を遅らせる */
+    double a_thaw = 2.5e-4; 
+    
+    if (a < a_thaw) {
+        // 凍結フェーズ：ピクリとも動かさず、積分器のパニックを防ぐ
+        dy[pba->index_bi_phi] = 0.0;
+        dy[pba->index_bi_phidot] = 0.0;
+    } else {
+        // 稼働フェーズ：ハッブル摩擦が下がり、安全に計算できる時代
+        /* d(phi) / d(lna) = phi' / (a*H) */
+
+## pattern: ua10_Gamma0
+--- lines 2678-2728 around ua10_Gamma0 ---
+
+    /* ポテンシャルの傾き dV/dphi の計算 */
+    double f_ax = pba->ua10_f_ax;
+    
+    // 安全対策：f_ax が 0 または極端に小さい場合のゼロ除算を防ぐ
+    if (f_ax < 1e-10) f_ax = 1e-10; 
+
+    double arg = phi / f_ax;
+    double one_minus_cos = 1.0 - cos(arg);
+    
+    /* V' = V0 * n * (1-cos)^(n-1) * (1/f) * sin(phi/f) */
+    double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);
+
+    /* --- 修正箇所：Delta_phi の安全な定義 --- */
+    /* YAMLから値が渡ってこない場合のゼロ除算を防ぐため、ハードコードで安全な幅を定義 */
+    double safe_delta_phi = 0.05; // 適切な幅（適宜調整可能ですが、一旦これで固定します）
+    
+    /* ドラッグ項（gate）の計算 */
+    double diff = phi - pba->ua10_phi_trigger;
+    double gate = exp(- (diff * diff) / (2.0 * safe_delta_phi * safe_delta_phi));
+    double gamma_drag = pba->ua10_Gamma0 * gate;
+
+    /* --- 運動方程式のセット（究極の凍結ロジック追加版） --- */
+    /* z=4000 (a=0.00025) 近傍をターゲットとして開始時期を遅らせる */
+    double a_thaw = 2.5e-4; 
+    
+    if (a < a_thaw) {
+        // 凍結フェーズ：ピクリとも動かさず、積分器のパニックを防ぐ
+        dy[pba->index_bi_phi] = 0.0;
+        dy[pba->index_bi_phidot] = 0.0;
+    } else {
+        // 稼働フェーズ：ハッブル摩擦が下がり、安全に計算できる時代
+        /* d(phi) / d(lna) = phi' / (a*H) */
+        dy[pba->index_bi_phi] = phi_prime / (a * H);
+
+        /* d(phi') / d(lna) = -2*phi' - (a^2/H)*dV - (gamma_drag/H)*phi' */
+        dy[pba->index_bi_phidot] = -2.0 * phi_prime - (a * a / H) * dV - (gamma_drag / H) * phi_prime;
+    }
+
+    /* 出力用データの更新 */
+    pvecback[pba->index_bg_Gamma_drag] = gamma_drag;
+}
+
+
+  /** - solve second order growth equation \f$ [D''(\tau)=-aHD'(\tau)+3/2 a^2 \rho_M D(\tau) \f$
+      written as \f$ dD/dloga = D' / (aH) \f$ and \f$ dD'/dloga = -D' + (3/2) (a/H) \rho_M D \f$ */
+  rho_M = pvecback[pba->index_bg_rho_b];
+  if (pba->has_cdm == _TRUE_) {
+    rho_M += pvecback[pba->index_bg_rho_cdm];
+  }
+  if (pba->has_idm == _TRUE_){
+
+## pattern: ua10_n_ax
+--- lines 563-613 around ua10_n_ax ---
+    dp_dloga += -(4./3.) * pvecback[pba->index_bg_rho_ur];
+    rho_r += pvecback[pba->index_bg_rho_ur];
+  }
+
+  /* interacting dark radiation */
+  if (pba->has_idr == _TRUE_) {
+    pvecback[pba->index_bg_rho_idr] = pba->Omega0_idr * pow(pba->H0,2) / pow(a,4);
+    rho_tot += pvecback[pba->index_bg_rho_idr];
+    p_tot += (1./3.) * pvecback[pba->index_bg_rho_idr];
+    rho_r += pvecback[pba->index_bg_rho_idr];
+  }
+
+/* 1. 各成分の密度計算（既存のループ内） */
+    if (pba->has_unified_a10 == _TRUE_) {
+        /* 積分変数 y からではなく、ここでは受け渡された pvecback_B 等から取得 */
+        double phi = pvecback_B[pba->index_bi_phi];
+        double phi_prime = pvecback_B[pba->index_bi_phidot];
+
+        double f_ax = pba->ua10_f_ax;
+        double one_minus_cos = 1.0 - cos(phi / f_ax);
+        double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+
+        /* 密度の計算：運動エネルギー + ポテンシャルエネルギー */
+        double rho_phi = (0.5 * phi_prime * phi_prime / (a * a)) + V;
+        double p_phi   = (0.5 * phi_prime * phi_prime / (a * a)) - V;
+
+        /* 合計密度 rho_tot に A10 の寄与をしっかりと加算 */
+        rho_tot += rho_phi;
+        p_tot += p_phi;
+
+        /* 出力用データの保存 */
+        pvecback[pba->index_bg_rho_phi] = rho_phi;
+        /* ゼロ割りを防ぐ安全な状態方程式パラメータ w の計算 */
+        pvecback[pba->index_bg_w_phi] = (rho_phi != 0.0) ? (p_phi / rho_phi) : -1.0;
+    }
+
+/* 2. --- YOSHIMURA A-LINE V2-PRIME REBOOT --- (H の計算の直前) */
+if (pba->has_unified_a10 == _TRUE_) {
+    double a_star = 1. / (1. + 3000.);
+    double x_aline = a / a_star;
+    double f_star = pba->ua10_f_ax; 
+    
+    /* 局所的ブースト: x * exp(1-x) により z=3000 で最大になり、現代では完全にゼロに消える */
+    double bump = x_aline * exp(1.0 - x_aline);
+    rho_tot *= (1.0 + f_star * bump);
+}
+
+//if (pba->ua10_tx_omega0 > 0.0) rho_tot += ua10_tx_rho(a, pba);
+
+  /** - compute expansion rate H from Friedmann equation: this is the
+      only place where the Friedmann equation is assumed. Remember
+--- lines 2669-2719 around ua10_n_ax ---
+  dy[pba->index_bi_rs] = 1./a/H/sqrt(3.*(1.+3.*pvecback[pba->index_bg_rho_b]/4./pvecback[pba->index_bg_rho_g]))*sqrt(1.-pba->K*y[pba->index_bi_rs]*y[pba->index_bi_rs]); // TBC: curvature correction
+
+
+/* Unified A10 の進化方程式 (d/d_lna) */
+if (pba->has_unified_a10 == _TRUE_) {
+
+    /* 変数の取得（この関数では y から取るのが CLASS の鉄則） */
+    double phi = y[pba->index_bi_phi];
+    double phi_prime = y[pba->index_bi_phidot];
+
+    /* ポテンシャルの傾き dV/dphi の計算 */
+    double f_ax = pba->ua10_f_ax;
+    
+    // 安全対策：f_ax が 0 または極端に小さい場合のゼロ除算を防ぐ
+    if (f_ax < 1e-10) f_ax = 1e-10; 
+
+    double arg = phi / f_ax;
+    double one_minus_cos = 1.0 - cos(arg);
+    
+    /* V' = V0 * n * (1-cos)^(n-1) * (1/f) * sin(phi/f) */
+    double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);
+
+    /* --- 修正箇所：Delta_phi の安全な定義 --- */
+    /* YAMLから値が渡ってこない場合のゼロ除算を防ぐため、ハードコードで安全な幅を定義 */
+    double safe_delta_phi = 0.05; // 適切な幅（適宜調整可能ですが、一旦これで固定します）
+    
+    /* ドラッグ項（gate）の計算 */
+    double diff = phi - pba->ua10_phi_trigger;
+    double gate = exp(- (diff * diff) / (2.0 * safe_delta_phi * safe_delta_phi));
+    double gamma_drag = pba->ua10_Gamma0 * gate;
+
+    /* --- 運動方程式のセット（究極の凍結ロジック追加版） --- */
+    /* z=4000 (a=0.00025) 近傍をターゲットとして開始時期を遅らせる */
+    double a_thaw = 2.5e-4; 
+    
+    if (a < a_thaw) {
+        // 凍結フェーズ：ピクリとも動かさず、積分器のパニックを防ぐ
+        dy[pba->index_bi_phi] = 0.0;
+        dy[pba->index_bi_phidot] = 0.0;
+    } else {
+        // 稼働フェーズ：ハッブル摩擦が下がり、安全に計算できる時代
+        /* d(phi) / d(lna) = phi' / (a*H) */
+        dy[pba->index_bi_phi] = phi_prime / (a * H);
+
+        /* d(phi') / d(lna) = -2*phi' - (a^2/H)*dV - (gamma_drag/H)*phi' */
+        dy[pba->index_bi_phidot] = -2.0 * phi_prime - (a * a / H) * dV - (gamma_drag / H) * phi_prime;
+    }
+
+    /* 出力用データの更新 */
+    pvecback[pba->index_bg_Gamma_drag] = gamma_drag;
+}

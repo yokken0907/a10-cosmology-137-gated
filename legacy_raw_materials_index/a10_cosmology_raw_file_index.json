@@ -1,0 +1,104 @@
+[
+  {
+    "path": "DISCLAIMER.md",
+    "bytes": 392,
+    "sha256": "07707b3b1e49f609b9b55952f0bc7ee043adca77362771a68ba41bfab72a1290",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "LICENSE_EVALUATION_ONLY.txt",
+    "bytes": 584,
+    "sha256": "77dee71c3af54eeff2f4f0722298530af0cc3755fe93e701a2c5f486bf8dbdaf",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "README.md",
+    "bytes": 569,
+    "sha256": "6ed0dbaddb036e6bea1b7b7acc8a425959af414c2802a4229c4bec878932769c",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "README_ja.md",
+    "bytes": 604,
+    "sha256": "eeab639fd4af4d3e26632c997628e99ed20c6b67281b1ea33f7a414b23e0db9f",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "STATUS.md",
+    "bytes": 313,
+    "sha256": "8f056fee330cc0d4f07e201a06d257f4995a0282605bc6945ca7d89429a949a9",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "docs/limitations.md",
+    "bytes": 275,
+    "sha256": "626cfc7ea2877d5a0d6dc02976de49cbedcd0d86ca76d3609919fef0d5585fd0",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "docs/release_checklist_ja.md",
+    "bytes": 479,
+    "sha256": "2fbb5ae052f23a989b59fd0140670816006c9acded6735f4d14aa74beef3214d",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "references/README.md",
+    "bytes": 137,
+    "sha256": "86fd0205a5b67910c6e80cac56fa50fc1923b6d2e4803bf49407666549e5fc2e",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "repro_archives/README.md",
+    "bytes": 114,
+    "sha256": "c032ff228ccf7d8a953f63af604b49aed0c695836fdfbcfef120cc36d7f02f2a",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "research_materials/all_code(13).txt",
+    "bytes": 83341,
+    "sha256": "2ce34b0f30b014e3cab4f36e2290bde449a12dd1c16ce37c8a2ecb1931c117fb",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "research_materials/all_code(19).txt",
+    "bytes": 75273,
+    "sha256": "eefa322408914a202deae19a2db4003572beadd5e7619dd6af55624b8aec232e",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "research_materials/all_code10(4).txt",
+    "bytes": 104358,
+    "sha256": "a8c4c362f4aacc517f34d8c58aef2b4e3caa7992d2b5ebad5d69c1f13bf0e5a6",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "research_materials/all_code11(3).txt",
+    "bytes": 15272,
+    "sha256": "fbe6d1295ceeca622127d607bdcd43f84f96f1a54382d49730131662608bb70e",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "research_materials/all_code4(5).txt",
+    "bytes": 161619,
+    "sha256": "e6bb3ebafd92a443ee955671ac30716ff437ced92c142cecca89904f088a94c5",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "research_materials/all_code5(3).txt",
+    "bytes": 352868,
+    "sha256": "fd4fb1a224a57cab6f25f6595b65bf0139046b11f771d67d522bcfa9ab73b30a",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "research_materials/all_code6(4).txt",
+    "bytes": 103821,
+    "sha256": "4a1269d0d4db913d473099b531c1a4cdabe62ac9faf9da9a8c35f7d26132ab24",
+    "included_in_git_folder": false
+  },
+  {
+    "path": "research_materials/all_code7(3).txt",
+    "bytes": 23654,
+    "sha256": "07a310f757864a45d3d184f29cda65196e26fefbbb3b2d3d417ef027a8083402",
+    "included_in_git_folder": false
+  }
+]

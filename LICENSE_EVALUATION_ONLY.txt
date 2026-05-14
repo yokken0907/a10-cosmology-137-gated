@@ -1,0 +1,7 @@
+Evaluation-only notice.
+
+This archive is provided for research review, documentation, and reproducibility assessment.
+
+It is not a validated product, not a commercial service, not a safety-critical system, and not an established cosmological model.
+
+Any reuse should preserve the claim boundary, AI-assistance disclosure, and citation metadata. External software and likelihood packages retain their own licenses and distribution terms.

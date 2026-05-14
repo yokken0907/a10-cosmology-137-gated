@@ -1,0 +1,325 @@
+# Focused windows for /home/kei/class_hybrid_a10/include/background.h
+
+## pattern: has_unified_a10
+--- lines 150-200 around has_unified_a10 ---
+  double Omega0_nfsm; /**< total non-free-streaming matter, that is, cdm, baryons and wdm */
+  double a_eq;      /**< scale factor at radiation/matter equality */
+  double H_eq;      /**< Hubble rate at radiation/matter equality [Mpc^-1] */
+  double z_eq;      /**< redshift at radiation/matter equality */
+  double tau_eq;    /**< conformal time at radiation/matter equality [Mpc] */
+
+  //@}
+
+
+  /** @name - all indices for the vector of background (=bg) quantities stored in table */
+
+  //@{
+
+  int index_bg_a;             /**< scale factor (in fact (a/a_0), see
+                                 normalisation conventions explained
+                                 at beginning of background.c) */
+  int index_bg_H;             /**< Hubble parameter in \f$Mpc^{-1}\f$ */
+  int index_bg_H_prime;       /**< its derivative w.r.t. conformal time */
+
+/* --- Unified A10 Project Parameters --- */
+  short has_unified_a10;           /* モデル起動スイッチ */
+  double ua10_phi_ini;             /* 初期値 */
+  double ua10_phi_trigger;         /* ゲートの中心（137.0） */
+  double ua10_Delta_phi;           /* ゲートの幅 */
+  double ua10_V0;                  /* ポテンシャル振幅 */
+  double ua10_f_ax;                /* スケール */
+  double ua10_n_ax;                /* べき数 */
+  double ua10_Gamma0;              /* ドラッグ強度 */
+
+  /* 背景積分のためのインデックス */
+  int index_bi_phi;                /* 積分変数phi */
+  int index_bi_phidot;             /* 積分変数phidot */
+
+  /* 派生出力のためのインデックス */
+  int index_bg_rho_phi;            /* 密度出力用 */
+  int index_bg_w_phi;              /* 状態方程式出力用 */
+  int index_bg_Gamma_drag;         /* ドラッグ強度出力用 */
+  /* -------------------------------------- */
+
+  /* end of vector in short format, now quantities in normal format */
+
+  int index_bg_rho_g;         /**< photon density */
+  int index_bg_rho_b;         /**< baryon density */
+  int index_bg_rho_cdm;       /**< cdm density */
+  int index_bg_rho_idm;       /**< idm density */
+  int index_bg_rho_lambda;    /**< cosmological constant density */
+  int index_bg_rho_fld;       /**< fluid density */
+  int index_bg_w_fld;         /**< fluid equation of state */
+  int index_bg_rho_idr;       /**< density of interacting dark radiation */
+  int index_bg_rho_ur;        /**< relativistic neutrinos/relics density */
+  int index_bg_rho_dcdm;      /**< dcdm density */
+
+## pattern: ua10_V0
+--- lines 154-204 around ua10_V0 ---
+  double tau_eq;    /**< conformal time at radiation/matter equality [Mpc] */
+
+  //@}
+
+
+  /** @name - all indices for the vector of background (=bg) quantities stored in table */
+
+  //@{
+
+  int index_bg_a;             /**< scale factor (in fact (a/a_0), see
+                                 normalisation conventions explained
+                                 at beginning of background.c) */
+  int index_bg_H;             /**< Hubble parameter in \f$Mpc^{-1}\f$ */
+  int index_bg_H_prime;       /**< its derivative w.r.t. conformal time */
+
+/* --- Unified A10 Project Parameters --- */
+  short has_unified_a10;           /* モデル起動スイッチ */
+  double ua10_phi_ini;             /* 初期値 */
+  double ua10_phi_trigger;         /* ゲートの中心（137.0） */
+  double ua10_Delta_phi;           /* ゲートの幅 */
+  double ua10_V0;                  /* ポテンシャル振幅 */
+  double ua10_f_ax;                /* スケール */
+  double ua10_n_ax;                /* べき数 */
+  double ua10_Gamma0;              /* ドラッグ強度 */
+
+  /* 背景積分のためのインデックス */
+  int index_bi_phi;                /* 積分変数phi */
+  int index_bi_phidot;             /* 積分変数phidot */
+
+  /* 派生出力のためのインデックス */
+  int index_bg_rho_phi;            /* 密度出力用 */
+  int index_bg_w_phi;              /* 状態方程式出力用 */
+  int index_bg_Gamma_drag;         /* ドラッグ強度出力用 */
+  /* -------------------------------------- */
+
+  /* end of vector in short format, now quantities in normal format */
+
+  int index_bg_rho_g;         /**< photon density */
+  int index_bg_rho_b;         /**< baryon density */
+  int index_bg_rho_cdm;       /**< cdm density */
+  int index_bg_rho_idm;       /**< idm density */
+  int index_bg_rho_lambda;    /**< cosmological constant density */
+  int index_bg_rho_fld;       /**< fluid density */
+  int index_bg_w_fld;         /**< fluid equation of state */
+  int index_bg_rho_idr;       /**< density of interacting dark radiation */
+  int index_bg_rho_ur;        /**< relativistic neutrinos/relics density */
+  int index_bg_rho_dcdm;      /**< dcdm density */
+  int index_bg_rho_dr;        /**< dr density */
+
+  int index_bg_phi_scf;       /**< scalar field value */
+  int index_bg_phi_prime_scf; /**< scalar field derivative wrt conformal time */
+
+## pattern: ua10_phi_trigger
+--- lines 152-202 around ua10_phi_trigger ---
+  double H_eq;      /**< Hubble rate at radiation/matter equality [Mpc^-1] */
+  double z_eq;      /**< redshift at radiation/matter equality */
+  double tau_eq;    /**< conformal time at radiation/matter equality [Mpc] */
+
+  //@}
+
+
+  /** @name - all indices for the vector of background (=bg) quantities stored in table */
+
+  //@{
+
+  int index_bg_a;             /**< scale factor (in fact (a/a_0), see
+                                 normalisation conventions explained
+                                 at beginning of background.c) */
+  int index_bg_H;             /**< Hubble parameter in \f$Mpc^{-1}\f$ */
+  int index_bg_H_prime;       /**< its derivative w.r.t. conformal time */
+
+/* --- Unified A10 Project Parameters --- */
+  short has_unified_a10;           /* モデル起動スイッチ */
+  double ua10_phi_ini;             /* 初期値 */
+  double ua10_phi_trigger;         /* ゲートの中心（137.0） */
+  double ua10_Delta_phi;           /* ゲートの幅 */
+  double ua10_V0;                  /* ポテンシャル振幅 */
+  double ua10_f_ax;                /* スケール */
+  double ua10_n_ax;                /* べき数 */
+  double ua10_Gamma0;              /* ドラッグ強度 */
+
+  /* 背景積分のためのインデックス */
+  int index_bi_phi;                /* 積分変数phi */
+  int index_bi_phidot;             /* 積分変数phidot */
+
+  /* 派生出力のためのインデックス */
+  int index_bg_rho_phi;            /* 密度出力用 */
+  int index_bg_w_phi;              /* 状態方程式出力用 */
+  int index_bg_Gamma_drag;         /* ドラッグ強度出力用 */
+  /* -------------------------------------- */
+
+  /* end of vector in short format, now quantities in normal format */
+
+  int index_bg_rho_g;         /**< photon density */
+  int index_bg_rho_b;         /**< baryon density */
+  int index_bg_rho_cdm;       /**< cdm density */
+  int index_bg_rho_idm;       /**< idm density */
+  int index_bg_rho_lambda;    /**< cosmological constant density */
+  int index_bg_rho_fld;       /**< fluid density */
+  int index_bg_w_fld;         /**< fluid equation of state */
+  int index_bg_rho_idr;       /**< density of interacting dark radiation */
+  int index_bg_rho_ur;        /**< relativistic neutrinos/relics density */
+  int index_bg_rho_dcdm;      /**< dcdm density */
+  int index_bg_rho_dr;        /**< dr density */
+
+
+## pattern: ua10_f_ax
+--- lines 155-205 around ua10_f_ax ---
+
+  //@}
+
+
+  /** @name - all indices for the vector of background (=bg) quantities stored in table */
+
+  //@{
+
+  int index_bg_a;             /**< scale factor (in fact (a/a_0), see
+                                 normalisation conventions explained
+                                 at beginning of background.c) */
+  int index_bg_H;             /**< Hubble parameter in \f$Mpc^{-1}\f$ */
+  int index_bg_H_prime;       /**< its derivative w.r.t. conformal time */
+
+/* --- Unified A10 Project Parameters --- */
+  short has_unified_a10;           /* モデル起動スイッチ */
+  double ua10_phi_ini;             /* 初期値 */
+  double ua10_phi_trigger;         /* ゲートの中心（137.0） */
+  double ua10_Delta_phi;           /* ゲートの幅 */
+  double ua10_V0;                  /* ポテンシャル振幅 */
+  double ua10_f_ax;                /* スケール */
+  double ua10_n_ax;                /* べき数 */
+  double ua10_Gamma0;              /* ドラッグ強度 */
+
+  /* 背景積分のためのインデックス */
+  int index_bi_phi;                /* 積分変数phi */
+  int index_bi_phidot;             /* 積分変数phidot */
+
+  /* 派生出力のためのインデックス */
+  int index_bg_rho_phi;            /* 密度出力用 */
+  int index_bg_w_phi;              /* 状態方程式出力用 */
+  int index_bg_Gamma_drag;         /* ドラッグ強度出力用 */
+  /* -------------------------------------- */
+
+  /* end of vector in short format, now quantities in normal format */
+
+  int index_bg_rho_g;         /**< photon density */
+  int index_bg_rho_b;         /**< baryon density */
+  int index_bg_rho_cdm;       /**< cdm density */
+  int index_bg_rho_idm;       /**< idm density */
+  int index_bg_rho_lambda;    /**< cosmological constant density */
+  int index_bg_rho_fld;       /**< fluid density */
+  int index_bg_w_fld;         /**< fluid equation of state */
+  int index_bg_rho_idr;       /**< density of interacting dark radiation */
+  int index_bg_rho_ur;        /**< relativistic neutrinos/relics density */
+  int index_bg_rho_dcdm;      /**< dcdm density */
+  int index_bg_rho_dr;        /**< dr density */
+
+  int index_bg_phi_scf;       /**< scalar field value */
+  int index_bg_phi_prime_scf; /**< scalar field derivative wrt conformal time */
+  int index_bg_V_scf;         /**< scalar field potential V */
+
+## pattern: ua10_Gamma0
+--- lines 157-207 around ua10_Gamma0 ---
+
+
+  /** @name - all indices for the vector of background (=bg) quantities stored in table */
+
+  //@{
+
+  int index_bg_a;             /**< scale factor (in fact (a/a_0), see
+                                 normalisation conventions explained
+                                 at beginning of background.c) */
+  int index_bg_H;             /**< Hubble parameter in \f$Mpc^{-1}\f$ */
+  int index_bg_H_prime;       /**< its derivative w.r.t. conformal time */
+
+/* --- Unified A10 Project Parameters --- */
+  short has_unified_a10;           /* モデル起動スイッチ */
+  double ua10_phi_ini;             /* 初期値 */
+  double ua10_phi_trigger;         /* ゲートの中心（137.0） */
+  double ua10_Delta_phi;           /* ゲートの幅 */
+  double ua10_V0;                  /* ポテンシャル振幅 */
+  double ua10_f_ax;                /* スケール */
+  double ua10_n_ax;                /* べき数 */
+  double ua10_Gamma0;              /* ドラッグ強度 */
+
+  /* 背景積分のためのインデックス */
+  int index_bi_phi;                /* 積分変数phi */
+  int index_bi_phidot;             /* 積分変数phidot */
+
+  /* 派生出力のためのインデックス */
+  int index_bg_rho_phi;            /* 密度出力用 */
+  int index_bg_w_phi;              /* 状態方程式出力用 */
+  int index_bg_Gamma_drag;         /* ドラッグ強度出力用 */
+  /* -------------------------------------- */
+
+  /* end of vector in short format, now quantities in normal format */
+
+  int index_bg_rho_g;         /**< photon density */
+  int index_bg_rho_b;         /**< baryon density */
+  int index_bg_rho_cdm;       /**< cdm density */
+  int index_bg_rho_idm;       /**< idm density */
+  int index_bg_rho_lambda;    /**< cosmological constant density */
+  int index_bg_rho_fld;       /**< fluid density */
+  int index_bg_w_fld;         /**< fluid equation of state */
+  int index_bg_rho_idr;       /**< density of interacting dark radiation */
+  int index_bg_rho_ur;        /**< relativistic neutrinos/relics density */
+  int index_bg_rho_dcdm;      /**< dcdm density */
+  int index_bg_rho_dr;        /**< dr density */
+
+  int index_bg_phi_scf;       /**< scalar field value */
+  int index_bg_phi_prime_scf; /**< scalar field derivative wrt conformal time */
+  int index_bg_V_scf;         /**< scalar field potential V */
+  int index_bg_dV_scf;        /**< scalar field potential derivative V' */
+  int index_bg_ddV_scf;       /**< scalar field potential second derivative V'' */
+
+## pattern: ua10_n_ax
+--- lines 156-206 around ua10_n_ax ---
+  //@}
+
+
+  /** @name - all indices for the vector of background (=bg) quantities stored in table */
+
+  //@{
+
+  int index_bg_a;             /**< scale factor (in fact (a/a_0), see
+                                 normalisation conventions explained
+                                 at beginning of background.c) */
+  int index_bg_H;             /**< Hubble parameter in \f$Mpc^{-1}\f$ */
+  int index_bg_H_prime;       /**< its derivative w.r.t. conformal time */
+
+/* --- Unified A10 Project Parameters --- */
+  short has_unified_a10;           /* モデル起動スイッチ */
+  double ua10_phi_ini;             /* 初期値 */
+  double ua10_phi_trigger;         /* ゲートの中心（137.0） */
+  double ua10_Delta_phi;           /* ゲートの幅 */
+  double ua10_V0;                  /* ポテンシャル振幅 */
+  double ua10_f_ax;                /* スケール */
+  double ua10_n_ax;                /* べき数 */
+  double ua10_Gamma0;              /* ドラッグ強度 */
+
+  /* 背景積分のためのインデックス */
+  int index_bi_phi;                /* 積分変数phi */
+  int index_bi_phidot;             /* 積分変数phidot */
+
+  /* 派生出力のためのインデックス */
+  int index_bg_rho_phi;            /* 密度出力用 */
+  int index_bg_w_phi;              /* 状態方程式出力用 */
+  int index_bg_Gamma_drag;         /* ドラッグ強度出力用 */
+  /* -------------------------------------- */
+
+  /* end of vector in short format, now quantities in normal format */
+
+  int index_bg_rho_g;         /**< photon density */
+  int index_bg_rho_b;         /**< baryon density */
+  int index_bg_rho_cdm;       /**< cdm density */
+  int index_bg_rho_idm;       /**< idm density */
+  int index_bg_rho_lambda;    /**< cosmological constant density */
+  int index_bg_rho_fld;       /**< fluid density */
+  int index_bg_w_fld;         /**< fluid equation of state */
+  int index_bg_rho_idr;       /**< density of interacting dark radiation */
+  int index_bg_rho_ur;        /**< relativistic neutrinos/relics density */
+  int index_bg_rho_dcdm;      /**< dcdm density */
+  int index_bg_rho_dr;        /**< dr density */
+
+  int index_bg_phi_scf;       /**< scalar field value */
+  int index_bg_phi_prime_scf; /**< scalar field derivative wrt conformal time */
+  int index_bg_V_scf;         /**< scalar field potential V */
+  int index_bg_dV_scf;        /**< scalar field potential derivative V' */

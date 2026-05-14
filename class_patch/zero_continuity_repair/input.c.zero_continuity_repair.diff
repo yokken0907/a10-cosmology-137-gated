@@ -1,0 +1,10 @@
+--- a/input.c.pre_zero_continuity_repair
++++ b/input.c.repaired
+@@ -1780,6 +1780,7 @@
+   // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+   pba->has_unified_a10 = _FALSE_;
+   pba->ua10_Gamma0 = 0.0;
++  pba->ua10_current_Gamma = 0.0;
+   pba->ua10_phi_trigger = 0.0;
+   pba->ua10_Delta_phi = 0.01;
+   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！

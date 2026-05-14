@@ -1,0 +1,20 @@
+--- a/perturbations.c.pre_zero_continuity_repair
++++ b/perturbations.c.repaired
+@@ -9085,7 +9085,7 @@
+         + R*pvecthermo[pth->index_th_dkappa]*(theta_g-theta_b);
+ 
+ /* 👇👇 Unified A10: ドラッグによるバリオンへの引っ張り力 👇👇 */
+-      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
++      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian && pba->ua10_current_Gamma != 0.0) {
+         dy[pv->index_pt_theta_b] += a * pba->ua10_current_Gamma * 
+                                     (pvecback[pba->index_bg_rho_cdm] / pvecback[pba->index_bg_rho_b]) * 
+                                     (y[pv->index_pt_theta_cdm] - theta_b);
+@@ -9236,7 +9236,7 @@
+       }
+ 
+ /* 👇👇 Unified A10: ドラッグによるCDMへのブレーキ力 👇👇 */
+-      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
++      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian && pba->ua10_current_Gamma != 0.0) {
+           dy[pv->index_pt_theta_cdm] -= a * pba->ua10_current_Gamma * (y[pv->index_pt_theta_cdm] - theta_b);
+       }
+ 

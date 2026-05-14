@@ -1,0 +1,71 @@
+--- a/background.c.pre_zero_continuity_repair
++++ b/background.c.repaired
+@@ -564,6 +564,11 @@
+     rho_r += pvecback[pba->index_bg_rho_ur];
+   }
+ 
++  /* unified-A10 continuity reset: V0->0 must imply no drag */
++  if (pba->has_unified_a10 == _TRUE_) {
++    pba->ua10_current_Gamma = 0.0;
++  }
++
+   /* interacting dark radiation */
+   if (pba->has_idr == _TRUE_) {
+     pvecback[pba->index_bg_rho_idr] = pba->Omega0_idr * pow(pba->H0,2) / pow(a,4);
+@@ -573,7 +578,7 @@
+   }
+ 
+ /* 1. 各成分の密度計算（既存のループ内） */
+-    if (pba->has_unified_a10 == _TRUE_) {
++    if (pba->has_unified_a10 == _TRUE_ && pba->ua10_V0 > 0.0) {
+         /* 積分変数 y からではなく、ここでは受け渡された pvecback_B 等から取得 */
+         double phi = pvecback_B[pba->index_bi_phi];
+         double phi_prime = pvecback_B[pba->index_bi_phidot];
+@@ -597,14 +602,15 @@
+     }
+ 
+ /* 2. --- YOSHIMURA A-LINE V2-PRIME REBOOT --- (H の計算の直前) */
+-if (pba->has_unified_a10 == _TRUE_) {
++if (pba->has_unified_a10 == _TRUE_ && pba->ua10_V0 > 0.0) {
+     double a_star = 1. / (1. + 3000.);
+     double x_aline = a / a_star;
+     double f_star = pba->ua10_f_ax; 
+     
+     /* 局所的ブースト: x * exp(1-x) により z=3000 で最大になり、現代では完全にゼロに消える */
+     double bump = x_aline * exp(1.0 - x_aline);
+-    rho_tot *= (1.0 + f_star * bump);
++    /* TEMP zero-amplitude continuity patch: A-LINE boost must vanish as V0->0 */
++    rho_tot *= (1.0 + pba->ua10_V0 * bump);
+ }
+ 
+ //if (pba->ua10_tx_omega0 > 0.0) rho_tot += ua10_tx_rho(a, pba);
+--- a/input.c.pre_zero_continuity_repair
++++ b/input.c.repaired
+@@ -1780,6 +1780,7 @@
+   // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+   pba->has_unified_a10 = _FALSE_;
+   pba->ua10_Gamma0 = 0.0;
++  pba->ua10_current_Gamma = 0.0;
+   pba->ua10_phi_trigger = 0.0;
+   pba->ua10_Delta_phi = 0.01;
+   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+--- a/perturbations.c.pre_zero_continuity_repair
++++ b/perturbations.c.repaired
+@@ -9085,7 +9085,7 @@
+         + R*pvecthermo[pth->index_th_dkappa]*(theta_g-theta_b);
+ 
+ /* 👇👇 Unified A10: ドラッグによるバリオンへの引っ張り力 👇👇 */
+-      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
++      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian && pba->ua10_current_Gamma != 0.0) {
+         dy[pv->index_pt_theta_b] += a * pba->ua10_current_Gamma * 
+                                     (pvecback[pba->index_bg_rho_cdm] / pvecback[pba->index_bg_rho_b]) * 
+                                     (y[pv->index_pt_theta_cdm] - theta_b);
+@@ -9236,7 +9236,7 @@
+       }
+ 
+ /* 👇👇 Unified A10: ドラッグによるCDMへのブレーキ力 👇👇 */
+-      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
++      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian && pba->ua10_current_Gamma != 0.0) {
+           dy[pv->index_pt_theta_cdm] -= a * pba->ua10_current_Gamma * (y[pv->index_pt_theta_cdm] - theta_b);
+       }
+ 

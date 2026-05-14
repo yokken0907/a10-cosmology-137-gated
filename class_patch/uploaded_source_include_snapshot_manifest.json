@@ -1,0 +1,248 @@
+{
+  "note": "Manifest of user-supplied local CLASS source/include snapshot. The GitHub-ready repo keeps selected modified overlay files, not the full local build tree.",
+  "created_utc": "2026-05-06T11:23:12.330873Z",
+  "input_files": {
+    "source.zip": {
+      "sha256": "fe3ca46e960a83d9eaf2b060ce04851dcf7c8b1fd9e5609698678d2ff913cf4d",
+      "size_bytes": 304466
+    },
+    "include.zip": {
+      "sha256": "f95650d0874f670d259dc67d60591e0dd763b8e8404ffe4dbe1537e439890d09",
+      "size_bytes": 96477
+    },
+    "README(202).md": {
+      "sha256": "24738c5700f7f0754ad29f14874d35b7fd5a314b8d6cb7e6729b93b7158c1bf9",
+      "size_bytes": 4565
+    },
+    "CLASS_rename.py": {
+      "sha256": "36989f3299c06db413c174867f0026a243d73836baf1e741413ff87693e41c7c",
+      "size_bytes": 19613
+    }
+  },
+  "omitted_binary_build_artifacts": {
+    "class": {
+      "sha256": "95b90def4c3a7eae0ef5b96beac6e0651ad5dd86a7d20267adb8570b07c7f128",
+      "size_bytes": 9941112,
+      "reason": "ELF executable build artifact; should not be committed to source repository."
+    },
+    "_classy.cpython-312-x86_64-linux-gnu.so": {
+      "sha256": "d6ab26d715d7dea21906a54ee62438980bdd18453ee5837a65ba302b0b7fc3a2",
+      "size_bytes": 15452360,
+      "reason": "Compiled Python extension build artifact; should not be committed to source repository."
+    }
+  },
+  "source_zip_members": [
+    {
+      "path": "source/background.c",
+      "size_bytes": 122793,
+      "crc": "0x6470853d"
+    },
+    {
+      "path": "source/distortions.c",
+      "size_bytes": 73823,
+      "crc": "0xd10332f9"
+    },
+    {
+      "path": "source/fourier.c",
+      "size_bytes": 106664,
+      "crc": "0xff9dee3b"
+    },
+    {
+      "path": "source/harmonic.c",
+      "size_bytes": 67580,
+      "crc": "0x24b6da66"
+    },
+    {
+      "path": "source/input.c",
+      "size_bytes": 241068,
+      "crc": "0x4204e0b5"
+    },
+    {
+      "path": "source/lensing.c",
+      "size_bytes": 59241,
+      "crc": "0xc13fcc51"
+    },
+    {
+      "path": "source/output.c",
+      "size_bytes": 68288,
+      "crc": "0xa3c79cac"
+    },
+    {
+      "path": "source/perturbations.c",
+      "size_bytes": 423280,
+      "crc": "0xc45a5191"
+    },
+    {
+      "path": "source/primordial.c",
+      "size_bytes": 131600,
+      "crc": "0xc5ecef5a"
+    },
+    {
+      "path": "source/thermodynamics.c",
+      "size_bytes": 209606,
+      "crc": "0x27404e84"
+    },
+    {
+      "path": "source/transfer.c",
+      "size_bytes": 205033,
+      "crc": "0x79b16169"
+    }
+  ],
+  "include_zip_members": [
+    {
+      "path": "include/arrays.h",
+      "size_bytes": 14861,
+      "crc": "0xccd49835"
+    },
+    {
+      "path": "include/background.h",
+      "size_bytes": 27659,
+      "crc": "0x462ec4e1"
+    },
+    {
+      "path": "include/background.h.a10_bak",
+      "size_bytes": 27659,
+      "crc": "0x462ec4e1"
+    },
+    {
+      "path": "include/class.h",
+      "size_bytes": 631,
+      "crc": "0x5a824296"
+    },
+    {
+      "path": "include/common.h",
+      "size_bytes": 24172,
+      "crc": "0x779143a7"
+    },
+    {
+      "path": "include/dei_rkck.h",
+      "size_bytes": 2705,
+      "crc": "0xf7050b8b"
+    },
+    {
+      "path": "include/distortions.h",
+      "size_bytes": 14824,
+      "crc": "0x2028f66c"
+    },
+    {
+      "path": "include/evolver_ndf15.h",
+      "size_bytes": 4238,
+      "crc": "0xc0141d82"
+    },
+    {
+      "path": "include/evolver_rkck.h",
+      "size_bytes": 1278,
+      "crc": "0xd6d9f7a5"
+    },
+    {
+      "path": "include/fourier.h",
+      "size_bytes": 19510,
+      "crc": "0x17f94517"
+    },
+    {
+      "path": "include/growTable.h",
+      "size_bytes": 1070,
+      "crc": "0x27cca168"
+    },
+    {
+      "path": "include/harmonic.h",
+      "size_bytes": 12742,
+      "crc": "0xca65a2b5"
+    },
+    {
+      "path": "include/hermite3_interpolation_csource.h",
+      "size_bytes": 4785,
+      "crc": "0xe84de4d8"
+    },
+    {
+      "path": "include/hermite4_interpolation_csource.h",
+      "size_bytes": 4899,
+      "crc": "0xd4cb5c63"
+    },
+    {
+      "path": "include/hermite6_interpolation_csource.h",
+      "size_bytes": 5749,
+      "crc": "0x4aec8f61"
+    },
+    {
+      "path": "include/hyperspherical.h",
+      "size_bytes": 10669,
+      "crc": "0x45229555"
+    },
+    {
+      "path": "include/input.h",
+      "size_bytes": 25735,
+      "crc": "0x96aadf72"
+    },
+    {
+      "path": "include/lensing.h",
+      "size_bytes": 9398,
+      "crc": "0xe7ce41e0"
+    },
+    {
+      "path": "include/macros_precision.h",
+      "size_bytes": 1503,
+      "crc": "0x6d6de2ae"
+    },
+    {
+      "path": "include/output.h",
+      "size_bytes": 6183,
+      "crc": "0x1bfc89f6"
+    },
+    {
+      "path": "include/parallel.h",
+      "size_bytes": 7257,
+      "crc": "0xf1694e20"
+    },
+    {
+      "path": "include/parser.h",
+      "size_bytes": 4124,
+      "crc": "0x5101399a"
+    },
+    {
+      "path": "include/perturbations.h",
+      "size_bytes": 50189,
+      "crc": "0x295ab40d"
+    },
+    {
+      "path": "include/precisions.h",
+      "size_bytes": 40186,
+      "crc": "0xf6720791"
+    },
+    {
+      "path": "include/primordial.h",
+      "size_bytes": 22113,
+      "crc": "0x4d24edc7"
+    },
+    {
+      "path": "include/quadrature.h",
+      "size_bytes": 3504,
+      "crc": "0x83b127cf"
+    },
+    {
+      "path": "include/sparse.h",
+      "size_bytes": 2428,
+      "crc": "0xec4da32"
+    },
+    {
+      "path": "include/svnversion.h",
+      "size_bytes": 30,
+      "crc": "0xc6f81888"
+    },
+    {
+      "path": "include/thermodynamics.h",
+      "size_bytes": 34358,
+      "crc": "0x95011733"
+    },
+    {
+      "path": "include/transfer.h",
+      "size_bytes": 34191,
+      "crc": "0x82b557c0"
+    },
+    {
+      "path": "include/trigonometric_integrals.h",
+      "size_bytes": 452,
+      "crc": "0xc98aa3b5"
+    }
+  ]
+}

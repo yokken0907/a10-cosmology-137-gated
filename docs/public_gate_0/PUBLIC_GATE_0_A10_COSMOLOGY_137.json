@@ -1,0 +1,28 @@
+{
+  "decision": "PASS-WITH-STRICT-COSMOLOGY-CLAIM-BOUNDARY-A10-COSMOLOGY-PUBLIC-GATE-0",
+  "repository": "a10-cosmology-137-gated",
+  "public_version": "v0.1.1-public-gate",
+  "date": "2026-05-07",
+  "classification": "A10宇宙論137-gated branch再現性・来歴アーカイブ",
+  "allowed_public_description": "A reproducibility/provenance archive for a candidate A10 137-gated cosmology branch and related CLASS/Cobaya materials.",
+  "allowed_public_description_ja": "A10 137-gated cosmology branch候補と関連CLASS/Cobaya素材の再現性・来歴アーカイブ。",
+  "forbidden_claims": [
+    "definitive resolution of Hubble tension",
+    "established replacement for LambdaCDM",
+    "official CLASS patch",
+    "externally certified cosmology result",
+    "redistribution of non-redistributable likelihood data"
+  ],
+  "publication_posture": {
+    "github": "CONDITIONAL GO; external likelihood/data requirements and large raw-chain exclusion must remain explicit.",
+    "zenodo": "CONDITIONAL; only redistributable materials or clearly separated release assets.",
+    "jxiv": "CONDITIONAL; use best-fit-vs-best-fit and convergence caveats conservatively."
+  },
+  "manifest_policy": "manifest-excluding-self",
+  "manifest_entries_verified": 2116,
+  "manifest_errors": [],
+  "notes": [
+    "High overclaim risk; all language must remain candidate/provenance/reproducibility, not discovery or final-resolution."
+  ],
+  "claim_promotion_authorized": false
+}

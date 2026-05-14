@@ -1,0 +1,62 @@
+# has_unified_a10 occurrences
+/home/kei/class_hybrid_a10/source/background.c:576:    if (pba->has_unified_a10 == _TRUE_) {
+/home/kei/class_hybrid_a10/source/background.c:600:if (pba->has_unified_a10 == _TRUE_) {
+/home/kei/class_hybrid_a10/source/background.c:1032:  if (pba->has_unified_a10 == _TRUE_) {
+/home/kei/class_hybrid_a10/source/background.c:1164:  if (pba->has_unified_a10 == _TRUE_) {
+/home/kei/class_hybrid_a10/source/background.c:2224:    if (pba->has_unified_a10 == _TRUE_) {
+/home/kei/class_hybrid_a10/source/background.c:2506:  if (pba->has_unified_a10 == _TRUE_) {
+/home/kei/class_hybrid_a10/source/background.c:2589:    if (pba->has_unified_a10 == _TRUE_) {
+/home/kei/class_hybrid_a10/source/background.c:2673:if (pba->has_unified_a10 == _TRUE_) {
+/home/kei/class_hybrid_a10/source/input.c:1781:  pba->has_unified_a10 = _FALSE_;
+/home/kei/class_hybrid_a10/source/input.c:1810:  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+/home/kei/class_hybrid_a10/source/input.c:1813:      pba->has_unified_a10 = _TRUE_;
+/home/kei/class_hybrid_a10/source/input.c:1815:      pba->has_unified_a10 = _FALSE_;
+/home/kei/class_hybrid_a10/source/perturbations.c:9088:      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
+/home/kei/class_hybrid_a10/source/perturbations.c:9239:      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
+/home/kei/class_hybrid_a10/include/background.h:170:  short has_unified_a10;           /* モデル起動スイッチ */
+/home/kei/class_hybrid_a10/include/background.h.a10_bak:170:  short has_unified_a10;           /* モデル起動スイッチ */
+
+# ua10_V0 occurrences
+/home/kei/class_hybrid_a10/source/background.c:583:        double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+/home/kei/class_hybrid_a10/source/background.c:2689:    double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);
+/home/kei/class_hybrid_a10/source/input.c:1786:  pba->ua10_V0 = 0.0;
+/home/kei/class_hybrid_a10/source/input.c:1803:  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+/home/kei/class_hybrid_a10/source/input.c:1804:  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+/home/kei/class_hybrid_a10/include/background.h:174:  double ua10_V0;                  /* ポテンシャル振幅 */
+/home/kei/class_hybrid_a10/include/background.h.a10_bak:174:  double ua10_V0;                  /* ポテンシャル振幅 */
+
+# ua10_phi_trigger occurrences
+/home/kei/class_hybrid_a10/source/background.c:2696:    double diff = phi - pba->ua10_phi_trigger;
+/home/kei/class_hybrid_a10/source/input.c:1783:  pba->ua10_phi_trigger = 0.0;
+/home/kei/class_hybrid_a10/source/input.c:1793:  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+/home/kei/class_hybrid_a10/source/input.c:1794:  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+/home/kei/class_hybrid_a10/include/background.h:172:  double ua10_phi_trigger;         /* ゲートの中心（137.0） */
+/home/kei/class_hybrid_a10/include/background.h.a10_bak:172:  double ua10_phi_trigger;         /* ゲートの中心（137.0） */
+
+# ua10_f_ax occurrences
+/home/kei/class_hybrid_a10/source/background.c:581:        double f_ax = pba->ua10_f_ax;
+/home/kei/class_hybrid_a10/source/background.c:603:    double f_star = pba->ua10_f_ax; 
+/home/kei/class_hybrid_a10/source/background.c:2226:        pvecback_integration[pba->index_bi_phi] = 2.6 * pba->ua10_f_ax; 
+/home/kei/class_hybrid_a10/source/background.c:2680:    double f_ax = pba->ua10_f_ax;
+/home/kei/class_hybrid_a10/source/input.c:1785:  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+/home/kei/class_hybrid_a10/source/input.c:1800:  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+/home/kei/class_hybrid_a10/source/input.c:1801:  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+/home/kei/class_hybrid_a10/include/background.h:175:  double ua10_f_ax;                /* スケール */
+/home/kei/class_hybrid_a10/include/background.h.a10_bak:175:  double ua10_f_ax;                /* スケール */
+
+# ua10_Gamma0 occurrences
+/home/kei/class_hybrid_a10/source/background.c:2698:    double gamma_drag = pba->ua10_Gamma0 * gate;
+/home/kei/class_hybrid_a10/source/input.c:1782:  pba->ua10_Gamma0 = 0.0;
+/home/kei/class_hybrid_a10/source/input.c:1790:  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+/home/kei/class_hybrid_a10/source/input.c:1791:  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+/home/kei/class_hybrid_a10/include/background.h:177:  double ua10_Gamma0;              /* ドラッグ強度 */
+/home/kei/class_hybrid_a10/include/background.h.a10_bak:177:  double ua10_Gamma0;              /* ドラッグ強度 */
+
+# ua10_n_ax occurrences
+/home/kei/class_hybrid_a10/source/background.c:583:        double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+/home/kei/class_hybrid_a10/source/background.c:2689:    double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);
+/home/kei/class_hybrid_a10/source/input.c:1787:  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+/home/kei/class_hybrid_a10/source/input.c:1806:  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+/home/kei/class_hybrid_a10/source/input.c:1807:  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+/home/kei/class_hybrid_a10/include/background.h:176:  double ua10_n_ax;                /* べき数 */
+/home/kei/class_hybrid_a10/include/background.h.a10_bak:176:  double ua10_n_ax;                /* べき数 */

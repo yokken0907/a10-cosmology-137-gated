@@ -1,0 +1,172 @@
+{
+  "status": "chain-audit-ready",
+  "fresh_rerun_status": "requires_modified_CLASS_and_external_likelihood_assets",
+  "chain_prefix": "repaired_unified_highH0_narrow_rerun",
+  "n_chains": 3,
+  "rows_total": 122242,
+  "weighted_samples_total": 372471.0,
+  "checkpoint": {
+    "converged": true,
+    "Rminus1_last": 0.03558984395819551,
+    "burn_in": 0,
+    "mpi_size": 3
+  },
+  "progress_last": {
+    "N": 122242.0,
+    "timestamp": "2026-04-25T02:42:59.579734",
+    "acceptance_rate": 0.345147,
+    "Rminus1": 0.03559,
+    "Rminus1_cl": 0.084296
+  },
+  "posterior_key_values": {
+    "H0": {
+      "weighted_mean": 72.84248837128797,
+      "weighted_std": 0.13805059679534018,
+      "q16": 72.691435,
+      "q50": 72.835511,
+      "q84": 72.985482,
+      "min": 72.60034,
+      "max": 73.290318
+    },
+    "log10_ua10_V0": {
+      "weighted_mean": -10.192960541023597,
+      "weighted_std": 0.22629666168112703,
+      "q16": -10.458317,
+      "q50": -10.176021,
+      "q84": -9.954377,
+      "min": -10.599972,
+      "max": -9.5692243
+    },
+    "ua10_V0": {
+      "weighted_mean": 7.328505073783999e-11,
+      "weighted_std": 3.8411580919797487e-11,
+      "q16": 3.4808303e-11,
+      "q50": 6.6677484e-11,
+      "q84": 1.1107671e-10,
+      "min": 2.5120482e-11,
+      "max": 2.6963462e-10
+    },
+    "chi2": {
+      "weighted_mean": 4316.264861379006,
+      "weighted_std": 5.839876796388676,
+      "q16": 4310.561857333333,
+      "q50": 4315.6717,
+      "q84": 4321.946782,
+      "min": 4300.2676,
+      "max": 4348.7626
+    },
+    "chi2__CMB": {
+      "weighted_mean": 2845.555481693071,
+      "weighted_std": 5.630677644391581,
+      "q16": 2840.0519393333334,
+      "q50": 2845.0077,
+      "q84": 2850.9443819999997,
+      "min": 2831.4591,
+      "max": 2879.9688
+    },
+    "chi2__BAO": {
+      "weighted_mean": 43.59965855515195,
+      "weighted_std": 1.6614123151045854,
+      "q16": 41.970493,
+      "q50": 43.530547,
+      "q84": 45.276871,
+      "min": 38.863471,
+      "max": 51.391317
+    },
+    "chi2__SN": {
+      "weighted_mean": 1427.0560332092969,
+      "weighted_std": 0.5075215610374142,
+      "q16": 1426.5601,
+      "q50": 1427.0299,
+      "q84": 1427.5618,
+      "min": 1425.5826,
+      "max": 1429.2752
+    },
+    "chi2__shoes_H0": {
+      "weighted_mean": 0.053687877412611024,
+      "weighted_std": 0.04876489991976253,
+      "q16": 0.0050694626,
+      "q50": 0.038983082,
+      "q84": 0.11233149,
+      "min": 7.864558e-11,
+      "max": 0.17871744
+    },
+    "minuslogpost": {
+      "weighted_mean": 2120.979612886104,
+      "weighted_std": 2.9469553380511946,
+      "q16": 2118.086542,
+      "q50": 2120.6996166666668,
+      "q84": 2123.8311,
+      "min": 2112.9453,
+      "max": 2137.4186
+    }
+  },
+  "bestfit_min_minuslogpost": {
+    "minuslogpost": 2112.9453,
+    "H0": 72.627912,
+    "omega_b": 0.02317632,
+    "omega_cdm": 0.10888077,
+    "A_s": 2.1363272e-09,
+    "n_s": 0.99401029,
+    "tau_reio": 0.071192759,
+    "log10_ua10_V0": -10.017149,
+    "ua10_V0": 9.6128335e-11,
+    "chi2": 4300.8873,
+    "chi2__CMB": 2832.8553,
+    "chi2__BAO": 41.494615,
+    "chi2__SN": 1426.3804,
+    "chi2__shoes_H0": 0.1570049,
+    "chi2__planck_2018_highl_plik.TTTEEE": 2413.2166,
+    "chi2__planck_2018_lowl.TT": 19.955924,
+    "chi2__planck_2018_lowl.EE": 399.68281,
+    "chi2__bao.sdss_dr12_consensus_bao": 41.494615,
+    "chi2__sn.pantheonplus": 1426.3804
+  },
+  "asset_hashes": [
+    {
+      "path": "external_assets/chains/a10_highH0/repaired_unified_highH0_narrow_rerun/repaired_unified_highH0_narrow_rerun.1.txt",
+      "bytes": 31843540,
+      "sha256": "37c62fe06c10f560df8d81c5f4d54b1388f72b4041e19889a93a8e165966a56c"
+    },
+    {
+      "path": "external_assets/chains/a10_highH0/repaired_unified_highH0_narrow_rerun/repaired_unified_highH0_narrow_rerun.2.txt",
+      "bytes": 31675492,
+      "sha256": "b1ca1ec9fd5cb1c44a72cbe47901c266cebf8ce0640d9adb7dad84aab1c6f5a0"
+    },
+    {
+      "path": "external_assets/chains/a10_highH0/repaired_unified_highH0_narrow_rerun/repaired_unified_highH0_narrow_rerun.3.txt",
+      "bytes": 31587578,
+      "sha256": "a69e6643b8abcdc9486be4bdb99c27d49fc212eae3ebe6d5d1d91fe3cacf5f12"
+    },
+    {
+      "path": "external_assets/chains/a10_highH0/repaired_unified_highH0_narrow_rerun/repaired_unified_highH0_narrow_rerun.checkpoint",
+      "bytes": 106,
+      "sha256": "eb77c1ff1945817cb1a755fb03e90f3dc43d4aff083e937e6af7f6d2f47273a2"
+    },
+    {
+      "path": "external_assets/chains/a10_highH0/repaired_unified_highH0_narrow_rerun/repaired_unified_highH0_narrow_rerun.covmat",
+      "bytes": 20311,
+      "sha256": "77928118c89df7d47f76d00573e4fbfea3eb11475bee9307ff6a9984399e3f7d"
+    },
+    {
+      "path": "external_assets/chains/a10_highH0/repaired_unified_highH0_narrow_rerun/repaired_unified_highH0_narrow_rerun.input.yaml",
+      "bytes": 4159,
+      "sha256": "bcfd273ccab30fe901cb7d86107b923502920a34a693f9e90b504311ae729767"
+    },
+    {
+      "path": "external_assets/chains/a10_highH0/repaired_unified_highH0_narrow_rerun/repaired_unified_highH0_narrow_rerun.progress",
+      "bytes": 1830,
+      "sha256": "dbc6967faeb29588c6c36e6d84fde733527c5b522b4f23cf2d47a318c7242681"
+    },
+    {
+      "path": "external_assets/chains/a10_highH0/repaired_unified_highH0_narrow_rerun/repaired_unified_highH0_narrow_rerun.updated.yaml",
+      "bytes": 11075,
+      "sha256": "b0b752e4669e774e520c817c072fc6ad0f79a11f9c2f61a7d82b25a6ece4332f"
+    },
+    {
+      "path": "external_assets/chains/a10_highH0/repaired_unified_highH0_narrow_rerun/repaired_unified_highH0_narrow_rerun.yaml",
+      "bytes": 3944,
+      "sha256": "2bc76e21c5a223ce64585961157d42a5b08dbf4b9ed80a8ef13a165a369dbbe6"
+    }
+  ]
+}
