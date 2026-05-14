@@ -1,0 +1,3 @@
+   583:         double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+   583:         double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+  2689:     double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);

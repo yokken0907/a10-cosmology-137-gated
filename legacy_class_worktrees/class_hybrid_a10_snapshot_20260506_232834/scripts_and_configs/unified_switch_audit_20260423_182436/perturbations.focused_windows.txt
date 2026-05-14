@@ -1,0 +1,115 @@
+===== perturbations hit 1: lines 9068-9123 (anchor 9088) =====
+  9068:     }
+  9069: 
+  9070:     /** - ---> baryon density */
+  9071: 
+  9072:     dy[pv->index_pt_delta_b] = -(theta_b+metric_continuity);
+  9073: 
+  9074:     /** - ---> baryon velocity (depends on tight-coupling approximation=tca) */
+  9075: 
+  9076:     if (ppw->approx[ppw->index_ap_tca] == (int)tca_off) {
+  9077: 
+  9078:       /* without tca */
+  9079: 
+  9080:       /** - ----> perturbed recombination has an impact **/
+  9081:       dy[pv->index_pt_theta_b] =
+  9082:         - a_prime_over_a*theta_b
+  9083:         + metric_euler
+  9084:         + k2*delta_p_b_over_rho_b
+  9085:         + R*pvecthermo[pth->index_th_dkappa]*(theta_g-theta_b);
+  9086: 
+  9087: /* 👇👇 Unified A10: ドラッグによるバリオンへの引っ張り力 👇👇 */
+  9088:       if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
+  9089:         dy[pv->index_pt_theta_b] += a * pba->ua10_current_Gamma * 
+  9090:                                     (pvecback[pba->index_bg_rho_cdm] / pvecback[pba->index_bg_rho_b]) * 
+  9091:                                     (y[pv->index_pt_theta_cdm] - theta_b);
+  9092:       }
+  9093: 
+  9094:       if (pth->has_idm_b == _TRUE_) {
+  9095:         dy[pv->index_pt_theta_b] += S_idm_b*R_idm_b*(theta_idm-theta_b);
+  9096:       }
+  9097:     }
+  9098: 
+  9099:     else {
+  9100: 
+  9101:       /* with tca */
+  9102:       class_call(perturbations_tca_slip_and_shear(y,pppaw,error_message),
+  9103:                  error_message,
+  9104:                  error_message);
+  9105: 
+  9106:       /* perturbed recombination has an impact **/
+  9107:       dy[pv->index_pt_theta_b] =
+  9108:         (-a_prime_over_a*theta_b
+  9109:          +k2*(delta_p_b_over_rho_b+R*(delta_g/4.-s2_squared*ppw->tca_shear_g))
+  9110:          +R*ppw->tca_slip)/(1.+R)
+  9111:         +metric_euler;
+  9112: 
+  9113:       if (pth->has_idm_g == _TRUE_) {
+  9114:         dy[pv->index_pt_theta_b] +=
+  9115:           -dmu_idm_g * R/(1.+R) * (theta_g - theta_idm);
+  9116:       }
+  9117:       if (pth->has_idm_b == _TRUE_) {
+  9118:         dy[pv->index_pt_theta_b] += (S_idm_b * R_idm_b * (theta_idm - theta_b))/(1.+R);
+  9119:       }
+  9120:     }
+  9121: 
+  9122:     /** - ---> photon temperature higher momenta and photon polarization (depend on tight-coupling approximation) */
+  9123: 
+
+===== perturbations hit 2: lines 9219-9274 (anchor 9239) =====
+  9219:         if (pth->has_idm_b == _TRUE_) {
+  9220:           dy[pv->index_pt_theta_g] += S_idm_b * R_idm_b * (theta_idm - theta_b) / R;
+  9221:         }
+  9222:       }
+  9223: 
+  9224:     }
+  9225: 
+  9226:     /** - ---> cdm */
+  9227: 
+  9228:     if (pba->has_cdm == _TRUE_) {
+  9229: 
+  9230:       /** - ----> newtonian gauge: cdm density and velocity */
+  9231: 
+  9232:       if (ppt->gauge == newtonian) {
+  9233:         dy[pv->index_pt_delta_cdm] = -(y[pv->index_pt_theta_cdm]+metric_continuity); /* cdm density */
+  9234: 
+  9235:         dy[pv->index_pt_theta_cdm] = - a_prime_over_a*y[pv->index_pt_theta_cdm] + metric_euler; /* cdm velocity */
+  9236:       }
+  9237: 
+  9238: /* 👇👇 Unified A10: ドラッグによるCDMへのブレーキ力 👇👇 */
+  9239:       if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
+  9240:           dy[pv->index_pt_theta_cdm] -= a * pba->ua10_current_Gamma * (y[pv->index_pt_theta_cdm] - theta_b);
+  9241:       }
+  9242: 
+  9243:       /** - ----> synchronous gauge: cdm density only (velocity set to zero by definition of the gauge) */
+  9244: 
+  9245:       if (ppt->gauge == synchronous) {
+  9246:         dy[pv->index_pt_delta_cdm] = -metric_continuity; /* cdm density */
+  9247:       }
+  9248:     }
+  9249: 
+  9250:     /** - ---> interacting dark radiation */
+  9251:     if (pba->has_idr == _TRUE_){
+  9252: 
+  9253:       if (ppw->approx[ppw->index_ap_rsa_idr] == (int)rsa_idr_off) {
+  9254: 
+  9255:         dy[pv->index_pt_delta_idr] = -4./3.*(theta_idr + metric_continuity);
+  9256: 
+  9257:         if (ppw->approx[ppw->index_ap_tca_idm_dr] == (int)tca_idm_dr_off) {
+  9258: 
+  9259:           /** - ----> idr velocity */
+  9260:           if (ppt->idr_nature == idr_free_streaming)
+  9261:             dy[pv->index_pt_theta_idr] = k2*(y[pv->index_pt_delta_idr]/4.-s2_squared*y[pv->index_pt_shear_idr]) + metric_euler;
+  9262:           else
+  9263:             dy[pv->index_pt_theta_idr] = k2/4. * y[pv->index_pt_delta_idr] + metric_euler;
+  9264: 
+  9265:           if (pth->has_idm_dr == _TRUE_)
+  9266:             dy[pv->index_pt_theta_idr] += dmu_idm_dr*(y[pv->index_pt_theta_idm]-y[pv->index_pt_theta_idr]);
+  9267: 
+  9268:           if (ppt->idr_nature == idr_free_streaming){
+  9269: 
+  9270:             /** - ----> exact idr shear */
+  9271:             l = 2;
+  9272:             dy[pv->index_pt_shear_idr] = 0.5*(8./15.*(y[pv->index_pt_theta_idr]+metric_shear)-3./5.*k*s_l[3]/s_l[2]*y[pv->index_pt_shear_idr+1]);
+  9273:             if (pth->has_idm_dr == _TRUE_)
+  9274:               dy[pv->index_pt_shear_idr]-= (ppt->alpha_idm_dr[l-2]*dmu_idm_dr + ppt->beta_idr[l-2]*dmu_idr)*y[pv->index_pt_shear_idr];

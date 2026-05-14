@@ -1,0 +1,31 @@
+# ua10_V0 references
+583:        double V = pba->ua10_V0 * pow(one_minus_cos, pba->ua10_n_ax);
+2689:    double dV = pba->ua10_V0 * pba->ua10_n_ax * pow(one_minus_cos, pba->ua10_n_ax - 1.0) * (1.0 / f_ax) * sin(arg);
+1786:  pba->ua10_V0 = 0.0;
+1803:  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+1804:  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+174:  double ua10_V0;                  /* ポテンシャル振幅 */
+
+# ua10_phi_trigger references
+2696:    double diff = phi - pba->ua10_phi_trigger;
+1783:  pba->ua10_phi_trigger = 0.0;
+1793:  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+1794:  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+172:  double ua10_phi_trigger;         /* ゲートの中心（137.0） */
+
+# ua10_f_ax references
+581:        double f_ax = pba->ua10_f_ax;
+603:    double f_star = pba->ua10_f_ax; 
+2226:        pvecback_integration[pba->index_bi_phi] = 2.6 * pba->ua10_f_ax; 
+2680:    double f_ax = pba->ua10_f_ax;
+1785:  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+1800:  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+1801:  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+175:  double ua10_f_ax;                /* スケール */
+
+# ua10_Gamma0 references
+2698:    double gamma_drag = pba->ua10_Gamma0 * gate;
+1782:  pba->ua10_Gamma0 = 0.0;
+1790:  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+1791:  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+177:  double ua10_Gamma0;              /* ドラッグ強度 */

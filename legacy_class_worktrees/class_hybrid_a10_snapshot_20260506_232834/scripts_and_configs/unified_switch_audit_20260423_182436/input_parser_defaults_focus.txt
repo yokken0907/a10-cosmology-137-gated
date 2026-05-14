@@ -1,0 +1,328 @@
+===== has_unified_a10 =====
+--- lines 1775-1789 around 1781 ---
+  1775:   char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  1776:   char * options_modes[6] = {"s","v","t","S","V","T"};
+  1777:   char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+  1778: 
+  1779: /* --- Unified A10 Logic Start --- */
+  1780:   // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  1781:   pba->has_unified_a10 = _FALSE_;
+  1782:   pba->ua10_Gamma0 = 0.0;
+  1783:   pba->ua10_phi_trigger = 0.0;
+  1784:   pba->ua10_Delta_phi = 0.01;
+  1785:   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  1786:   pba->ua10_V0 = 0.0;
+  1787:   pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+
+--- lines 1804-1818 around 1810 ---
+  1804:   if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+  1805: 
+  1806:   class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1807:   if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+  1808: 
+  1809:   // 3. スイッチの読み込み
+  1810:   class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  1811:   if (flag1 == _TRUE_) {
+  1812:     if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+  1813:       pba->has_unified_a10 = _TRUE_;
+  1814:     else
+  1815:       pba->has_unified_a10 = _FALSE_;
+  1816:   }
+  1817:   /* --- Unified A10 Logic End --- */
+  1818: 
+
+--- lines 1807-1821 around 1813 ---
+  1807:   if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+  1808: 
+  1809:   // 3. スイッチの読み込み
+  1810:   class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  1811:   if (flag1 == _TRUE_) {
+  1812:     if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+  1813:       pba->has_unified_a10 = _TRUE_;
+  1814:     else
+  1815:       pba->has_unified_a10 = _FALSE_;
+  1816:   }
+  1817:   /* --- Unified A10 Logic End --- */
+  1818: 
+  1819:   /* Set local default values */
+  1820:   ppt->has_perturbations = _FALSE_;
+  1821:   ppt->has_cls = _FALSE_;
+
+--- lines 1809-1823 around 1815 ---
+  1809:   // 3. スイッチの読み込み
+  1810:   class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  1811:   if (flag1 == _TRUE_) {
+  1812:     if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+  1813:       pba->has_unified_a10 = _TRUE_;
+  1814:     else
+  1815:       pba->has_unified_a10 = _FALSE_;
+  1816:   }
+  1817:   /* --- Unified A10 Logic End --- */
+  1818: 
+  1819:   /* Set local default values */
+  1820:   ppt->has_perturbations = _FALSE_;
+  1821:   ppt->has_cls = _FALSE_;
+  1822:   psd->has_distortions = _FALSE_;
+  1823: 
+
+===== ua10_V0 =====
+--- lines 1780-1794 around 1786 ---
+  1780:   // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  1781:   pba->has_unified_a10 = _FALSE_;
+  1782:   pba->ua10_Gamma0 = 0.0;
+  1783:   pba->ua10_phi_trigger = 0.0;
+  1784:   pba->ua10_Delta_phi = 0.01;
+  1785:   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  1786:   pba->ua10_V0 = 0.0;
+  1787:   pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+  1790:   class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1791:   if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+  1792: 
+  1793:   class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  1794:   if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+--- lines 1797-1811 around 1803 ---
+  1797:   if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+  1798: 
+  1799:   /* 👇 今回追加した3つの受付窓口 👇 */
+  1800:   class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1801:   if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+  1802: 
+  1803:   class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1804:   if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+  1805: 
+  1806:   class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1807:   if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+  1808: 
+  1809:   // 3. スイッチの読み込み
+  1810:   class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  1811:   if (flag1 == _TRUE_) {
+
+--- lines 1798-1812 around 1804 ---
+  1798: 
+  1799:   /* 👇 今回追加した3つの受付窓口 👇 */
+  1800:   class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1801:   if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+  1802: 
+  1803:   class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1804:   if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+  1805: 
+  1806:   class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1807:   if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+  1808: 
+  1809:   // 3. スイッチの読み込み
+  1810:   class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  1811:   if (flag1 == _TRUE_) {
+  1812:     if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+
+===== ua10_phi_trigger =====
+--- lines 1777-1791 around 1783 ---
+  1777:   char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+  1778: 
+  1779: /* --- Unified A10 Logic Start --- */
+  1780:   // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  1781:   pba->has_unified_a10 = _FALSE_;
+  1782:   pba->ua10_Gamma0 = 0.0;
+  1783:   pba->ua10_phi_trigger = 0.0;
+  1784:   pba->ua10_Delta_phi = 0.01;
+  1785:   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  1786:   pba->ua10_V0 = 0.0;
+  1787:   pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+  1790:   class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1791:   if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+--- lines 1787-1801 around 1793 ---
+  1787:   pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+  1790:   class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1791:   if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+  1792: 
+  1793:   class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  1794:   if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+  1795: 
+  1796:   class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  1797:   if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+  1798: 
+  1799:   /* 👇 今回追加した3つの受付窓口 👇 */
+  1800:   class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1801:   if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+--- lines 1788-1802 around 1794 ---
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+  1790:   class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1791:   if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+  1792: 
+  1793:   class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  1794:   if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+  1795: 
+  1796:   class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  1797:   if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+  1798: 
+  1799:   /* 👇 今回追加した3つの受付窓口 👇 */
+  1800:   class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1801:   if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+  1802: 
+
+===== ua10_f_ax =====
+--- lines 1779-1793 around 1785 ---
+  1779: /* --- Unified A10 Logic Start --- */
+  1780:   // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  1781:   pba->has_unified_a10 = _FALSE_;
+  1782:   pba->ua10_Gamma0 = 0.0;
+  1783:   pba->ua10_phi_trigger = 0.0;
+  1784:   pba->ua10_Delta_phi = 0.01;
+  1785:   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  1786:   pba->ua10_V0 = 0.0;
+  1787:   pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+  1790:   class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1791:   if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+  1792: 
+  1793:   class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+
+--- lines 1794-1808 around 1800 ---
+  1794:   if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+  1795: 
+  1796:   class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  1797:   if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+  1798: 
+  1799:   /* 👇 今回追加した3つの受付窓口 👇 */
+  1800:   class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1801:   if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+  1802: 
+  1803:   class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1804:   if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+  1805: 
+  1806:   class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1807:   if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+  1808: 
+
+--- lines 1795-1809 around 1801 ---
+  1795: 
+  1796:   class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  1797:   if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+  1798: 
+  1799:   /* 👇 今回追加した3つの受付窓口 👇 */
+  1800:   class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1801:   if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+  1802: 
+  1803:   class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1804:   if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+  1805: 
+  1806:   class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1807:   if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+  1808: 
+  1809:   // 3. スイッチの読み込み
+
+===== ua10_Gamma0 =====
+--- lines 1776-1790 around 1782 ---
+  1776:   char * options_modes[6] = {"s","v","t","S","V","T"};
+  1777:   char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+  1778: 
+  1779: /* --- Unified A10 Logic Start --- */
+  1780:   // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  1781:   pba->has_unified_a10 = _FALSE_;
+  1782:   pba->ua10_Gamma0 = 0.0;
+  1783:   pba->ua10_phi_trigger = 0.0;
+  1784:   pba->ua10_Delta_phi = 0.01;
+  1785:   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  1786:   pba->ua10_V0 = 0.0;
+  1787:   pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+  1790:   class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+
+--- lines 1784-1798 around 1790 ---
+  1784:   pba->ua10_Delta_phi = 0.01;
+  1785:   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  1786:   pba->ua10_V0 = 0.0;
+  1787:   pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+  1790:   class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1791:   if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+  1792: 
+  1793:   class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  1794:   if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+  1795: 
+  1796:   class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  1797:   if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+  1798: 
+
+--- lines 1785-1799 around 1791 ---
+  1785:   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  1786:   pba->ua10_V0 = 0.0;
+  1787:   pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+  1790:   class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1791:   if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+  1792: 
+  1793:   class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  1794:   if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+  1795: 
+  1796:   class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  1797:   if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+  1798: 
+  1799:   /* 👇 今回追加した3つの受付窓口 👇 */
+
+===== ua10_n_ax =====
+--- lines 1781-1795 around 1787 ---
+  1781:   pba->has_unified_a10 = _FALSE_;
+  1782:   pba->ua10_Gamma0 = 0.0;
+  1783:   pba->ua10_phi_trigger = 0.0;
+  1784:   pba->ua10_Delta_phi = 0.01;
+  1785:   pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  1786:   pba->ua10_V0 = 0.0;
+  1787:   pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+  1788: 
+  1789:   // 2. パラメータの読み込み（受付窓口）
+  1790:   class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1791:   if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+  1792: 
+  1793:   class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  1794:   if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+  1795: 
+
+--- lines 1800-1814 around 1806 ---
+  1800:   class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1801:   if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+  1802: 
+  1803:   class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1804:   if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+  1805: 
+  1806:   class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1807:   if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+  1808: 
+  1809:   // 3. スイッチの読み込み
+  1810:   class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  1811:   if (flag1 == _TRUE_) {
+  1812:     if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+  1813:       pba->has_unified_a10 = _TRUE_;
+  1814:     else
+
+--- lines 1801-1815 around 1807 ---
+  1801:   if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+  1802: 
+  1803:   class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  1804:   if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+  1805: 
+  1806:   class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  1807:   if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+  1808: 
+  1809:   // 3. スイッチの読み込み
+  1810:   class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  1811:   if (flag1 == _TRUE_) {
+  1812:     if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+  1813:       pba->has_unified_a10 = _TRUE_;
+  1814:     else
+  1815:       pba->has_unified_a10 = _FALSE_;

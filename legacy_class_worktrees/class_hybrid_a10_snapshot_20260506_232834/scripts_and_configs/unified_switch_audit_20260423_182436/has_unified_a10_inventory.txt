@@ -1,0 +1,16 @@
+# has_unified_a10 references
+576:    if (pba->has_unified_a10 == _TRUE_) {
+600:if (pba->has_unified_a10 == _TRUE_) {
+1032:  if (pba->has_unified_a10 == _TRUE_) {
+1164:  if (pba->has_unified_a10 == _TRUE_) {
+2224:    if (pba->has_unified_a10 == _TRUE_) {
+2506:  if (pba->has_unified_a10 == _TRUE_) {
+2589:    if (pba->has_unified_a10 == _TRUE_) {
+2673:if (pba->has_unified_a10 == _TRUE_) {
+9088:      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
+9239:      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
+1781:  pba->has_unified_a10 = _FALSE_;
+1810:  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+1813:      pba->has_unified_a10 = _TRUE_;
+1815:      pba->has_unified_a10 = _FALSE_;
+170:  short has_unified_a10;           /* モデル起動スイッチ */

@@ -1,0 +1,5 @@
+  9084:         + k2*delta_p_b_over_rho_b
+  9089:         dy[pv->index_pt_theta_b] += a * pba->ua10_current_Gamma * 
+  9090:                                     (pvecback[pba->index_bg_rho_cdm] / pvecback[pba->index_bg_rho_b]) * 
+  9109:          +k2*(delta_p_b_over_rho_b+R*(delta_g/4.-s2_squared*ppw->tca_shear_g))
+  9240:           dy[pv->index_pt_theta_cdm] -= a * pba->ua10_current_Gamma * (y[pv->index_pt_theta_cdm] - theta_b);

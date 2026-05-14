@@ -1,0 +1,13 @@
+# Open these first:
+less background.focused_windows.txt
+less background.without_ua10_V0.txt
+less input_parser_defaults_focus.txt
+
+# Fast searches:
+grep -n "has_unified_a10" source/background.c source/perturbations.c source/input.c include/background.h
+grep -n "ua10_V0" source/background.c source/perturbations.c source/input.c include/background.h
+grep -n "ua10_phi_trigger" source/background.c source/perturbations.c source/input.c include/background.h
+
+# If you want to inspect only branches that may survive at ua10_V0=0:
+grep -n -C 4 "has_unified_a10" source/background.c | grep -v "ua10_V0"
+grep -n -C 4 "has_unified_a10" source/perturbations.c | grep -v "ua10_V0"
