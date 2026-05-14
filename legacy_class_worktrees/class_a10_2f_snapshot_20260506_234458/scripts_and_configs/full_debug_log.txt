@@ -1,0 +1,19 @@
+[output] Output to be read-from/written-into folder '.', with prefix 'a10_2f_ef'
+[output] Found existing info files with the requested output prefix: 'a10_2f_ef'
+[output] Will delete previous products ('force' was requested).
+[classy] `classy` module loaded successfully from /home/kei/class_a10_2f/build/lib.linux-x86_64-cpython-312/classy
+[evaluate] *WARNING* No sampled parameters requested! This will fail for non-mock samplers.
+[evaluate] Initialized!
+[evaluate] Looking for a reference point with non-zero prior.
+[evaluate] Reference point:
+   
+[evaluate] Evaluating prior and likelihoods...
+[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'h': 0.6736, 'omega_b': 0.02237, 'omega_cdm': 0.12, 'tau_reio': 0.0544, 'n_s': 0.9649, 'logA': 3.044} and {'has_a10_2f': 'no', 'lensing': 'yes', 'non_linear': 'hmcode', 'output': 'lCl tCl pCl', 'l_max_scalars': 29}. To see the original CLASS' error traceback, make 'debug: True'.
+[evaluate] log-posterior  = -inf
+[evaluate] log-prior      = 0
+[evaluate]    logprior_0 = 0
+[evaluate] log-likelihood = -inf
+[evaluate]    chi2_planck_2018_lowl.TT = inf
+[evaluate]    chi2_planck_2018_lowl.EE = inf
+[evaluate] Derived params:
+[evaluate]    chi2__CMB = nan
