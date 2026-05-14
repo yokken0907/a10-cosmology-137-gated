@@ -1,0 +1,146 @@
+# Provenance
+
+target=/home/kei/class_unified_a10
+label=class_unified_a10
+generated=2026-05-06T23:40:20+09:00
+
+## du
+12G	/home/kei/class_unified_a10
+
+## git
+e85808324f51fc694d12e3ed7439552a3c3f9540
+e8580832 (HEAD -> master, tag: v3.3.4, origin/master, origin/HEAD) Fixed shoorting bug (negative dx); store Omega_m(z) and Omega_r(z) in background table.
+origin	https://github.com/lesgourg/class_public.git (fetch)
+origin	https://github.com/lesgourg/class_public.git (push)
+ M include/background.h
+ D output/explanatory00_cl.dat
+ D output/explanatory00_cl_lensed.dat
+ D output/explanatory00_pk.dat
+ M source/background.c
+ M source/input.c
+ M source/perturbations.c
+?? 137_gate_evolution.png
+?? The_Final_Universe.png
+?? The_Final_Universe.py
+?? _classy.cpython-312-x86_64-linux-gnu.so
+?? a10_2d_likelihood.png
+?? a10_bao_run.1.txt
+?? a10_bao_run.checkpoint
+?? a10_bao_run.converge
+?? a10_bao_run.corr
+?? a10_bao_run.covmat
+?? a10_bao_run.input.yaml
+?? a10_bao_run.input.yaml.locked
+?? a10_bao_run.likestats
+?? a10_bao_run.log
+?? a10_bao_run.margestats
+?? a10_bao_run.progress
+?? a10_bao_run.updated.yaml
+?? a10_bao_test.input.yaml
+?? a10_chi2_scan.png
+?? a10_cmb_comparison.png
+?? a10_debug.yaml
+?? a10_env/
+?? a10_final_grand_history.py
+?? a10_grand_history_final.png
+?? a10_k_comparison.png
+?? a10_k_comparison.py
+?? a10_k_comparison_v2.png
+?? a10_k_comparison_v2.py
+?? a10_mcmc_chain_sim.txt
+?? a10_observation_comparison.png
+?? a10_phase2.py
+?? a10_phase2_corner.png
+?? a10_phase2_mcmc.txt
+?? a10_phase2_mcmc_chain.txt
+?? a10_phase2_mcmc_robust.py
+?? a10_phase2_plot.py
+?? a10_prod_run.2.txt.bak
+?? a10_prod_run.converge
+?? a10_prod_run.corr
+?? a10_prod_run.covmat
+?? a10_prod_run.likestats
+?? a10_prod_run.margestats
+?? a10_production.yaml
+?? a10_real_H_plot.png
+?? a10_real_mcmc_results.txt
+?? a10_real_mcmc_samples.png
+?? a10_single_victory.png
+?? a10_success_plot.png
+?? a10_test_00_background.dat
+?? a10_test_00_cl.dat
+?? a10_test_00_pk.dat
+?? a10_test_00_tk.dat
+?? a10_triangle_final.png
+?? a10_triangle_plot.png
+?? a10_zoomed_H_plot.png
+?? all_code6.txt
+?? analyze_gate.py
+?? analyze_matter.py
+?? chains/
+?? classy.egg-info/
+?? cmb_comparison.png
+?? cmb_spectrum_a10.png
+?? cmb_validation_golden_model.py
+?? compare_cmb.py
+?? curvature_diagnostics.py
+?? curvature_invariants.png
+?? daf
+?? diagnostic_final_ignition.png
+?? diagnostic_rs_ignition.png
+?? diagnostic_rs_single.png
+?? diagnostic_true_mountain.png
+?? exact_regular_bh_diagnostics.png
+?? exact_regular_bh_solver.py
+?? final_audit.py
+?? generate_a10_only.py
+?? get_bestfit.py
+?? include/background.h.a10_bak
+?? lcdm_data.npz
+?? local_bh_solver.py
+?? mass_function_full.png
+?? matter_analysis.png
+?? my_old_classy_script.py
+?? packages/
+?? plot_a10.py
+?? plot_a10_latest.py
+?? plot_a10_result.py
+?? plot_background.py
+?? plot_cmb.py
+?? plot_tentative.py
+?? python/classy.egg-info/
+?? regular_bh_profiles.png
+?? residual_plot.png
+?? rs_evolution.png
+?? run_a10_h0_free.py
+?? run_ratio_test.py
+?? sanity_check.png
+?? scientific_analysis.png
+?? source/background.c.backup
+?? step1_lcdm.py
+?? step2_a10_ratio.py
+?? tentative_analysis.png
+?? test_H0_70.19.png
+?? test_H0_72.69.png
+?? test_H0_73.26.png
+?? test_H0_73.83.png
+?? test_H0_74.47.png
+?? test_H0_75.94.png
+?? test_mcmc.yaml
+?? test_mcmc_output.1.txt
+?? test_mcmc_output.checkpoint
+?? test_mcmc_output.covmat
+?? test_mcmc_output.input.yaml
+?? test_mcmc_output.progress
+?? test_mcmc_output.updated.yaml
+?? the_ratio_test.png
+?? unified_a10.yaml
+?? verify_residual.py
+count: 0
+size: 0 bytes
+in-pack: 31337
+packs: 1
+size-pack: 803.81 MiB
+prune-packable: 0
+garbage: 0
+size-garbage: 0 bytes
