@@ -1,0 +1,1001 @@
+# Focused windows for /home/kei/class_hybrid_a10/source/input.c
+
+## pattern: has_unified_a10
+--- lines 1761-1811 around has_unified_a10 ---
+                                  struct fourier * pfo,
+                                  struct distortions * psd,
+                                  ErrorMsg errmsg){
+
+  /** Summary: */
+
+  /** - Define local variables */
+  int flag1,flag2;
+  double param1,param2;
+  char string1[_ARGUMENT_LENGTH_MAX_];
+  char * options_output[33] =  {"tCl","pCl","lCl","nCl","dCl","sCl","mPk","mTk","dTk","vTk","sd",
+                                "TCl","PCl","LCl","NCl","DCl","SCl","MPk","MTk","DTk","VTk","Sd",
+                                "TCL","PCL","LCL","NCL","DCL","SCL","MPK","MTK","DTK","VTK","SD"};
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+--- lines 1790-1840 around has_unified_a10 ---
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+  /* Read */
+  class_call(parser_read_string(pfc,"output",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  if (flag1 == _TRUE_) {
+    if ((strstr(string1,"tCl") != NULL) || (strstr(string1,"TCl") != NULL) || (strstr(string1,"TCL") != NULL)) {
+      ppt->has_cl_cmb_temperature = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+    }
+    if ((strstr(string1,"pCl") != NULL) || (strstr(string1,"PCl") != NULL) || (strstr(string1,"PCL") != NULL)) {
+      ppt->has_cl_cmb_polarization = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+    }
+--- lines 1793-1843 around has_unified_a10 ---
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+  /* Read */
+  class_call(parser_read_string(pfc,"output",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  if (flag1 == _TRUE_) {
+    if ((strstr(string1,"tCl") != NULL) || (strstr(string1,"TCl") != NULL) || (strstr(string1,"TCL") != NULL)) {
+      ppt->has_cl_cmb_temperature = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+    }
+    if ((strstr(string1,"pCl") != NULL) || (strstr(string1,"PCl") != NULL) || (strstr(string1,"PCL") != NULL)) {
+      ppt->has_cl_cmb_polarization = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+    }
+    if ((strstr(string1,"lCl") != NULL) || (strstr(string1,"LCl") != NULL) || (strstr(string1,"LCL") != NULL)) {
+      ppt->has_cl_cmb_lensing_potential = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+--- lines 1795-1845 around has_unified_a10 ---
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+  /* Read */
+  class_call(parser_read_string(pfc,"output",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  if (flag1 == _TRUE_) {
+    if ((strstr(string1,"tCl") != NULL) || (strstr(string1,"TCl") != NULL) || (strstr(string1,"TCL") != NULL)) {
+      ppt->has_cl_cmb_temperature = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+    }
+    if ((strstr(string1,"pCl") != NULL) || (strstr(string1,"PCl") != NULL) || (strstr(string1,"PCL") != NULL)) {
+      ppt->has_cl_cmb_polarization = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+    }
+    if ((strstr(string1,"lCl") != NULL) || (strstr(string1,"LCl") != NULL) || (strstr(string1,"LCL") != NULL)) {
+      ppt->has_cl_cmb_lensing_potential = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+    }
+
+## pattern: ua10_V0
+--- lines 1766-1816 around ua10_V0 ---
+
+  /** - Define local variables */
+  int flag1,flag2;
+  double param1,param2;
+  char string1[_ARGUMENT_LENGTH_MAX_];
+  char * options_output[33] =  {"tCl","pCl","lCl","nCl","dCl","sCl","mPk","mTk","dTk","vTk","sd",
+                                "TCl","PCl","LCl","NCl","DCl","SCl","MPk","MTk","DTk","VTk","Sd",
+                                "TCL","PCL","LCL","NCL","DCL","SCL","MPK","MTK","DTK","VTK","SD"};
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+--- lines 1783-1833 around ua10_V0 ---
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+  /* Read */
+  class_call(parser_read_string(pfc,"output",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  if (flag1 == _TRUE_) {
+    if ((strstr(string1,"tCl") != NULL) || (strstr(string1,"TCl") != NULL) || (strstr(string1,"TCL") != NULL)) {
+      ppt->has_cl_cmb_temperature = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+--- lines 1784-1834 around ua10_V0 ---
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+  /* Read */
+  class_call(parser_read_string(pfc,"output",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  if (flag1 == _TRUE_) {
+    if ((strstr(string1,"tCl") != NULL) || (strstr(string1,"TCl") != NULL) || (strstr(string1,"TCL") != NULL)) {
+      ppt->has_cl_cmb_temperature = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+
+## pattern: ua10_phi_trigger
+--- lines 1763-1813 around ua10_phi_trigger ---
+                                  ErrorMsg errmsg){
+
+  /** Summary: */
+
+  /** - Define local variables */
+  int flag1,flag2;
+  double param1,param2;
+  char string1[_ARGUMENT_LENGTH_MAX_];
+  char * options_output[33] =  {"tCl","pCl","lCl","nCl","dCl","sCl","mPk","mTk","dTk","vTk","sd",
+                                "TCl","PCl","LCl","NCl","DCl","SCl","MPk","MTk","DTk","VTk","Sd",
+                                "TCL","PCL","LCL","NCL","DCL","SCL","MPK","MTK","DTK","VTK","SD"};
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+--- lines 1773-1823 around ua10_phi_trigger ---
+                                "TCL","PCL","LCL","NCL","DCL","SCL","MPK","MTK","DTK","VTK","SD"};
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+--- lines 1774-1824 around ua10_phi_trigger ---
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+
+## pattern: ua10_f_ax
+--- lines 1765-1815 around ua10_f_ax ---
+  /** Summary: */
+
+  /** - Define local variables */
+  int flag1,flag2;
+  double param1,param2;
+  char string1[_ARGUMENT_LENGTH_MAX_];
+  char * options_output[33] =  {"tCl","pCl","lCl","nCl","dCl","sCl","mPk","mTk","dTk","vTk","sd",
+                                "TCl","PCl","LCl","NCl","DCl","SCl","MPk","MTk","DTk","VTk","Sd",
+                                "TCL","PCL","LCL","NCL","DCL","SCL","MPK","MTK","DTK","VTK","SD"};
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+--- lines 1780-1830 around ua10_f_ax ---
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+  /* Read */
+  class_call(parser_read_string(pfc,"output",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  if (flag1 == _TRUE_) {
+--- lines 1781-1831 around ua10_f_ax ---
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+  /* Read */
+  class_call(parser_read_string(pfc,"output",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  if (flag1 == _TRUE_) {
+    if ((strstr(string1,"tCl") != NULL) || (strstr(string1,"TCl") != NULL) || (strstr(string1,"TCL") != NULL)) {
+
+## pattern: ua10_Gamma0
+--- lines 1762-1812 around ua10_Gamma0 ---
+                                  struct distortions * psd,
+                                  ErrorMsg errmsg){
+
+  /** Summary: */
+
+  /** - Define local variables */
+  int flag1,flag2;
+  double param1,param2;
+  char string1[_ARGUMENT_LENGTH_MAX_];
+  char * options_output[33] =  {"tCl","pCl","lCl","nCl","dCl","sCl","mPk","mTk","dTk","vTk","sd",
+                                "TCl","PCl","LCl","NCl","DCl","SCl","MPk","MTk","DTk","VTk","Sd",
+                                "TCL","PCL","LCL","NCL","DCL","SCL","MPK","MTK","DTK","VTK","SD"};
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+--- lines 1770-1820 around ua10_Gamma0 ---
+  char string1[_ARGUMENT_LENGTH_MAX_];
+  char * options_output[33] =  {"tCl","pCl","lCl","nCl","dCl","sCl","mPk","mTk","dTk","vTk","sd",
+                                "TCl","PCl","LCl","NCl","DCl","SCl","MPk","MTk","DTk","VTk","Sd",
+                                "TCL","PCL","LCL","NCL","DCL","SCL","MPK","MTK","DTK","VTK","SD"};
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+--- lines 1771-1821 around ua10_Gamma0 ---
+  char * options_output[33] =  {"tCl","pCl","lCl","nCl","dCl","sCl","mPk","mTk","dTk","vTk","sd",
+                                "TCl","PCl","LCl","NCl","DCl","SCl","MPk","MTk","DTk","VTk","Sd",
+                                "TCL","PCL","LCL","NCL","DCL","SCL","MPK","MTK","DTK","VTK","SD"};
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+
+## pattern: ua10_n_ax
+--- lines 1767-1817 around ua10_n_ax ---
+  /** - Define local variables */
+  int flag1,flag2;
+  double param1,param2;
+  char string1[_ARGUMENT_LENGTH_MAX_];
+  char * options_output[33] =  {"tCl","pCl","lCl","nCl","dCl","sCl","mPk","mTk","dTk","vTk","sd",
+                                "TCl","PCl","LCl","NCl","DCl","SCl","MPk","MTk","DTk","VTk","Sd",
+                                "TCL","PCL","LCL","NCL","DCL","SCL","MPK","MTK","DTK","VTK","SD"};
+  char * options_temp_contributions[10] = {"tsw","eisw","lisw","dop","pol","TSW","EISW","LISW","Dop","Pol"};
+  char * options_number_count[8] = {"density","dens","rsd","RSD","lensing","lens","gr","GR"};
+  char * options_modes[6] = {"s","v","t","S","V","T"};
+  char * options_ics[10] = {"ad","bi","cdi","nid","niv","AD","BI","CDI","NID","NIV"};
+
+/* --- Unified A10 Logic Start --- */
+  // 1. ゴミデータとゼロ割りを防ぐ安全な初期化
+  pba->has_unified_a10 = _FALSE_;
+  pba->ua10_Gamma0 = 0.0;
+  pba->ua10_phi_trigger = 0.0;
+  pba->ua10_Delta_phi = 0.01;
+  pba->ua10_f_ax = 1.0;     // ゼロ割り防止！
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+--- lines 1786-1836 around ua10_n_ax ---
+  pba->ua10_V0 = 0.0;
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+  /* Read */
+  class_call(parser_read_string(pfc,"output",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  if (flag1 == _TRUE_) {
+    if ((strstr(string1,"tCl") != NULL) || (strstr(string1,"TCl") != NULL) || (strstr(string1,"TCL") != NULL)) {
+      ppt->has_cl_cmb_temperature = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+    }
+    if ((strstr(string1,"pCl") != NULL) || (strstr(string1,"PCl") != NULL) || (strstr(string1,"PCL") != NULL)) {
+--- lines 1787-1837 around ua10_n_ax ---
+  pba->ua10_n_ax = 1.0;     // ゼロ割り防止！
+
+  // 2. パラメータの読み込み（受付窓口）
+  class_call(parser_read_double(pfc, "ua10_Gamma0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Gamma0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_phi_trigger", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_phi_trigger = param1;
+
+  class_call(parser_read_double(pfc, "ua10_Delta_phi", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_Delta_phi = param1;
+
+  /* 👇 今回追加した3つの受付窓口 👇 */
+  class_call(parser_read_double(pfc, "ua10_f_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_f_ax = param1;
+
+  class_call(parser_read_double(pfc, "ua10_V0", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_V0 = param1;
+
+  class_call(parser_read_double(pfc, "ua10_n_ax", &param1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) pba->ua10_n_ax = param1;
+
+  // 3. スイッチの読み込み
+  class_call(parser_read_string(pfc, "has_unified_a10", &string1, &flag1, errmsg), errmsg, errmsg);
+  if (flag1 == _TRUE_) {
+    if ((strcmp(string1, "yes") == 0) || (strcmp(string1, "y") == 0) || (strcmp(string1, "_TRUE_") == 0))
+      pba->has_unified_a10 = _TRUE_;
+    else
+      pba->has_unified_a10 = _FALSE_;
+  }
+  /* --- Unified A10 Logic End --- */
+
+  /* Set local default values */
+  ppt->has_perturbations = _FALSE_;
+  ppt->has_cls = _FALSE_;
+  psd->has_distortions = _FALSE_;
+
+  /** 1) List of output spectra requested */
+  /* Read */
+  class_call(parser_read_string(pfc,"output",&string1,&flag1,errmsg),
+             errmsg,
+             errmsg);
+  /* Complete set of parameters */
+  if (flag1 == _TRUE_) {
+    if ((strstr(string1,"tCl") != NULL) || (strstr(string1,"TCl") != NULL) || (strstr(string1,"TCL") != NULL)) {
+      ppt->has_cl_cmb_temperature = _TRUE_;
+      ppt->has_perturbations = _TRUE_;
+      ppt->has_cls = _TRUE_;
+    }
+    if ((strstr(string1,"pCl") != NULL) || (strstr(string1,"PCl") != NULL) || (strstr(string1,"PCL") != NULL)) {
+      ppt->has_cl_cmb_polarization = _TRUE_;

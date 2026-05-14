@@ -1,0 +1,117 @@
+# Focused windows for /home/kei/class_hybrid_a10/source/perturbations.c
+
+## pattern: has_unified_a10
+--- lines 9068-9118 around has_unified_a10 ---
+    }
+
+    /** - ---> baryon density */
+
+    dy[pv->index_pt_delta_b] = -(theta_b+metric_continuity);
+
+    /** - ---> baryon velocity (depends on tight-coupling approximation=tca) */
+
+    if (ppw->approx[ppw->index_ap_tca] == (int)tca_off) {
+
+      /* without tca */
+
+      /** - ----> perturbed recombination has an impact **/
+      dy[pv->index_pt_theta_b] =
+        - a_prime_over_a*theta_b
+        + metric_euler
+        + k2*delta_p_b_over_rho_b
+        + R*pvecthermo[pth->index_th_dkappa]*(theta_g-theta_b);
+
+/* 👇👇 Unified A10: ドラッグによるバリオンへの引っ張り力 👇👇 */
+      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
+        dy[pv->index_pt_theta_b] += a * pba->ua10_current_Gamma * 
+                                    (pvecback[pba->index_bg_rho_cdm] / pvecback[pba->index_bg_rho_b]) * 
+                                    (y[pv->index_pt_theta_cdm] - theta_b);
+      }
+
+      if (pth->has_idm_b == _TRUE_) {
+        dy[pv->index_pt_theta_b] += S_idm_b*R_idm_b*(theta_idm-theta_b);
+      }
+    }
+
+    else {
+
+      /* with tca */
+      class_call(perturbations_tca_slip_and_shear(y,pppaw,error_message),
+                 error_message,
+                 error_message);
+
+      /* perturbed recombination has an impact **/
+      dy[pv->index_pt_theta_b] =
+        (-a_prime_over_a*theta_b
+         +k2*(delta_p_b_over_rho_b+R*(delta_g/4.-s2_squared*ppw->tca_shear_g))
+         +R*ppw->tca_slip)/(1.+R)
+        +metric_euler;
+
+      if (pth->has_idm_g == _TRUE_) {
+        dy[pv->index_pt_theta_b] +=
+          -dmu_idm_g * R/(1.+R) * (theta_g - theta_idm);
+      }
+      if (pth->has_idm_b == _TRUE_) {
+        dy[pv->index_pt_theta_b] += (S_idm_b * R_idm_b * (theta_idm - theta_b))/(1.+R);
+--- lines 9219-9269 around has_unified_a10 ---
+        if (pth->has_idm_b == _TRUE_) {
+          dy[pv->index_pt_theta_g] += S_idm_b * R_idm_b * (theta_idm - theta_b) / R;
+        }
+      }
+
+    }
+
+    /** - ---> cdm */
+
+    if (pba->has_cdm == _TRUE_) {
+
+      /** - ----> newtonian gauge: cdm density and velocity */
+
+      if (ppt->gauge == newtonian) {
+        dy[pv->index_pt_delta_cdm] = -(y[pv->index_pt_theta_cdm]+metric_continuity); /* cdm density */
+
+        dy[pv->index_pt_theta_cdm] = - a_prime_over_a*y[pv->index_pt_theta_cdm] + metric_euler; /* cdm velocity */
+      }
+
+/* 👇👇 Unified A10: ドラッグによるCDMへのブレーキ力 👇👇 */
+      if (pba->has_unified_a10 == _TRUE_ && pba->has_cdm == _TRUE_ && ppt->gauge == newtonian) {
+          dy[pv->index_pt_theta_cdm] -= a * pba->ua10_current_Gamma * (y[pv->index_pt_theta_cdm] - theta_b);
+      }
+
+      /** - ----> synchronous gauge: cdm density only (velocity set to zero by definition of the gauge) */
+
+      if (ppt->gauge == synchronous) {
+        dy[pv->index_pt_delta_cdm] = -metric_continuity; /* cdm density */
+      }
+    }
+
+    /** - ---> interacting dark radiation */
+    if (pba->has_idr == _TRUE_){
+
+      if (ppw->approx[ppw->index_ap_rsa_idr] == (int)rsa_idr_off) {
+
+        dy[pv->index_pt_delta_idr] = -4./3.*(theta_idr + metric_continuity);
+
+        if (ppw->approx[ppw->index_ap_tca_idm_dr] == (int)tca_idm_dr_off) {
+
+          /** - ----> idr velocity */
+          if (ppt->idr_nature == idr_free_streaming)
+            dy[pv->index_pt_theta_idr] = k2*(y[pv->index_pt_delta_idr]/4.-s2_squared*y[pv->index_pt_shear_idr]) + metric_euler;
+          else
+            dy[pv->index_pt_theta_idr] = k2/4. * y[pv->index_pt_delta_idr] + metric_euler;
+
+          if (pth->has_idm_dr == _TRUE_)
+            dy[pv->index_pt_theta_idr] += dmu_idm_dr*(y[pv->index_pt_theta_idm]-y[pv->index_pt_theta_idr]);
+
+          if (ppt->idr_nature == idr_free_streaming){
+
+
+## pattern: ua10_V0
+
+## pattern: ua10_phi_trigger
+
+## pattern: ua10_f_ax
+
+## pattern: ua10_Gamma0
+
+## pattern: ua10_n_ax

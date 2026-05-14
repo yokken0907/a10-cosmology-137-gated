@@ -1,0 +1,530 @@
+===== chains/V0_0.stdout.log =====
+42: 2026-04-23 16:54:56,796 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_V0', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax']
+70:   log10_ua10_V0 = 0
+71:   ua10_phi_trigger = 137.47
+94: 2026-04-23 16:54:56,950 [model] Posterior to be computed for parameters {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_phi_trigger': 137.47, 'A_planck': 1.0009783710183677, 'calib_100T': 1.0011660175739074, 'calib_217T': 0.9972590261494089, 'A_cib_217': 84.57947957016913, 'xi_sz_cib': 0.008855288966562926, 'A_sz': 7.476547618636783, 'ksz_norm': 2.4051256566878663, 'gal545_A_100': 8.096203459721025, 'gal545_A_143': 7.807118935248701, 'gal545_A_143_217': 22.79583080860672, 'gal545_A_217': 93.94073039034993, 'ps_A_100_100': 296.8353523531184, 'ps_A_143_143': 23.173843670273094, 'ps_A_143_217': 33.98584647686099, 'ps_A_217_217': 92.56183726615346, 'galf_TE_A_100': 0.11567090006836149, 'galf_TE_A_100_143': 0.12410430381395389, 'galf_TE_A_100_217': 0.30743322734506706, 'galf_TE_A_143': 0.34969791629403435, 'galf_TE_A_143_217': 0.8640009991895743, 'galf_TE_A_217': 1.7536418389930544}
+105: 2026-04-23 16:54:56,951 [model] Got input parameters: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_planck': 1.0009783710183677, 'calib_100T': 1.0011660175739074, 'calib_217T': 0.9972590261494089, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'A_cib_217': 84.57947957016913, 'xi_sz_cib': 0.008855288966562926, 'A_sz': 7.476547618636783, 'ksz_norm': 2.4051256566878663, 'gal545_A_100': 8.096203459721025, 'gal545_A_143': 7.807118935248701, 'gal545_A_143_217': 22.79583080860672, 'gal545_A_217': 93.94073039034993, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ps_A_100_100': 296.8353523531184, 'ps_A_143_143': 23.173843670273094, 'ps_A_143_217': 33.98584647686099, 'ps_A_217_217': 92.56183726615346, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.11567090006836149, 'galf_TE_A_100_143': 0.12410430381395389, 'galf_TE_A_100_217': 0.30743322734506706, 'galf_TE_A_143': 0.34969791629403435, 'galf_TE_A_143_217': 0.8640009991895743, 'galf_TE_A_217': 1.7536418389930544, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0}
+109: 2026-04-23 16:54:56,951 [classy] Got parameters {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5}
+111: 2026-04-23 16:54:56,951 [classy] Setting parameters: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+
+===== chains/V0_1.stdout.log =====
+42: 2026-04-23 16:55:23,678 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_V0', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax']
+70:   log10_ua10_V0 = 0
+71:   ua10_phi_trigger = 137.47
+94: 2026-04-23 16:55:23,903 [model] Posterior to be computed for parameters {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_phi_trigger': 137.47, 'A_planck': 1.0018475060918781, 'calib_100T': 0.9990351370281234, 'calib_217T': 0.9996379932213656, 'A_cib_217': 91.92696869829317, 'xi_sz_cib': 0.056172269152356014, 'A_sz': 2.3978074657222743, 'ksz_norm': 1.9060521418243526, 'gal545_A_100': 4.443374222047999, 'gal545_A_143': 8.680370203075196, 'gal545_A_143_217': 26.90366633230802, 'gal545_A_217': 92.97192028041192, 'ps_A_100_100': 248.63167515346893, 'ps_A_143_143': 58.50703184955613, 'ps_A_143_217': 35.951593761155856, 'ps_A_217_217': 118.54876833488441, 'galf_TE_A_100': 0.19919972645621697, 'galf_TE_A_100_143': 0.11703773850677246, 'galf_TE_A_100_217': 0.6365275578718752, 'galf_TE_A_143': 0.10028625732171585, 'galf_TE_A_143_217': 0.6071326879173203, 'galf_TE_A_217': 2.096040478790455}
+105: 2026-04-23 16:55:23,904 [model] Got input parameters: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_planck': 1.0018475060918781, 'calib_100T': 0.9990351370281234, 'calib_217T': 0.9996379932213656, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'A_cib_217': 91.92696869829317, 'xi_sz_cib': 0.056172269152356014, 'A_sz': 2.3978074657222743, 'ksz_norm': 1.9060521418243526, 'gal545_A_100': 4.443374222047999, 'gal545_A_143': 8.680370203075196, 'gal545_A_143_217': 26.90366633230802, 'gal545_A_217': 92.97192028041192, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ps_A_100_100': 248.63167515346893, 'ps_A_143_143': 58.50703184955613, 'ps_A_143_217': 35.951593761155856, 'ps_A_217_217': 118.54876833488441, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.19919972645621697, 'galf_TE_A_100_143': 0.11703773850677246, 'galf_TE_A_100_217': 0.6365275578718752, 'galf_TE_A_143': 0.10028625732171585, 'galf_TE_A_143_217': 0.6071326879173203, 'galf_TE_A_217': 2.096040478790455, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0}
+109: 2026-04-23 16:55:23,904 [classy] Got parameters {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5}
+111: 2026-04-23 16:55:23,905 [classy] Setting parameters: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'pCl tCl lCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+
+===== chains/V0_1em16.stdout.log =====
+42: 2026-04-23 16:55:11,226 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_V0', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax']
+70:   log10_ua10_V0 = 0
+71:   ua10_phi_trigger = 137.47
+94: 2026-04-23 16:55:11,746 [model] Posterior to be computed for parameters {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_phi_trigger': 137.47, 'A_planck': 0.9984531337014636, 'calib_100T': 1.0006311328136717, 'calib_217T': 0.9969287427517318, 'A_cib_217': 43.53752858694707, 'xi_sz_cib': 0.01674037790898097, 'A_sz': 5.860578048370915, 'ksz_norm': 1.4109666582859917, 'gal545_A_100': 7.017991413509939, 'gal545_A_143': 9.251292090861876, 'gal545_A_143_217': 13.217566341210672, 'gal545_A_217': 89.93975795381344, 'ps_A_100_100': 204.1270036314184, 'ps_A_143_143': 47.70812947120933, 'ps_A_143_217': 28.58900906555261, 'ps_A_217_217': 99.08839950202926, 'galf_TE_A_100': 0.11296141506788458, 'galf_TE_A_100_143': 0.044253723888028396, 'galf_TE_A_100_217': 0.3536798988312745, 'galf_TE_A_143': 0.29515467191892114, 'galf_TE_A_143_217': 0.5743306301866918, 'galf_TE_A_217': 1.8019510632096778}
+105: 2026-04-23 16:55:11,746 [model] Got input parameters: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_planck': 0.9984531337014636, 'calib_100T': 1.0006311328136717, 'calib_217T': 0.9969287427517318, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'A_cib_217': 43.53752858694707, 'xi_sz_cib': 0.01674037790898097, 'A_sz': 5.860578048370915, 'ksz_norm': 1.4109666582859917, 'gal545_A_100': 7.017991413509939, 'gal545_A_143': 9.251292090861876, 'gal545_A_143_217': 13.217566341210672, 'gal545_A_217': 89.93975795381344, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ps_A_100_100': 204.1270036314184, 'ps_A_143_143': 47.70812947120933, 'ps_A_143_217': 28.58900906555261, 'ps_A_217_217': 99.08839950202926, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.11296141506788458, 'galf_TE_A_100_143': 0.044253723888028396, 'galf_TE_A_100_217': 0.3536798988312745, 'galf_TE_A_143': 0.29515467191892114, 'galf_TE_A_143_217': 0.5743306301866918, 'galf_TE_A_217': 1.8019510632096778, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0}
+109: 2026-04-23 16:55:11,747 [classy] Got parameters {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5}
+111: 2026-04-23 16:55:11,747 [classy] Setting parameters: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+
+===== chains/a10_debug.1.txt =====
+
+===== chains/a10_main_rescue.1.txt =====
+1:#        weight    minuslogpost              H0         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus
+
+===== chains/a10_phase4_shoes.1.txt =====
+1:#        weight    minuslogpost              H0         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus  chi2__shoes_H0
+
+===== chains/a10_prod_run.1.txt =====
+
+===== chains/a10_prod_run.3.txt =====
+
+===== chains/a10_prod_run.4.txt =====
+
+===== chains/a10_prod_run.5.txt =====
+
+===== chains/a10_profile_68.minimum.txt =====
+1:#        weight    minuslogpost         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus
+
+===== chains/a10_profile_69.minimum.txt =====
+1:#        weight    minuslogpost         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus
+
+===== chains/a10_profile_70.minimum.txt =====
+1:#        weight    minuslogpost         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus
+
+===== chains/a10_profile_71.minimum.txt =====
+1:#        weight    minuslogpost         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus
+
+===== chains/a10_profile_72.minimum.txt =====
+1:#        weight    minuslogpost         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus
+
+===== chains/a10_profile_73.minimum.txt =====
+1:#        weight    minuslogpost         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus
+
+===== chains/a10_run1.1.txt =====
+
+===== chains/a10_run2.1.txt =====
+
+===== chains/a10_scout_H0_72.1.txt =====
+1:#        weight    minuslogpost              H0         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus
+
+===== chains/a10_wp0_valley.1.txt =====
+1:#        weight    minuslogpost              H0         omega_b       omega_cdm             A_s             n_s        tau_reio       ua10_f_ax         ua10_V0     ua10_Gamma0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus
+
+===== chains/bridge_AC_interp_t0p0.stdout.log =====
+17:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_V0': 5000.016600000003, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'tCl lCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+45:    raise CosmoComputationError(self.ba.error_message)
+46:classy._classy.CosmoComputationError: 
+50:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_AC_interp_t0p25.stdout.log =====
+17:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 71.80879575, 'omega_b': 0.0231842485, 'omega_cdm': 0.11136054749999999, 'A_s': 2.1182671e-09, 'n_s': 0.9875225774999999, 'tau_reio': 0.06896008025, 'ua10_V0': 21010.514365376865, 'ua10_phi_trigger': 137.7992725, 'ua10_f_ax': 0.1066242875, 'ua10_Gamma0': 0.040815742, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+45:    raise CosmoComputationError(self.ba.error_message)
+46:classy._classy.CosmoComputationError: 
+50:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_AC_interp_t0p5.stdout.log =====
+17:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 70.6184225, 'omega_b': 0.022931395, 'omega_cdm': 0.114047315, 'A_s': 2.1157669e-09, 'n_s': 0.980486505, 'tau_reio': 0.0668366955, 'ua10_V0': 88288.04966321643, 'ua10_phi_trigger': 137.689515, 'ua10_f_ax': 0.097721955, 'ua10_Gamma0': 0.033876167, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'lCl pCl tCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+45:    raise CosmoComputationError(self.ba.error_message)
+46:classy._classy.CosmoComputationError: 
+50:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_AC_interp_t0p75.stdout.log =====
+17:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 69.42804924999999, 'omega_b': 0.0226785415, 'omega_cdm': 0.11673408249999999, 'A_s': 2.1132667e-09, 'n_s': 0.9734504325000001, 'tau_reio': 0.06471331075, 'ua10_V0': 370994.2354471611, 'ua10_phi_trigger': 137.5797575, 'ua10_f_ax': 0.0888196225, 'ua10_Gamma0': 0.026936592, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'lCl tCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+45:    raise CosmoComputationError(self.ba.error_message)
+46:classy._classy.CosmoComputationError: 
+50:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_AC_interp_t1p0.stdout.log =====
+17:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.237676, 'omega_b': 0.022425688, 'omega_cdm': 0.11942085, 'A_s': 2.1107665e-09, 'n_s': 0.96641436, 'tau_reio': 0.062589926, 'ua10_V0': 1558950.76695037, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.07991729, 'ua10_Gamma0': 0.019997017, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+45:    raise CosmoComputationError(self.ba.error_message)
+46:classy._classy.CosmoComputationError: 
+50:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_A_homotopy_V0_0.1.txt =====
+
+===== chains/bridge_A_homotopy_V0_0.stdout.log =====
+40: 2026-04-23 17:56:54,948 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax', 'ua10_V0']
+62: 2026-04-23 17:56:54,980 [model] Got input parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'A_planck': 1.0016268, 'calib_100T': 0.99935686, 'calib_217T': 0.99847109, 'A_cib_217': 41.501581, 'xi_sz_cib': 0.8113954, 'A_sz': 5.2627339, 'ksz_norm': 3.5247239, 'gal545_A_100': 9.9955642, 'gal545_A_143': 11.352529, 'gal545_A_143_217': 21.124608, 'gal545_A_217': 99.258869, 'ps_A_100_100': 241.93116, 'ps_A_143_143': 42.666257, 'ps_A_143_217': 39.610188, 'ps_A_217_217': 115.52279, 'galf_TE_A_100': 0.11252958, 'galf_TE_A_100_143': 0.13689693, 'galf_TE_A_100_217': 0.47271102, 'galf_TE_A_143': 0.21718123, 'galf_TE_A_143_217': 0.61944668, 'galf_TE_A_217': 1.9622415, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'galf_TE_index': -2.4, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ua10_V0': 0.0}
+66: 2026-04-23 17:56:54,980 [classy] Got parameters {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 0.0}
+68: 2026-04-23 17:56:54,981 [classy] Setting parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 0.0, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'tCl pCl lCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+
+===== chains/bridge_A_homotopy_V0_1.stdout.log =====
+40: 2026-04-23 17:56:40,027 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax', 'ua10_V0']
+62: 2026-04-23 17:56:40,063 [model] Got input parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'A_planck': 1.0016268, 'calib_100T': 0.99935686, 'calib_217T': 0.99847109, 'A_cib_217': 41.501581, 'xi_sz_cib': 0.8113954, 'A_sz': 5.2627339, 'ksz_norm': 3.5247239, 'gal545_A_100': 9.9955642, 'gal545_A_143': 11.352529, 'gal545_A_143_217': 21.124608, 'gal545_A_217': 99.258869, 'ps_A_100_100': 241.93116, 'ps_A_143_143': 42.666257, 'ps_A_143_217': 39.610188, 'ps_A_217_217': 115.52279, 'galf_TE_A_100': 0.11252958, 'galf_TE_A_100_143': 0.13689693, 'galf_TE_A_100_217': 0.47271102, 'galf_TE_A_143': 0.21718123, 'galf_TE_A_143_217': 0.61944668, 'galf_TE_A_217': 1.9622415, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'galf_TE_index': -2.4, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ua10_V0': 1.0}
+66: 2026-04-23 17:56:40,064 [classy] Got parameters {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 1.0}
+68: 2026-04-23 17:56:40,064 [classy] Setting parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 1.0, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'tCl pCl lCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+69: 2026-04-23 17:56:40,085 [classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 1.0} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+97:    raise CosmoComputationError(self.ba.error_message)
+98:classy._classy.CosmoComputationError: 
+102:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_A_homotopy_V0_10.stdout.log =====
+40: 2026-04-23 17:56:34,310 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax', 'ua10_V0']
+62: 2026-04-23 17:56:34,344 [model] Got input parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'A_planck': 1.0016268, 'calib_100T': 0.99935686, 'calib_217T': 0.99847109, 'A_cib_217': 41.501581, 'xi_sz_cib': 0.8113954, 'A_sz': 5.2627339, 'ksz_norm': 3.5247239, 'gal545_A_100': 9.9955642, 'gal545_A_143': 11.352529, 'gal545_A_143_217': 21.124608, 'gal545_A_217': 99.258869, 'ps_A_100_100': 241.93116, 'ps_A_143_143': 42.666257, 'ps_A_143_217': 39.610188, 'ps_A_217_217': 115.52279, 'galf_TE_A_100': 0.11252958, 'galf_TE_A_100_143': 0.13689693, 'galf_TE_A_100_217': 0.47271102, 'galf_TE_A_143': 0.21718123, 'galf_TE_A_143_217': 0.61944668, 'galf_TE_A_217': 1.9622415, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'galf_TE_index': -2.4, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ua10_V0': 10.0}
+66: 2026-04-23 17:56:34,344 [classy] Got parameters {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 10.0}
+68: 2026-04-23 17:56:34,344 [classy] Setting parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 10.0, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+69: 2026-04-23 17:56:34,366 [classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 10.0} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+97:    raise CosmoComputationError(self.ba.error_message)
+98:classy._classy.CosmoComputationError: 
+102:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_A_homotopy_V0_100.stdout.log =====
+40: 2026-04-23 17:56:28,942 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax', 'ua10_V0']
+62: 2026-04-23 17:56:28,974 [model] Got input parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'A_planck': 1.0016268, 'calib_100T': 0.99935686, 'calib_217T': 0.99847109, 'A_cib_217': 41.501581, 'xi_sz_cib': 0.8113954, 'A_sz': 5.2627339, 'ksz_norm': 3.5247239, 'gal545_A_100': 9.9955642, 'gal545_A_143': 11.352529, 'gal545_A_143_217': 21.124608, 'gal545_A_217': 99.258869, 'ps_A_100_100': 241.93116, 'ps_A_143_143': 42.666257, 'ps_A_143_217': 39.610188, 'ps_A_217_217': 115.52279, 'galf_TE_A_100': 0.11252958, 'galf_TE_A_100_143': 0.13689693, 'galf_TE_A_100_217': 0.47271102, 'galf_TE_A_143': 0.21718123, 'galf_TE_A_143_217': 0.61944668, 'galf_TE_A_217': 1.9622415, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'galf_TE_index': -2.4, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ua10_V0': 100.0}
+66: 2026-04-23 17:56:28,974 [classy] Got parameters {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 100.0}
+68: 2026-04-23 17:56:28,975 [classy] Setting parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 100.0, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'tCl lCl pCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+69: 2026-04-23 17:56:28,992 [classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 100.0} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'tCl lCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+97:    raise CosmoComputationError(self.ba.error_message)
+98:classy._classy.CosmoComputationError: 
+102:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_A_homotopy_V0_1000.stdout.log =====
+40: 2026-04-23 17:56:23,632 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax', 'ua10_V0']
+62: 2026-04-23 17:56:23,666 [model] Got input parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'A_planck': 1.0016268, 'calib_100T': 0.99935686, 'calib_217T': 0.99847109, 'A_cib_217': 41.501581, 'xi_sz_cib': 0.8113954, 'A_sz': 5.2627339, 'ksz_norm': 3.5247239, 'gal545_A_100': 9.9955642, 'gal545_A_143': 11.352529, 'gal545_A_143_217': 21.124608, 'gal545_A_217': 99.258869, 'ps_A_100_100': 241.93116, 'ps_A_143_143': 42.666257, 'ps_A_143_217': 39.610188, 'ps_A_217_217': 115.52279, 'galf_TE_A_100': 0.11252958, 'galf_TE_A_100_143': 0.13689693, 'galf_TE_A_100_217': 0.47271102, 'galf_TE_A_143': 0.21718123, 'galf_TE_A_143_217': 0.61944668, 'galf_TE_A_217': 1.9622415, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'galf_TE_index': -2.4, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ua10_V0': 1000.0}
+66: 2026-04-23 17:56:23,666 [classy] Got parameters {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 1000.0}
+68: 2026-04-23 17:56:23,666 [classy] Setting parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 1000.0, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+69: 2026-04-23 17:56:23,684 [classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 1000.0} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+97:    raise CosmoComputationError(self.ba.error_message)
+98:classy._classy.CosmoComputationError: 
+102:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_A_homotopy_V0_1em02.stdout.log =====
+40: 2026-04-23 17:56:42,982 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax', 'ua10_V0']
+62: 2026-04-23 17:56:43,016 [model] Got input parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'A_planck': 1.0016268, 'calib_100T': 0.99935686, 'calib_217T': 0.99847109, 'A_cib_217': 41.501581, 'xi_sz_cib': 0.8113954, 'A_sz': 5.2627339, 'ksz_norm': 3.5247239, 'gal545_A_100': 9.9955642, 'gal545_A_143': 11.352529, 'gal545_A_143_217': 21.124608, 'gal545_A_217': 99.258869, 'ps_A_100_100': 241.93116, 'ps_A_143_143': 42.666257, 'ps_A_143_217': 39.610188, 'ps_A_217_217': 115.52279, 'galf_TE_A_100': 0.11252958, 'galf_TE_A_100_143': 0.13689693, 'galf_TE_A_100_217': 0.47271102, 'galf_TE_A_143': 0.21718123, 'galf_TE_A_143_217': 0.61944668, 'galf_TE_A_217': 1.9622415, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'galf_TE_index': -2.4, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ua10_V0': 0.01}
+66: 2026-04-23 17:56:43,016 [classy] Got parameters {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 0.01}
+68: 2026-04-23 17:56:43,016 [classy] Setting parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 0.01, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+69: 2026-04-23 17:56:43,034 [classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 0.01} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+97:    raise CosmoComputationError(self.ba.error_message)
+98:classy._classy.CosmoComputationError: 
+102:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_A_homotopy_V0_1em04.1.txt =====
+
+===== chains/bridge_A_homotopy_V0_1em04.stdout.log =====
+40: 2026-04-23 17:56:48,155 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax', 'ua10_V0']
+62: 2026-04-23 17:56:48,188 [model] Got input parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'A_planck': 1.0016268, 'calib_100T': 0.99935686, 'calib_217T': 0.99847109, 'A_cib_217': 41.501581, 'xi_sz_cib': 0.8113954, 'A_sz': 5.2627339, 'ksz_norm': 3.5247239, 'gal545_A_100': 9.9955642, 'gal545_A_143': 11.352529, 'gal545_A_143_217': 21.124608, 'gal545_A_217': 99.258869, 'ps_A_100_100': 241.93116, 'ps_A_143_143': 42.666257, 'ps_A_143_217': 39.610188, 'ps_A_217_217': 115.52279, 'galf_TE_A_100': 0.11252958, 'galf_TE_A_100_143': 0.13689693, 'galf_TE_A_100_217': 0.47271102, 'galf_TE_A_143': 0.21718123, 'galf_TE_A_143_217': 0.61944668, 'galf_TE_A_217': 1.9622415, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'galf_TE_index': -2.4, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ua10_V0': 0.0001}
+66: 2026-04-23 17:56:48,189 [classy] Got parameters {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 0.0001}
+68: 2026-04-23 17:56:48,189 [classy] Setting parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 0.0001, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl lCl tCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+
+===== chains/bridge_A_homotopy_V0_5000.stdout.log =====
+40: 2026-04-23 17:56:18,631 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax', 'ua10_V0']
+62: 2026-04-23 17:56:18,662 [model] Got input parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'A_planck': 1.0016268, 'calib_100T': 0.99935686, 'calib_217T': 0.99847109, 'A_cib_217': 41.501581, 'xi_sz_cib': 0.8113954, 'A_sz': 5.2627339, 'ksz_norm': 3.5247239, 'gal545_A_100': 9.9955642, 'gal545_A_143': 11.352529, 'gal545_A_143_217': 21.124608, 'gal545_A_217': 99.258869, 'ps_A_100_100': 241.93116, 'ps_A_143_143': 42.666257, 'ps_A_143_217': 39.610188, 'ps_A_217_217': 115.52279, 'galf_TE_A_100': 0.11252958, 'galf_TE_A_100_143': 0.13689693, 'galf_TE_A_100_217': 0.47271102, 'galf_TE_A_143': 0.21718123, 'galf_TE_A_143_217': 0.61944668, 'galf_TE_A_217': 1.9622415, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'galf_TE_index': -2.4, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0, 'ua10_V0': 5000.0}
+66: 2026-04-23 17:56:18,662 [classy] Got parameters {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 5000.0}
+68: 2026-04-23 17:56:18,662 [classy] Setting parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 5000.0, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+69: 2026-04-23 17:56:18,680 [classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'ua10_V0': 5000.0} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'pCl tCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+97:    raise CosmoComputationError(self.ba.error_message)
+98:classy._classy.CosmoComputationError: 
+102:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_eval_A_scan730_best.stdout.log =====
+3: 2026-04-23 17:46:39,989 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/bridge_eval_A_scan730_best_v2.stdout.log =====
+42: 2026-04-23 17:49:51,213 [model]      Input:  ['H0', 'omega_b', 'omega_cdm', 'A_s', 'n_s', 'tau_reio', 'ua10_V0', 'ua10_phi_trigger', 'ua10_f_ax', 'ua10_Gamma0', 'ua10_n_ax']
+64: 2026-04-23 17:49:51,247 [model] Got input parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_V0': 5000.0166, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'A_planck': 1.0016268, 'calib_100T': 0.99935686, 'calib_217T': 0.99847109, 'A_cib_217': 41.501581, 'xi_sz_cib': 0.8113954, 'A_sz': 5.2627339, 'ksz_norm': 3.5247239, 'gal545_A_100': 9.9955642, 'gal545_A_143': 11.352529, 'gal545_A_143_217': 21.124608, 'gal545_A_217': 99.258869, 'ps_A_100_100': 241.93116, 'ps_A_143_143': 42.666257, 'ps_A_143_217': 39.610188, 'ps_A_217_217': 115.52279, 'galf_TE_A_100': 0.11252958, 'galf_TE_A_100_143': 0.13689693, 'galf_TE_A_100_217': 0.47271102, 'galf_TE_A_143': 0.21718123, 'galf_TE_A_143_217': 0.61944668, 'galf_TE_A_217': 1.9622415, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'cib_index': -1.3, 'galf_TE_index': -2.4, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0, 'A_sbpx_100_100_TT': 1.0, 'A_sbpx_143_143_TT': 1.0, 'A_sbpx_143_217_TT': 1.0, 'A_sbpx_217_217_TT': 1.0}
+68: 2026-04-23 17:49:51,247 [classy] Got parameters {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_V0': 5000.0166, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5}
+70: 2026-04-23 17:49:51,248 [classy] Setting parameters: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_V0': 5000.0166, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5, 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'tCl lCl pCl', 'l_max_scalars': 2508.0, 'lensing': 'yes'}
+71: 2026-04-23 17:49:51,266 [classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 72.999169, 'omega_b': 0.023437102, 'omega_cdm': 0.10867378, 'A_s': 2.1207673e-09, 'n_s': 0.99455865, 'tau_reio': 0.071083465, 'ua10_V0': 5000.0166, 'ua10_phi_trigger': 137.90903, 'ua10_f_ax': 0.11552662, 'ua10_Gamma0': 0.047755317, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'tCl lCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+99:    raise CosmoComputationError(self.ba.error_message)
+100:classy._classy.CosmoComputationError: 
+104:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/bridge_eval_C_runB_fixed137_control_v3.stdout.log =====
+17:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.237676, 'omega_b': 0.022425688, 'omega_cdm': 0.11942085, 'A_s': 2.1107665e-09, 'n_s': 0.96641436, 'tau_reio': 0.062589926, 'ua10_V0': 1558950.76695037, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.07991729, 'ua10_Gamma0': 0.019997017, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'has_unified_a10': 'yes', 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+45:    raise CosmoComputationError(self.ba.error_message)
+46:classy._classy.CosmoComputationError: 
+50:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/run_A_bestfit.minimum.txt =====
+
+===== chains/run_A_eval.1.txt =====
+
+===== chains/run_A_nogate.1.txt =====
+
+===== chains/run_A_nogate.3.txt =====
+
+===== chains/run_B_fixed137.1.txt =====
+
+===== chains/run_B_fixed137.2.txt =====
+
+===== chains/run_B_fixed137.3.txt =====
+
+===== chains/run_C_bestfit_fixed_v2.1.txt =====
+1:#        weight    minuslogpost              H0         omega_b       omega_cdm             A_s             n_s        tau_reio   log10_ua10_V0 ua10_phi_trigger        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217         ua10_V0       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus  chi2__shoes_H0
+
+===== chains/run_C_eval2_phi_136_logV_-1.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -1.0, 'ua10_V0': 0.1, 'ua10_phi_trigger': 136.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl lCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_136_logV_-2.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -2.0, 'ua10_V0': 0.01, 'ua10_phi_trigger': 136.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'pCl lCl tCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_136_logV_0.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 136.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl lCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_137.47_logV_-1.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -1.0, 'ua10_V0': 0.1, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_137.47_logV_-2.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -2.0, 'ua10_V0': 0.01, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_137.47_logV_0.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl lCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_139_logV_-1.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -1.0, 'ua10_V0': 0.1, 'ua10_phi_trigger': 139.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_139_logV_-2.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -2.0, 'ua10_V0': 0.01, 'ua10_phi_trigger': 139.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'lCl tCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_139_logV_0.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 139.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_142_logV_-1.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -1.0, 'ua10_V0': 0.1, 'ua10_phi_trigger': 142.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_142_logV_-2.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -2.0, 'ua10_V0': 0.01, 'ua10_phi_trigger': 142.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl lCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval2_phi_142_logV_0.stdout.log =====
+17:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 142.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5} and {'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+47:Error in Class: Class did not read input parameter(s): log10_ua10_V0
+
+===== chains/run_C_eval3_phi_136_logV_-1.1.txt =====
+
+===== chains/run_C_eval3_phi_136_logV_-1.stdout.log =====
+
+===== chains/run_C_eval3_phi_136_logV_-2.1.txt =====
+
+===== chains/run_C_eval3_phi_136_logV_-2.stdout.log =====
+
+===== chains/run_C_eval3_phi_136_logV_0.1.txt =====
+
+===== chains/run_C_eval3_phi_136_logV_0.stdout.log =====
+
+===== chains/run_C_eval3_phi_137.47_logV_-1.1.txt =====
+
+===== chains/run_C_eval3_phi_137.47_logV_-1.stdout.log =====
+
+===== chains/run_C_eval3_phi_137.47_logV_-2.1.txt =====
+
+===== chains/run_C_eval3_phi_137.47_logV_-2.stdout.log =====
+
+===== chains/run_C_eval3_phi_137.47_logV_0.1.txt =====
+
+===== chains/run_C_eval3_phi_137.47_logV_0.stdout.log =====
+
+===== chains/run_C_eval3_phi_139_logV_-1.1.txt =====
+
+===== chains/run_C_eval3_phi_139_logV_-1.stdout.log =====
+
+===== chains/run_C_eval3_phi_139_logV_-2.1.txt =====
+
+===== chains/run_C_eval3_phi_139_logV_-2.stdout.log =====
+
+===== chains/run_C_eval3_phi_139_logV_0.1.txt =====
+
+===== chains/run_C_eval3_phi_139_logV_0.stdout.log =====
+
+===== chains/run_C_eval3_phi_142_logV_-1.1.txt =====
+
+===== chains/run_C_eval3_phi_142_logV_-1.stdout.log =====
+
+===== chains/run_C_eval3_phi_142_logV_-2.1.txt =====
+
+===== chains/run_C_eval3_phi_142_logV_-2.stdout.log =====
+
+===== chains/run_C_eval3_phi_142_logV_0.1.txt =====
+
+===== chains/run_C_eval3_phi_142_logV_0.stdout.log =====
+
+===== chains/run_C_eval_phi_136_logV_-1.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -1.0, 'ua10_V0': 0.1, 'ua10_phi_trigger': 136.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'pCl tCl lCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_136_logV_-2.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -2.0, 'ua10_V0': 0.01, 'ua10_phi_trigger': 136.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_136_logV_0.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 136.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'lCl pCl tCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_137.47_logV_-1.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -1.0, 'ua10_V0': 0.1, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'pCl lCl tCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_137.47_logV_-2.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -2.0, 'ua10_V0': 0.01, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'pCl lCl tCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_137.47_logV_0.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'lCl tCl pCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_139_logV_-1.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -1.0, 'ua10_V0': 0.1, 'ua10_phi_trigger': 139.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl lCl pCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_139_logV_-2.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -2.0, 'ua10_V0': 0.01, 'ua10_phi_trigger': 139.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_139_logV_0.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 139.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'pCl lCl tCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_142_logV_-1.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -1.0, 'ua10_V0': 0.1, 'ua10_phi_trigger': 142.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'pCl tCl lCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_142_logV_-2.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': -2.0, 'ua10_V0': 0.01, 'ua10_phi_trigger': 142.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'pCl lCl tCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_eval_phi_142_logV_0.stdout.log =====
+19:[classy] *ERROR* Serious error setting parameters or computing results. The parameters passed were {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'log10_ua10_V0': 0.0, 'ua10_V0': 1.0, 'ua10_phi_trigger': 142.0, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'A_pol': 1.0, 'calib_100P': 1.021, 'calib_143P': 0.966, 'calib_217P': 1.04, 'galf_TE_index': -2.4, 'galf_TE_A_100': 0.17216329567074776, 'galf_TE_A_100_143': 0.03694740350221859, 'galf_TE_A_100_217': 0.564368432565184, 'galf_TE_A_143': 0.12421921085928826, 'galf_TE_A_143_217': 0.6947514506576826, 'galf_TE_A_217': 2.0621337529747565, 'galf_EE_index': -2.4, 'galf_EE_A_100': 0.055, 'galf_EE_A_100_143': 0.04, 'galf_EE_A_100_217': 0.094, 'galf_EE_A_143': 0.086, 'galf_EE_A_143_217': 0.21, 'galf_EE_A_217': 0.7, 'A_cnoise_e2e_100_100_EE': 1.0, 'A_cnoise_e2e_143_143_EE': 1.0, 'A_cnoise_e2e_217_217_EE': 1.0, 'A_sbpx_100_100_EE': 1.0, 'A_sbpx_100_143_EE': 1.0, 'A_sbpx_100_217_EE': 1.0, 'A_sbpx_143_143_EE': 1.0, 'A_sbpx_143_217_EE': 1.0, 'A_sbpx_217_217_EE': 1.0} and {'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'lCl tCl pCl', 'non_linear': 'hmcode', 'l_max_scalars': 2508, 'lensing': 'yes'}. To see the original CLASS' error traceback, make 'debug: True'.
+49:Error in Class: Class did not read input parameter(s): log10_ua10_V0, A_pol, calib_100P, calib_143P, calib_217P, galf_TE_index, galf_TE_A_100, galf_TE_A_100_143, galf_TE_A_100_217, galf_TE_A_143, galf_TE_A_143_217, galf_TE_A_217, galf_EE_index, galf_EE_A_100, galf_EE_A_100_143, galf_EE_A_100_217, galf_EE_A_143, galf_EE_A_143_217, galf_EE_A_217, A_cnoise_e2e_100_100_EE, A_cnoise_e2e_143_143_EE, A_cnoise_e2e_217_217_EE, A_sbpx_100_100_EE, A_sbpx_100_143_EE, A_sbpx_100_217_EE, A_sbpx_143_143_EE, A_sbpx_143_217_EE, A_sbpx_217_217_EE
+
+===== chains/run_C_freegate.1.txt =====
+1:#        weight    minuslogpost              H0         omega_b       omega_cdm             A_s             n_s        tau_reio    ua10_log10V0 ua10_phi_trigger       ua10_f_ax     ua10_Gamma0        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus  chi2__shoes_H0
+
+===== chains/run_C_freegate.2.txt =====
+1:#        weight    minuslogpost              H0         omega_b       omega_cdm             A_s             n_s        tau_reio    ua10_log10V0 ua10_phi_trigger       ua10_f_ax     ua10_Gamma0        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus  chi2__shoes_H0
+
+===== chains/run_C_freegate.3.txt =====
+1:#        weight    minuslogpost              H0         omega_b       omega_cdm             A_s             n_s        tau_reio    ua10_log10V0 ua10_phi_trigger       ua10_f_ax     ua10_Gamma0        A_planck      calib_100T      calib_217T       A_cib_217       xi_sz_cib            A_sz        ksz_norm    gal545_A_100    gal545_A_143 gal545_A_143_217    gal545_A_217    ps_A_100_100    ps_A_143_143    ps_A_143_217    ps_A_217_217   galf_TE_A_100 galf_TE_A_100_143 galf_TE_A_100_217   galf_TE_A_143 galf_TE_A_143_217   galf_TE_A_217       chi2__BAO       chi2__CMB        chi2__SN   minuslogprior minuslogprior__0 minuslogprior__SZ            chi2 chi2__planck_2018_highl_plik.TTTEEE chi2__planck_2018_lowl.TT chi2__planck_2018_lowl.EE chi2__bao.sdss_dr12_consensus_bao chi2__sn.pantheonplus  chi2__shoes_H0
+
+===== chains/run_C_hasA10_phi_0p0001_V0_0p0001.stdout.log =====
+3: 2026-04-23 16:31:32,655 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_0p0001_V0_0p01.stdout.log =====
+3: 2026-04-23 16:31:35,146 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_0p0001_V0_1.stdout.log =====
+3: 2026-04-23 16:31:38,469 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_0p5_V0_0p0001.stdout.log =====
+3: 2026-04-23 16:31:41,382 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_0p5_V0_0p01.stdout.log =====
+3: 2026-04-23 16:31:44,403 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_0p5_V0_1.stdout.log =====
+3: 2026-04-23 16:31:46,741 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_137p47_V0_0p0001.stdout.log =====
+3: 2026-04-23 16:31:49,273 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_137p47_V0_0p01.stdout.log =====
+3: 2026-04-23 16:31:50,701 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_137p47_V0_1.stdout.log =====
+3: 2026-04-23 16:31:52,551 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_1em06_V0_0p0001.stdout.log =====
+3: 2026-04-23 16:31:24,306 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_1em06_V0_0p01.stdout.log =====
+3: 2026-04-23 16:31:27,781 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_phi_1em06_V0_1.stdout.log =====
+3: 2026-04-23 16:31:30,539 [tools] *ERROR* Failed to load external function: 'NameError("name 'yes' is not defined")'
+
+===== chains/run_C_hasA10_tinyV0_phi_0p5_V0_1em05.1.txt =====
+
+===== chains/run_C_hasA10_tinyV0_phi_0p5_V0_1em05.stdout.log =====
+
+===== chains/run_C_hasA10_tinyV0_phi_0p5_V0_1em06.1.txt =====
+
+===== chains/run_C_hasA10_tinyV0_phi_0p5_V0_1em06.stdout.log =====
+
+===== chains/run_C_hasA10_tinyV0_phi_0p5_V0_1em07.1.txt =====
+
+===== chains/run_C_hasA10_tinyV0_phi_0p5_V0_1em07.stdout.log =====
+
+===== chains/run_C_hasA10_tinyV0_phi_0p5_V0_1em08.1.txt =====
+
+===== chains/run_C_hasA10_tinyV0_phi_0p5_V0_1em08.stdout.log =====
+
+===== chains/run_C_hasA10_tinyV0_phi_137p47_V0_1em05.1.txt =====
+
+===== chains/run_C_hasA10_tinyV0_phi_137p47_V0_1em05.stdout.log =====
+
+===== chains/run_C_hasA10_tinyV0_phi_137p47_V0_1em06.1.txt =====
+
+===== chains/run_C_hasA10_tinyV0_phi_137p47_V0_1em06.stdout.log =====
+
+===== chains/run_C_hasA10_tinyV0_phi_137p47_V0_1em07.1.txt =====
+
+===== chains/run_C_hasA10_tinyV0_phi_137p47_V0_1em07.stdout.log =====
+
+===== chains/run_C_hasA10_tinyV0_phi_137p47_V0_1em08.1.txt =====
+
+===== chains/run_C_hasA10_tinyV0_phi_137p47_V0_1em08.stdout.log =====
+
+===== chains/run_C_hasA10_ultratiny_phi_0p5_V0_1em10.1.txt =====
+
+===== chains/run_C_hasA10_ultratiny_phi_0p5_V0_1em10.stdout.log =====
+
+===== chains/run_C_hasA10_ultratiny_phi_0p5_V0_1em12.1.txt =====
+
+===== chains/run_C_hasA10_ultratiny_phi_0p5_V0_1em12.stdout.log =====
+
+===== chains/run_C_hasA10_ultratiny_phi_0p5_V0_1em14.1.txt =====
+
+===== chains/run_C_hasA10_ultratiny_phi_0p5_V0_1em14.stdout.log =====
+
+===== chains/run_C_hasA10_ultratiny_phi_0p5_V0_1em16.1.txt =====
+
+===== chains/run_C_hasA10_ultratiny_phi_0p5_V0_1em16.stdout.log =====
+
+===== chains/run_C_hasA10_ultratiny_phi_137p47_V0_1em10.1.txt =====
+
+===== chains/run_C_hasA10_ultratiny_phi_137p47_V0_1em10.stdout.log =====
+
+===== chains/run_C_hasA10_ultratiny_phi_137p47_V0_1em12.1.txt =====
+
+===== chains/run_C_hasA10_ultratiny_phi_137p47_V0_1em12.stdout.log =====
+
+===== chains/run_C_hasA10_ultratiny_phi_137p47_V0_1em14.1.txt =====
+
+===== chains/run_C_hasA10_ultratiny_phi_137p47_V0_1em14.stdout.log =====
+
+===== chains/run_C_hasA10_ultratiny_phi_137p47_V0_1em16.1.txt =====
+
+===== chains/run_C_hasA10_ultratiny_phi_137p47_V0_1em16.stdout.log =====
+
+===== chains/run_C_hasA10_v2_phi_0p0001_V0_0p0001.1.txt =====
+
+===== chains/run_C_hasA10_v2_phi_0p0001_V0_0p0001.stdout.log =====
+
+===== chains/run_C_hasA10_v2_phi_0p0001_V0_0p01.stdout.log =====
+19:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'ua10_V0': 0.01, 'ua10_phi_trigger': 0.0001} and {'has_unified_a10': 'yes', 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+47:    raise CosmoComputationError(self.ba.error_message)
+48:classy._classy.CosmoComputationError: 
+52:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/run_C_hasA10_v2_phi_0p0001_V0_1p0.stdout.log =====
+19:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'ua10_V0': 1.0, 'ua10_phi_trigger': 0.0001} and {'has_unified_a10': 'yes', 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'lCl tCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+47:    raise CosmoComputationError(self.ba.error_message)
+48:classy._classy.CosmoComputationError: 
+52:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/run_C_hasA10_v2_phi_0p5_V0_0p0001.1.txt =====
+
+===== chains/run_C_hasA10_v2_phi_0p5_V0_0p0001.stdout.log =====
+
+===== chains/run_C_hasA10_v2_phi_0p5_V0_0p01.stdout.log =====
+19:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'ua10_V0': 0.01, 'ua10_phi_trigger': 0.5} and {'has_unified_a10': 'yes', 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl lCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+47:    raise CosmoComputationError(self.ba.error_message)
+48:classy._classy.CosmoComputationError: 
+52:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/run_C_hasA10_v2_phi_0p5_V0_1p0.stdout.log =====
+19:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'ua10_V0': 1.0, 'ua10_phi_trigger': 0.5} and {'has_unified_a10': 'yes', 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'pCl tCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+47:    raise CosmoComputationError(self.ba.error_message)
+48:classy._classy.CosmoComputationError: 
+52:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/run_C_hasA10_v2_phi_137p47_V0_0p0001.1.txt =====
+
+===== chains/run_C_hasA10_v2_phi_137p47_V0_0p0001.stdout.log =====
+
+===== chains/run_C_hasA10_v2_phi_137p47_V0_0p01.stdout.log =====
+19:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'ua10_V0': 0.01, 'ua10_phi_trigger': 137.47} and {'has_unified_a10': 'yes', 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl pCl lCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+47:    raise CosmoComputationError(self.ba.error_message)
+48:classy._classy.CosmoComputationError: 
+52:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/run_C_hasA10_v2_phi_137p47_V0_1p0.stdout.log =====
+17:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'ua10_V0': 1.0, 'ua10_phi_trigger': 137.47} and {'has_unified_a10': 'yes', 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'lCl pCl tCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+45:    raise CosmoComputationError(self.ba.error_message)
+46:classy._classy.CosmoComputationError: 
+50:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/run_C_hasA10_v2_phi_1em06_V0_0p0001.1.txt =====
+
+===== chains/run_C_hasA10_v2_phi_1em06_V0_0p0001.stdout.log =====
+
+===== chains/run_C_hasA10_v2_phi_1em06_V0_0p01.stdout.log =====
+19:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'ua10_V0': 0.01, 'ua10_phi_trigger': 1e-06} and {'has_unified_a10': 'yes', 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'tCl lCl pCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+47:    raise CosmoComputationError(self.ba.error_message)
+48:classy._classy.CosmoComputationError: 
+52:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
+===== chains/run_C_hasA10_v2_phi_1em06_V0_1p0.stdout.log =====
+19:[classy] *ERROR* Computation error (see traceback below)! Parameters sent to CLASS: {'H0': 68.206, 'omega_b': 0.0223, 'omega_cdm': 0.1194, 'A_s': 2.1e-09, 'n_s': 0.965, 'tau_reio': 0.055, 'ua10_f_ax': 0.1, 'ua10_Gamma0': 1.0, 'ua10_n_ax': 2.5, 'ua10_V0': 1.0, 'ua10_phi_trigger': 1e-06} and {'has_unified_a10': 'yes', 'non_linear': 'halofit', 'N_ncdm': 1, 'N_ur': 2.0328, 'output': 'lCl pCl tCl', 'l_max_scalars': 2508, 'lensing': 'yes'}.
+47:    raise CosmoComputationError(self.ba.error_message)
+48:classy._classy.CosmoComputationError: 
+52:=>evolver_ndf15(L:497) :condition (absh <= hmin) is true; Step size too small: step:5.15779e-14, minimum:5.15779e-14, in interval: [-32.2362:0]
+
