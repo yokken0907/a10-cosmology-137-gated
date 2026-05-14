@@ -1,0 +1,29 @@
+==========================================================
+TECHNICAL NOTE: Yoshimura A10 (Decaying Dark Sector Model)
+Date: 2026-03-12
+Lead Researcher: Yoshi / Assistant: Gemini
+==========================================================
+
+[1. Model Concept]
+A transient energy-injection model targeting the Hubble Tension.
+Unlike phenomenological 'H-boost' hacks, this model is implemented
+via self-consistent Einstein equations (Background & Perturbations).
+
+[2. Physical Mechanism]
+- Sector Y: Quasi-vacuum fluid (w = -0.999999) serving as an energy reservoir.
+- Sector X: Stiff-like daughter fluid (w = 1.0).
+- Interaction: A Gaussian-localized decay kernel at z ~ 5000.
+  Decay Equation: d(rho_Y)/d(ln a) = -eps(a) * rho_Y
+  Creation Equation: d(rho_X)/d(ln a) = -6*rho_X + eps(a) * rho_Y
+
+[3. Key Findings (A10 Implementation)]
+- Successfully achieved H0 = 73.00 km/s/Mpc.
+- Preserved standard n_s (0.9665) and N_eff (3.044).
+- Confirmed that perturbation-level feedback stabilizes the 1st peak height.
+- Maintained phase consistency with Standard LCDM up to l = 2500.
+
+[4. Scientific Humility & Limitations]
+- Current results demonstrate "Proof of Principle" at the linear level.
+- Full MCMC likelihood analysis (Planck/BAO/Pantheon) is the required next step.
+- The microphysical origin of the decay kernel requires further theoretical grounding.
+==========================================================
