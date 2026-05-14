@@ -1,0 +1,10 @@
+cff-version: "1.2.0"
+message: "If you use this repository, please cite it using the metadata in this file."
+authors:
+  - family-names: "Yoshimura"
+    given-names: "Keiji"
+    affiliation: "Independent Researcher"
+title: "A10 Cosmology 137-Gated"
+version: "0.1.1-public-gate"
+date-released: "2026-05-07"
+repository-code: "https://github.com/yokken0907/a10-cosmology-137-gated"
