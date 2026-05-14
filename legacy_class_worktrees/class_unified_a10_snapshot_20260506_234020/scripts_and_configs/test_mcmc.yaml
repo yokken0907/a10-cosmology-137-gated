@@ -1,0 +1,82 @@
+# --- CDM有効変形モデル MCMC検証用（軌道修正・厳密制約版） ---
+
+theory:
+  classy:
+    extra_args:
+      Omega_cdm: 0.0
+      fluid_equation_of_state: 'CLP'
+      cs2_fld: 1e-6
+      non_linear: 'none'
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE: null
+  planck_2018_lowl.TT: null
+  planck_2018_lowl.EE: null
+
+prior:
+  # 外部モジュールに依存しない純粋な数式によるSH0ES (H0 = 73.04 ± 1.04) のガウス事前分布
+  SH0ES_H0: 'lambda H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+
+params:
+  logA:
+    prior: {min: 1.61, max: 3.91}
+    ref: 3.05
+    proposal: 0.001
+    drop: true
+  A_s:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+    latex: A_\mathrm{s}
+  n_s:
+    prior: {min: 0.8, max: 1.2}
+    ref: 0.965
+    proposal: 0.002
+    latex: n_\mathrm{s}
+  
+  # H0の探索範囲を現実的な物理領域 [60, 80] に限定
+  H0:
+    prior: {min: 60.0, max: 100.0}
+    ref: 73.0
+    proposal: 0.2
+    latex: H_0
+  
+  omega_b:
+    prior: {min: 0.005, max: 0.1}
+    ref: 0.0224
+    proposal: 0.0001
+    latex: \Omega_\mathrm{b} h^2
+  tau_reio:
+    prior: {min: 0.01, max: 0.08}
+    ref: 0.054
+    proposal: 0.005
+    latex: \tau_\mathrm{reio}
+
+  omega_fld:
+    prior: {min: 0.01, max: 0.99}
+    ref: 0.12
+    proposal: 0.0005
+    latex: \omega_\mathrm{eff}
+    drop: true
+  Omega_fld:
+    value: 'lambda omega_fld, H0: omega_fld / (H0/100.0)**2'
+    latex: \Omega_\mathrm{eff}
+  
+  # Delta_0 (w0_fld) の上限を 0.005 に設定し、初期宇宙の密度発散を抑制
+  w0_fld:
+    prior: {min: 0.0, max: 0.01}
+    ref: 0.0005
+    proposal: 0.00005
+    latex: \Delta_0
+  
+  wa_fld:
+    value: 2.0
+    latex: n
+
+sampler:
+  mcmc:
+    Rminus1_stop: 0.01
+    max_tries: 100000
+    learn_proposal: true
+    learn_every: 400
+    burn_in: 500
+
+output: test_mcmc_output
