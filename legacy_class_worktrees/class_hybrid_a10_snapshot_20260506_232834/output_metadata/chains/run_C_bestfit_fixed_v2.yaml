@@ -1,0 +1,71 @@
+output: chains/run_C_bestfit_fixed_v2
+
+theory:
+  classy:
+    path: .
+    extra_args:
+      non_linear: halofit
+      N_ncdm: 1
+      N_ur: 2.0328
+
+likelihood:
+  planck_2018_highl_plik.TTTEEE:
+    path: null
+    clik_file: baseline/plc_3.0/hi_l/plik/plik_rd12_HM_v22b_TTTEEE.clik
+    prior:
+      SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz, loc=9.5, scale=3.0)'
+  planck_2018_lowl.TT:
+  planck_2018_lowl.EE:
+  bao.sdss_dr12_consensus_bao:
+  sn.pantheonplus:
+  shoes_H0:
+    external: 'lambda _self, H0: -0.5 * ((H0 - 73.04) / 1.04)**2'
+    requires: [H0]
+
+params:
+  H0:
+    prior: {min: 60, max: 80}
+    ref: 68.206
+  omega_b:
+    prior: {min: 0.02, max: 0.025}
+    ref: 0.0223
+  omega_cdm:
+    prior: {min: 0.10, max: 0.14}
+    ref: 0.1194
+  A_s:
+    prior: {min: 1.5e-9, max: 3.0e-9}
+    ref: 2.1e-9
+  n_s:
+    prior: {min: 0.92, max: 1.0}
+    ref: 0.965
+  tau_reio:
+    prior: {min: 0.04, max: 0.08}
+    ref: 0.055
+
+  # Sample V0 in log-space for numerical stability.
+  log10_ua10_V0:
+    prior: {min: -10, max: 5}
+    ref: 0.0
+    proposal: 0.5
+    drop: true
+  ua10_V0:
+    value: 'lambda log10_ua10_V0: 10**log10_ua10_V0'
+
+  # CLASS does not recognize "a10_gate" in this build; use only the native trigger name.
+  ua10_phi_trigger:
+    prior: {min: 120, max: 155}
+    ref: 137.47
+    proposal: 1.0
+
+  ua10_f_ax: 0.1
+  ua10_Gamma0: 1.0
+  ua10_n_ax: 2.5
+
+sampler:
+  minimize:
+    method: bobyqa
+    ignore_prior: True
+    max_evals: 1000
+
+debug: True
+stop_at_error: True
