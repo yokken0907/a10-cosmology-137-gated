@@ -1,0 +1,37 @@
+{
+  "package": "a10-cosmology-readme-technical-visual-orientation-revision",
+  "version": "0.2.0",
+  "generated_utc": "2026-05-15T13:32:27.169464+00:00",
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 7856,
+      "sha256": "396db9c5aa551adef1674780e5bf0036144be0ea8e870460182b9eebc471d4d6"
+    },
+    {
+      "path": "README_REGENERATION_INSTRUCTIONS.md",
+      "size_bytes": 730,
+      "sha256": "ef9243645a492cb36c326e2162df9b62e80e2571963fa51c30469f6ab887e193"
+    },
+    {
+      "path": "README_REVISION_MANIFEST.csv",
+      "size_bytes": 480,
+      "sha256": "7bee94c40a2298604eb39520006084e6a0cb85fd6607f655c7d8ca8e3e302c1c"
+    },
+    {
+      "path": "README_ja.md",
+      "size_bytes": 8454,
+      "sha256": "fa8eb1f6c3f003eb5ec368c648c5de2c73187609c6dca4a753c8654c9c207e89"
+    },
+    {
+      "path": "README_ja_update.diff",
+      "size_bytes": 10416,
+      "sha256": "fa79102c7a957419f3697a1dd827916bf7cdb25786a36bd8128dc21a29216a66"
+    },
+    {
+      "path": "README_update.diff",
+      "size_bytes": 10164,
+      "sha256": "3178fa2f3ad9afa41d1c9cd5155f5ac57804ffd2e83bde28bff7845187e7cedb"
+    }
+  ]
+}
