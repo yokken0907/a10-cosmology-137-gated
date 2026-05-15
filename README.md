@@ -1,0 +1,156 @@
+# A10 Cosmology — 137-Gated Branch
+
+This repository provides public-facing reproducibility and provenance materials for the A10 cosmology branch centered on localized early-time energy transfer and 137-stability gating.
+
+It accompanies the manuscript:
+
+**From Localized Early-Time Energy Transfer to 137-Stability Gating: A Refined Integrated A10 Cosmology for the Hubble Tension with an Optional Late-Time Growth-Suppression Extension**
+
+Jxiv DOI / URL: pending  
+Repository DOI: `10.5281/zenodo.20187119`  
+Public release version: `v0.1.1-public-gate`
+
+## Repository purpose
+
+This repository is intended to make the reported A10 137-gated cosmology workflow inspectable. It is not a one-click full cosmology reproduction package, because key likelihood data and local compiled environments are not redistributed here.
+
+The repository should be read as:
+
+- a manuscript companion archive,
+- a source/configuration provenance archive,
+- a claim-boundary and reproducibility-status archive,
+- a public-gate copy of the A10 cosmology 137-gated branch.
+
+## What this repository contains
+
+- manuscript references,
+- claim-boundary statements,
+- AI-assistance disclosure,
+- local modified CLASS source/header overlay,
+- zero-amplitude continuity repair notes/diffs,
+- Cobaya YAML configuration materials,
+- MCMC summary and compact provenance materials,
+- reproducibility status documents,
+- data-requirement notes,
+- compact legacy CLASS worktree snapshots,
+- optional technical visual orientation materials.
+
+## What this repository does not contain
+
+- Planck/clik likelihood data,
+- full external likelihood packages,
+- compiled CLASS binaries,
+- `_classy` binary extensions,
+- local `.git/` history,
+- full final raw MCMC chain text files in the GitHub body.
+
+Compact legacy/provenance chain fragments and minimization summaries may be included where needed for auditability. Large or non-redistributable assets are treated as local-only or future Zenodo/release-asset candidates.
+
+## Technical Visual Orientation
+
+For technically interested first-time readers, this repository includes a browser-only visual orientation page:
+
+`docs/technical_visual_orientation/index.html`
+
+This page provides a structured overview of the A10 137-gated model logic, including localized early-time transfer near `z≈5000`, stability-gated activation near `χ≈137`, the repository evidence chain, observable-level constraints, and the claim boundary.
+
+The page is intended only as an orientation aid. It does not run CLASS, Cobaya, MCMC, Planck/clik likelihoods, BAO likelihoods, supernova likelihoods, or SH0ES likelihoods. It also does not replace the manuscript, source/configuration materials, numerical evidence, or independent reproduction.
+
+## Suggested reading order
+
+For first-time technical readers:
+
+1. `README.md` / `README_ja.md`
+2. `docs/technical_visual_orientation/index.html`
+3. `CLAIM_BOUNDARY.md`
+4. `LIMITATIONS.md`
+5. `docs/REPRODUCIBILITY_NOTES.md`
+6. `class_patch/`
+7. `cobaya_configs/`
+8. `audit/`
+9. `legacy_class_worktrees/`
+
+This order is intended to separate conceptual orientation, claim boundary, configuration provenance, and legacy reconstruction materials.
+
+## Scientific scope
+
+The A10 137-gated branch is presented as a candidate high-H0 mechanism with numerical support in the reported workflow.
+
+It is **not** presented as:
+
+- a definitive resolution of the Hubble tension,
+- an established replacement for ΛCDM,
+- a final observational model selection,
+- a fully independent external reproduction,
+- a claim that the number 137 is a universal cosmological constant,
+- a claim that the optional visual orientation page is scientific evidence.
+
+## Reproducibility status
+
+This archive provides a local modified CLASS/Cobaya reproducibility reference.
+
+Important caveat:
+
+> The exact upstream CLASS commit for the final reported workflow remains not fully reconstructed. The repository provides the local modified source overlay, compact legacy worktree snapshots, and configuration records used in the reported workflow, not a clean upstream patch release.
+
+The compact snapshots are preserved for provenance and auditability. They should not be confused with a minimal clean reproduction package.
+
+## Data and external dependency policy
+
+Planck/clik and other external likelihood data are not redistributed in this repository. Users who attempt independent reproduction must obtain external likelihood packages through their proper channels and configure CLASS/Cobaya locally.
+
+The repository avoids committing large binaries, compiled local artifacts, and full local worktrees.
+
+## Recommended citation
+
+For the manuscript, use the Jxiv DOI once assigned. Until then, cite as:
+
+Keiji Yoshimura, *From Localized Early-Time Energy Transfer to 137-Stability Gating: A Refined Integrated A10 Cosmology for the Hubble Tension with an Optional Late-Time Growth-Suppression Extension*, preprint, 2026.
+
+For the repository archive, cite:
+
+Keiji Yoshimura, *A10 Cosmology — 137-Gated Branch public-gate repository archive*, Zenodo, 2026. DOI: `10.5281/zenodo.20187119`.
+
+## AI-assistance disclosure
+
+This project used AI assistance for theory organization, manuscript drafting support, software/package structuring, audit design, and documentation preparation. Scientific claims remain bounded by the numerical workflow, repository materials, and stated limitations.
+
+## Version and provenance notes
+
+### v0.7 update: `class_public_mess` legacy snapshot
+
+A compact snapshot of the legacy WSL folder `class_public_mess` was added under `legacy_class_worktrees/class_public_mess_snapshot/`.
+
+This snapshot indicates that the legacy working tree was based on CLASS v3.3.4 / commit `e85808324f51fc694d12e3ed7439552a3c3f9540`. It is preserved as intermediate provenance material, not as a final clean upstream patch for the reported A10 unified run.
+
+### v0.8 update: `class_hybrid_a10` snapshot and root loose inventory
+
+A compact snapshot of `class_hybrid_a10` was added under `legacy_class_worktrees/class_hybrid_a10_snapshot_20260506_232834/`.
+
+The snapshot indicates that this worktree was based on CLASS v3.3.4 / commit `e85808324f51fc694d12e3ed7439552a3c3f9540` and contains traces of A10 unified, SH0ES, run_B, run_C, and repaired_unified_highH0 workflows.
+
+A local WSL root loose-file inventory was also added under `local_wsl_inventory/root_loose_files_20260506_232931/`.
+
+### v0.9 update: `class_unified_a10` snapshot
+
+A compact snapshot of `class_unified_a10` was added under `legacy_class_worktrees/class_unified_a10_snapshot_20260506_234020/`.
+
+This snapshot preserves key provenance for the unified A10 cosmology workflow, zero-continuity repair, high-H0 branch, and SH0ES/Planck/BAO/Pantheon-related materials. The original 12G worktree should not be committed to GitHub and should be moved to legacy frozen storage.
+
+### v1.0 update: `class_a10_2f` snapshot
+
+A compact snapshot of `class_a10_2f` was added under `legacy_class_worktrees/class_a10_2f_snapshot_20260506_234458/`.
+
+With this addition, compact preservation is complete for the main inspected A10 cosmology / CLASS legacy worktrees: `class_public_mess`, `class_hybrid_a10`, `class_unified_a10`, and `class_a10_2f`.
+
+### v1.1 update: broken CLASS snapshots
+
+Compact snapshots of `class_public_broken` and `class_public_broken_backup` were added. They are treated as cleanup provenance, not as primary reproducibility sources.
+
+## PUBLIC-GATE-0 status
+
+Decision: `PASS-WITH-STRICT-COSMOLOGY-CLAIM-BOUNDARY-A10-COSMOLOGY-PUBLIC-GATE-0`  
+Public version: `v0.1.1-public-gate`  
+Classification: A10 cosmology 137-gated branch reproducibility and provenance archive
+
+This repository is a public-gate copy reviewed under an A10 Evidence-Lock Protocol style gate. The gate fixes the claim boundary, non-claims, manifest policy, and GitHub/Zenodo/Jxiv publication posture.

@@ -1,0 +1,158 @@
+# A10 Cosmology — 137-Gated Branch
+
+このリポジトリは、局所的 early-time energy transfer と 137-stability gating を中心とする A10 宇宙論 branch について、公開可能な再現性・来歴資料を整理したものである。
+
+対応する論文:
+
+**From Localized Early-Time Energy Transfer to 137-Stability Gating: A Refined Integrated A10 Cosmology for the Hubble Tension with an Optional Late-Time Growth-Suppression Extension**
+
+Jxiv DOI / URL: pending  
+Repository DOI: `10.5281/zenodo.20187119`  
+公開版: `v0.1.1-public-gate`
+
+## リポジトリの目的
+
+本リポジトリの目的は、報告された A10 137-gated cosmology workflow を外部から点検可能な形にすることである。
+
+ただし、主要な likelihood data やローカルの compiled environment は再配布しないため、本リポジトリは one-click の完全再現パッケージではない。
+
+本リポジトリは以下として読むべきである。
+
+- 論文補助アーカイブ
+- source / configuration の来歴アーカイブ
+- claim-boundary と reproducibility-status のアーカイブ
+- A10 cosmology 137-gated branch の public-gate copy
+
+## 含まれるもの
+
+- 論文参照資料
+- 主張境界
+- AI支援開示
+- A10改造後のローカルCLASS source/header overlay
+- zero-amplitude continuity repair notes/diffs
+- Cobaya YAML configuration materials
+- MCMC summary と小型provenance materials
+- 再現性ステータス文書
+- 外部データ要件メモ
+- 小型legacy CLASS worktree snapshot
+- 任意の技術的ビジュアル案内資料
+
+## 含まれないもの
+
+- Planck/clik likelihood data
+- 外部likelihood package全体
+- compiled CLASS binaries
+- `_classy` binary extensions
+- `.git/` 履歴
+- 最終版のfull raw MCMC chain text files
+
+ただし、監査性のために必要な小型legacy/provenance chain断片やminimization summaryは含まれる場合がある。大容量または再配布に注意が必要なものは、local-onlyまたは将来のZenodo/release asset候補として扱う。
+
+## 技術的ビジュアル案内
+
+初めて本リポジトリを見る技術的関心のある読者向けに、ブラウザだけで開けるビジュアル案内ページを同梱している。
+
+`docs/technical_visual_orientation/index.html`
+
+このページは、A10 137-gated branch の構造、すなわち `z≈5000` 付近の局在的 early-time transfer、`χ≈137` 付近の stability-gated activation、リポジトリ内の証拠チェーン、観測量レベルでの制約、および claim boundary を短く整理するための補助資料である。
+
+このページは説明補助であり、CLASS、Cobaya、MCMC、Planck/clik likelihood、BAO likelihood、supernova likelihood、SH0ES likelihood を実行するものではない。また、論文本体、ソース・設定資料、数値的証拠、独立再現を置き換えるものでもない。
+
+## 推奨閲覧順
+
+初めて見る技術的読者には、以下の順で読むことを推奨する。
+
+1. `README.md` / `README_ja.md`
+2. `docs/technical_visual_orientation/index.html`
+3. `CLAIM_BOUNDARY.md`
+4. `LIMITATIONS.md`
+5. `docs/REPRODUCIBILITY_NOTES.md`
+6. `class_patch/`
+7. `cobaya_configs/`
+8. `audit/`
+9. `legacy_class_worktrees/`
+
+この順序は、概念的案内、主張境界、設定来歴、legacy reconstruction materials を切り分けて確認するためのものである。
+
+## 科学的スコープ
+
+A10 137-gated branch は、報告された workflow において数値的支持を受けた高 H0 候補機構として提示する。
+
+以下は主張しない。
+
+- ハッブルテンションの決定的解決
+- ΛCDM の確立済み置換
+- 観測的な最終モデル選択
+- 完全な外部独立再現
+- 数値137が普遍的宇宙定数であること
+- 任意のビジュアル案内ページが科学的証拠であること
+
+## 再現性ステータス
+
+本アーカイブは、A10 改造後のローカル CLASS/Cobaya 再現性資料である。
+
+重要な注意:
+
+> 最終報告 workflow の元になった upstream CLASS commit は完全には再構成されていない。本リポジトリは、報告 workflow で使用された local modified source overlay、小型 legacy worktree snapshot、および configuration records を提供するものであり、clean upstream patch release ではない。
+
+小型snapshotは、来歴保護と監査性のために保存されている。これらを minimal clean reproduction package と混同してはならない。
+
+## データおよび外部依存関係の扱い
+
+Planck/clik およびその他の外部 likelihood data は、本リポジトリでは再配布しない。独立再現を試みる利用者は、適切な経路で外部 likelihood package を入手し、CLASS/Cobaya をローカルで設定する必要がある。
+
+本リポジトリでは、大容量バイナリ、compiled local artifact、full local worktree をGit本体へ投入しない。
+
+## 引用
+
+論文本体については、Jxiv DOIが付与されたら、そのDOIを優先して引用する。現時点では以下。
+
+Keiji Yoshimura, *From Localized Early-Time Energy Transfer to 137-Stability Gating: A Refined Integrated A10 Cosmology for the Hubble Tension with an Optional Late-Time Growth-Suppression Extension*, preprint, 2026.
+
+リポジトリアーカイブについては以下。
+
+Keiji Yoshimura, *A10 Cosmology — 137-Gated Branch public-gate repository archive*, Zenodo, 2026. DOI: `10.5281/zenodo.20187119`.
+
+## AI支援開示
+
+本プロジェクトでは、理論整理、論文草稿支援、ソフトウェアおよびパッケージ構成、監査設計、文書化支援にAIを使用した。科学的主張は、数値workflow、リポジトリ資料、および明示された制限により境界づけられる。
+
+## バージョンおよび来歴メモ
+
+### v0.7 update: `class_public_mess` legacy snapshot
+
+旧WSLフォルダ `class_public_mess` の小型snapshotを `legacy_class_worktrees/class_public_mess_snapshot/` に追加した。
+
+このsnapshotにより、少なくとも当該作業ツリーは CLASS v3.3.4 / commit `e85808324f51fc694d12e3ed7439552a3c3f9540` を基点にしていたことが確認できる。ただし、これは最終A10 unified runの完全なupstream証明ではなく、中間探索・来歴保護資料として扱う。
+
+### v0.8 update: `class_hybrid_a10` snapshot and root loose inventory
+
+`class_hybrid_a10` の小型snapshotを `legacy_class_worktrees/class_hybrid_a10_snapshot_20260506_232834/` に追加した。
+
+このsnapshotにより、当該worktreeが CLASS v3.3.4 / commit `e85808324f51fc694d12e3ed7439552a3c3f9540` を基点としていること、A10 unified / SH0ES / run_B / run_C / repaired_unified_highH0 系の痕跡を含むことが確認できた。
+
+また、WSLホーム直下のloose Python filesのinventoryを `local_wsl_inventory/root_loose_files_20260506_232931/` に追加した。
+
+### v0.9 update: `class_unified_a10` snapshot
+
+`class_unified_a10` の小型snapshotを `legacy_class_worktrees/class_unified_a10_snapshot_20260506_234020/` に追加した。
+
+このsnapshotにより、A10 cosmology統合版・zero-continuity repair・high-H0 branch・SH0ES/Planck/BAO/Pantheon関連workflowの主要来歴を保護した。元フォルダ全体12GはGitHubに入れず、legacy_frozenへ移動することを推奨する。
+
+### v1.0 update: `class_a10_2f` snapshot
+
+`class_a10_2f` の小型snapshotを `legacy_class_worktrees/class_a10_2f_snapshot_20260506_234458/` に追加した。
+
+これにより、主要なA10 cosmology / CLASS legacy worktreeのうち、`class_public_mess`, `class_hybrid_a10`, `class_unified_a10`, `class_a10_2f` の小型保護が完了した。
+
+### v1.1 update: broken CLASS snapshots
+
+`class_public_broken` と `class_public_broken_backup` の小型snapshotを追加した。これらは主要再現系ではなく、cleanup前の来歴保護資料として扱う。
+
+## PUBLIC-GATE-0 status
+
+判定: `PASS-WITH-STRICT-COSMOLOGY-CLAIM-BOUNDARY-A10-COSMOLOGY-PUBLIC-GATE-0`  
+公開版: `v0.1.1-public-gate`  
+分類: A10宇宙論137-gated branch再現性・来歴アーカイブ
+
+このリポジトリは、A10 Evidence-Lock Protocol型の公開前監査により、主張境界・非主張事項・manifest方針・GitHub/Zenodo/Jxiv方針を固定した public-gate 版である。
