@@ -1,0 +1,39 @@
+{
+  "package": "a10-cosmology-137-gated-technical-visual-orientation-addon",
+  "version": "0.2.0",
+  "generated_utc": "2026-05-15T13:23:56.459596+00:00",
+  "claim_boundary": "technical visual orientation only; not scientific computation or validation",
+  "note": "JSON manifest excludes itself to avoid recursive self-hashing.",
+  "files": [
+    {
+      "path": "README_ADDON.md",
+      "size_bytes": 155,
+      "sha256": "990b17a34a0451ab0a2a284da71430143a465d296313a6d3dd6bad17c2c3f9cb"
+    },
+    {
+      "path": "docs/technical_visual_orientation/INSTALL_NOTE.md",
+      "size_bytes": 261,
+      "sha256": "3072f135f61debe9dc67c2eb11355a474ed63f125fbe098f1c0281ec62f81473"
+    },
+    {
+      "path": "docs/technical_visual_orientation/README_TECHNICAL_VISUAL_ORIENTATION.md",
+      "size_bytes": 1860,
+      "sha256": "f44190a2311d7b0fddcf699ab9cc5e40a5ebba4b006dcc36831a1af031471905"
+    },
+    {
+      "path": "docs/technical_visual_orientation/TECHNICAL_VISUAL_ORIENTATION_MANIFEST.csv",
+      "size_bytes": 634,
+      "sha256": "aa110294dd16f8a1a9530593aaa7babcf97ab33360ea7d057aed086c188c3220"
+    },
+    {
+      "path": "docs/technical_visual_orientation/TECHNICAL_VISUAL_ORIENTATION_SCOPE.md",
+      "size_bytes": 1248,
+      "sha256": "6d526f652bc883e35da3861971f9a606fc72ccd2dbd32701824d7946daaf42e3"
+    },
+    {
+      "path": "docs/technical_visual_orientation/index.html",
+      "size_bytes": 20347,
+      "sha256": "e7f6375908870e9bfbd5cfb8338dcb6825eaa5dcf51f28f37475617d5a524f11"
+    }
+  ]
+}

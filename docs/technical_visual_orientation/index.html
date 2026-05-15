@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A10 137-Gated Cosmology — Technical Visual Orientation</title>
+<style>
+:root{
+  --bg:#f5f6f8; --panel:#ffffff; --ink:#161a22; --muted:#5d6675;
+  --line:#d9dee8; --soft:#f0f3f8; --blue:#2f56d8; --violet:#7b45c8;
+  --green:#1f7a4d; --orange:#a05a16; --red:#9b2f2f; --shadow:0 18px 46px rgba(20,30,50,.10);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#f8f9fb 0,#f1f3f7 45%,#e9edf5 100%);color:var(--ink);
+font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.58}
+header,main{max-width:1240px;margin:auto;padding:22px}
+.hero{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+padding:30px}
+h1{font-size:clamp(26px,4vw,44px);line-height:1.12;margin:0 0 10px;letter-spacing:-.035em}
+h2{font-size:clamp(21px,3vw,31px);margin:0 0 14px;letter-spacing:-.025em}
+h3{font-size:18px;margin:18px 0 8px}
+p{margin:0 0 12px}.muted{color:var(--muted)} code{background:#edf1f7;border:1px solid #dce2ec;border-radius:7px;padding:1px 6px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.badge{background:var(--soft);border:1px solid var(--line);border-radius:999px;
+padding:7px 11px;font-size:13px;color:#303747}
+.layout{display:grid;grid-template-columns:305px 1fr;gap:18px;align-items:start}
+nav{position:sticky;top:16px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:var(--radius);
+box-shadow:var(--shadow);padding:12px}
+.navbtn{display:flex;gap:10px;align-items:flex-start;border:0;background:transparent;width:100%;text-align:left;padding:12px;border-radius:16px;
+cursor:pointer;color:var(--ink);font-size:14px}.navbtn:hover{background:#f0f3f8}.navbtn.active{background:#eaf0ff;color:#18389f;font-weight:800}
+.navnum{min-width:28px;height:28px;border-radius:50%;display:inline-flex;justify-content:center;align-items:center;background:#fff;border:1px solid var(--line);font-weight:800}
+.card{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;min-height:720px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.note{background:#f7f9fc;border:1px solid var(--line);border-radius:18px;padding:15px}.note.green{background:#effaf4;border-color:#b9dfca;color:#153d28}
+.note.warn{background:#fff7ec;border-color:#edcfaa;color:#573508}.note.red{background:#fff1f1;border-color:#e8baba;color:#6b2222}
+canvas{width:100%;min-height:320px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#fbfcff);display:block}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0}
+button.action{border:0;border-radius:14px;padding:10px 13px;cursor:pointer;font-weight:800;background:var(--blue);color:#fff;box-shadow:0 8px 18px rgba(47,86,216,.23)}
+button.secondary{border:1px solid var(--line);border-radius:14px;padding:10px 13px;cursor:pointer;font-weight:800;background:#eef2f7;color:#303747}
+.kpi{background:#f7f9fc;border:1px solid var(--line);border-radius:16px;padding:14px}.kpi .label{font-size:12px;color:var(--muted)}.kpi .val{font-size:20px;font-weight:900}
+table{width:100%;border-collapse:collapse;margin:10px 0 0;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+th{background:#f5f7fb;color:#303747}.hidden{display:none}.small{font-size:13px;color:var(--muted)}
+.phase{display:flex;gap:10px;align-items:flex-start;margin:9px 0;padding:12px;border:1px solid var(--line);border-radius:16px;background:#f8f9fc}
+.phase .dot{min-width:16px;height:16px;border-radius:50%;background:#c7ceda;margin-top:4px}.phase.active{border-color:#8ca1ff;background:#edf2ff}.phase.active .dot{background:var(--blue)}
+.footerlinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}a{color:#2349ca;text-decoration:none;font-weight:800}a:hover{text-decoration:underline}
+@media(max-width:920px){.layout,.grid2,.grid3{grid-template-columns:1fr}nav{position:relative;top:auto}}
+</style>
+</head>
+<body>
+<header>
+  <section class="hero">
+    <h1>A10 137-Gated Cosmology<br>Technical Visual Orientation</h1>
+    <p class="muted">
+      This is a repository-facing visual orientation layer for readers who already have at least a minimal interest
+      in cosmology, CMB constraints, numerical workflows, or reproducible preprints.
+      It is intentionally <strong>not</strong> a popular-science simplification and intentionally <strong>not</strong> a proof dashboard.
+    </p>
+    <div class="badges">
+      <span class="badge">target: technically interested first-time readers</span>
+      <span class="badge">browser-only</span>
+      <span class="badge">no CLASS/Cobaya execution</span>
+      <span class="badge">claim-boundary preserving</span>
+      <span class="badge">repository orientation</span>
+    </div>
+  </section>
+</header>
+<main>
+<div class="layout">
+<nav>
+<button class="navbtn active" data-section="reader"><span class="navnum">0</span><span>Reader level<br><small>not too elementary</small></span></button>
+<button class="navbtn" data-section="mechanism"><span class="navnum">1</span><span>Mechanism<br><small>z≈5000 + χ≈137</small></span></button>
+<button class="navbtn" data-section="pipeline"><span class="navnum">2</span><span>Workflow<br><small>repo evidence chain</small></span></button>
+<button class="navbtn" data-section="observables"><span class="navnum">3</span><span>Observables<br><small>CMB / BAO / H0</small></span></button>
+<button class="navbtn" data-section="evidence"><span class="navnum">4</span><span>Evidence hierarchy<br><small>what carries weight</small></span></button>
+<button class="navbtn" data-section="repo"><span class="navnum">5</span><span>How to read repo<br><small>where to look first</small></span></button>
+<button class="navbtn" data-section="boundary"><span class="navnum">6</span><span>Claim boundary<br><small>non-claims</small></span></button>
+</nav>
+
+<section class="card">
+
+<div id="reader" class="section">
+<h2>0. Reader level and purpose</h2>
+<div class="grid2">
+<div>
+<p>
+This page assumes the reader can tolerate terms such as <code>H0</code>, <code>CMB</code>, <code>sound horizon</code>,
+<code>CLASS</code>, <code>Cobaya</code>, and <code>MCMC</code>. It does not try to teach cosmology from zero.
+</p>
+<p>
+Its role is to reduce the first-contact friction of the repository: before reading source overlays, YAML files,
+claim-boundary notes, and MCMC summaries, the reader can see the intended mechanism and evidence chain in one place.
+</p>
+<div class="note green">
+<strong>Recommended placement:</strong><br>
+Use this as an optional repository page under <code>docs/technical_visual_orientation/</code>.
+It should sit after the README and before deeper reproducibility materials.
+</div>
+</div>
+<div>
+<canvas id="readerCanvas" width="640" height="400"></canvas>
+<p class="small">Conceptual positioning only. No scientific calculation is performed in this HTML.</p>
+</div>
+</div>
+</div>
+
+<div id="mechanism" class="section hidden">
+<h2>1. Mechanism: localized transfer + stability gate</h2>
+<p>
+The branch is easiest to read as a two-coordinate localization problem:
+redshift-space localization near <code>z≈5000</code> and field-space activation near <code>χ≈137</code>.
+</p>
+<div class="grid2">
+<div>
+<canvas id="mechanismCanvas" width="640" height="420"></canvas>
+</div>
+<div>
+<h3>Interpretation</h3>
+<table>
+<tr><th>Layer</th><th>Role</th></tr>
+<tr><td>Localized early-time transfer</td><td>Modify early expansion in a compact window rather than broad deformation.</td></tr>
+<tr><td>137 stability gate</td><td>Interpret the activation as conditional on a protected field-space domain.</td></tr>
+<tr><td>High-H0 branch</td><td>Target a reduced sound horizon / high-H0 solution while preserving testability.</td></tr>
+</table>
+<div class="controls">
+<button class="action" onclick="animateMechanism()">animate mechanism</button>
+<button class="secondary" onclick="drawMechanism(1)">static</button>
+</div>
+</div>
+</div>
+</div>
+
+<div id="pipeline" class="section hidden">
+<h2>2. Repository workflow: what this archive is trying to preserve</h2>
+<p>
+The repository should be read as a provenance and reproducibility archive, not as a one-click full cosmology pipeline.
+External likelihood data and full heavy local environments are intentionally outside the Git body.
+</p>
+<div class="grid2">
+<div>
+<div id="phase0" class="phase active"><span class="dot"></span><span><strong>Manuscript claim</strong><br><small>high-H0 candidate branch with strict scope.</small></span></div>
+<div id="phase1" class="phase"><span class="dot"></span><span><strong>CLASS source overlay</strong><br><small>modified source/header materials and patch notes.</small></span></div>
+<div id="phase2" class="phase"><span class="dot"></span><span><strong>Cobaya YAML</strong><br><small>configuration records for likelihood/MCMC workflow.</small></span></div>
+<div id="phase3" class="phase"><span class="dot"></span><span><strong>MCMC / summary materials</strong><br><small>compact summaries and provenance, not full heavy chains.</small></span></div>
+<div id="phase4" class="phase"><span class="dot"></span><span><strong>Claim boundary</strong><br><small>what the archive supports and what it does not claim.</small></span></div>
+<div class="controls">
+<button class="action" onclick="animatePipeline()">step through workflow</button>
+<button class="secondary" onclick="resetPipeline()">reset</button>
+</div>
+</div>
+<div>
+<canvas id="pipelineCanvas" width="640" height="420"></canvas>
+</div>
+</div>
+</div>
+
+<div id="observables" class="section hidden">
+<h2>3. Observable logic: what must remain controlled</h2>
+<div class="grid3">
+<div class="kpi"><div class="label">early target</div><div class="val">sound horizon</div></div>
+<div class="kpi"><div class="label">headline parameter</div><div class="val">H0 branch</div></div>
+<div class="kpi"><div class="label">required discipline</div><div class="val">CMB/BAO consistency</div></div>
+</div>
+<p>
+The model is not useful if it raises <code>H0</code> while catastrophically degrading CMB acoustic structure or BAO distances.
+The central visual idea is therefore not "large change", but "localized change with controlled residuals."
+</p>
+<div class="grid2">
+<div><canvas id="observablesCanvas" width="640" height="420"></canvas></div>
+<div>
+<h3>Technical reading</h3>
+<ul>
+<li>TT residuals must not become a broad uncontrolled phase distortion.</li>
+<li>EE/TE should remain nontrivial tests, not be hidden by the explanation.</li>
+<li>BAO distance consistency matters because early-time success can fail at late times.</li>
+<li>Full model comparison requires likelihood-level comparison, not this page.</li>
+</ul>
+<div class="controls">
+<button class="action" onclick="animateObservables()">show residual concept</button>
+<button class="secondary" onclick="drawObservables(1)">static</button>
+</div>
+</div>
+</div>
+</div>
+
+<div id="evidence" class="section hidden">
+<h2>4. Evidence hierarchy</h2>
+<p>
+Not every component has the same evidential status. This page should help the reader separate core evidence from
+conceptual support.
+</p>
+<table>
+<tr><th>Evidence layer</th><th>Status</th><th>How to treat it</th></tr>
+<tr><td>CLASS/Cobaya configuration and source overlay</td><td>core technical provenance</td><td>Inspect first for reproducibility scope.</td></tr>
+<tr><td>MCMC summaries / reported posterior behavior</td><td>numerical support within reported workflow</td><td>Useful, but not external independent reproduction.</td></tr>
+<tr><td>137 stability-gate interpretation</td><td>model-organization layer</td><td>Supports selectivity; does not establish universal numerology.</td></tr>
+<tr><td>Root-geometric / conceptual selectivity arguments</td><td>conceptual support</td><td>Mechanism template, not direct cosmological derivation.</td></tr>
+<tr><td>Late-time growth-suppression extension</td><td>optional companion sector</td><td>Do not merge with the core early-time H0 mechanism.</td></tr>
+</table>
+<div class="note warn">
+<strong>Practical use:</strong> this hierarchy prevents the visual page from overselling weaker components.
+</div>
+</div>
+
+<div id="repo" class="section hidden">
+<h2>5. How to read the repository first</h2>
+<p>
+For a technically interested reader, the fastest route is not to open every file. Start from the claim boundary and
+provenance map, then move to configuration and source materials.
+</p>
+<div class="grid2">
+<div class="note">
+<h3>Suggested reading order</h3>
+<ol>
+<li><code>README.md</code> / <code>README_ja.md</code></li>
+<li><code>CLAIM_BOUNDARY.md</code> and <code>LIMITATIONS.md</code></li>
+<li><code>docs/REPRODUCIBILITY_NOTES.md</code></li>
+<li><code>class_patch/</code></li>
+<li><code>cobaya_configs/</code></li>
+<li><code>audit/</code> and compact provenance snapshots</li>
+</ol>
+</div>
+<div class="note">
+<h3>What not to expect</h3>
+<ul>
+<li>No bundled Planck/clik likelihood data.</li>
+<li>No full compiled CLASS binaries.</li>
+<li>No guarantee that the exact upstream local environment is fully reconstructed.</li>
+<li>No final model selection claim.</li>
+</ul>
+</div>
+</div>
+<div class="footerlinks">
+<a href="https://github.com/yokken0907/a10-cosmology-137-gated" target="_blank" rel="noreferrer">GitHub repository</a>
+<a href="https://doi.org/10.5281/zenodo.20187119" target="_blank" rel="noreferrer">Zenodo DOI</a>
+</div>
+</div>
+
+<div id="boundary" class="section hidden">
+<h2>6. Claim boundary: the page should not expand the science</h2>
+<div class="grid2">
+<div class="note green">
+<h3>Allowed reading</h3>
+<ul>
+<li>A structured candidate branch for high-H0 cosmology.</li>
+<li>A repository-facing guide to the model and archive layout.</li>
+<li>A conceptual explanation of z-localization and χ-gating.</li>
+<li>A pointer toward the actual manuscript and reproducibility materials.</li>
+</ul>
+</div>
+<div class="note red">
+<h3>Forbidden reading</h3>
+<ul>
+<li>"A10 has solved the Hubble tension."</li>
+<li>"137 is proven to be a universal cosmological constant."</li>
+<li>"This HTML is a numerical validation."</li>
+<li>"The repository is a full one-click independent reproduction."</li>
+<li>"Visual clarity replaces likelihood comparison."</li>
+</ul>
+</div>
+</div>
+<p class="muted">
+The goal is a professional orientation page: visually helpful, technically honest, and restrained.
+</p>
+</div>
+
+</section>
+</div>
+</main>
+<script>
+const sections=["reader","mechanism","pipeline","observables","evidence","repo","boundary"];
+document.querySelectorAll(".navbtn").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll(".navbtn").forEach(b=>b.classList.remove("active")); btn.classList.add("active");
+ const id=btn.dataset.section; sections.forEach(s=>document.getElementById(s).classList.toggle("hidden",s!==id)); setTimeout(redraw,20);
+}));
+function C(id){return document.getElementById(id).getContext("2d")} function clear(c){c.clearRect(0,0,c.canvas.width,c.canvas.height)}
+function text(c,s,x,y,size=14,color="#161a22",align="left",w="600"){c.fillStyle=color;c.font=`${w} ${size}px system-ui,sans-serif`;c.textAlign=align;c.fillText(s,x,y)}
+function line(c,x1,y1,x2,y2,color="#9aa4b5",w=2){c.strokeStyle=color;c.lineWidth=w;c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke()}
+function dot(c,x,y,r,color){c.fillStyle=color;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill()}
+function rect(c,x,y,w,h,r,fill,stroke="#d9dee8"){c.fillStyle=fill;c.strokeStyle=stroke;c.lineWidth=1.5;c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();c.fill();c.stroke()}
+function axes(c,x0,y0,w,h,xl,yl){line(c,x0,y0+h,x0+w,y0+h,"#7b8492",2);line(c,x0,y0,x0,y0+h,"#7b8492",2);text(c,xl,x0+w/2,y0+h+34,13,"#5d6675","center");text(c,yl,x0-38,y0+8,13,"#5d6675")}
+function drawReader(){
+ const c=C("readerCanvas");clear(c); text(c,"Audience filter",320,34,20,"#161a22","center","850");
+ const boxes=[
+  ["Interested reader",95,120,"#eef3ff"],["Technical orientation",320,120,"#f1edff"],["Manuscript / repo",545,120,"#effaf4"],
+  ["Not popularization",160,265,"#fff7ec"],["Not validation",480,265,"#fff1f1"]
+ ];
+ boxes.forEach(b=>{rect(c,b[1]-88,b[2]-40,176,80,18,b[3]);text(c,b[0],b[1],b[2]+5,15,"#161a22","center","800")});
+ [[183,120,232,120],[408,120,457,120],[235,156,190,230],[405,156,455,230]].forEach(a=>{line(c,a[0],a[1],a[2],a[3],"#2f56d8",3);dot(c,a[2],a[3],4,"#2f56d8")});
+ text(c,"A bridge between README and technical evidence",320,372,13,"#5d6675","center");
+}
+function drawMechanism(t=1){
+ const c=C("mechanismCanvas");clear(c); text(c,"Two-coordinate localization",320,30,20,"#161a22","center","850");
+ axes(c,65,65,520,260,"redshift / field-space schematic","activation / response");
+ // transfer
+ c.beginPath(); for(let i=0;i<=220;i++){let x=i/220;let y=Math.exp(-Math.pow((x-.34)/.07,2)/2)*.8*t;let px=65+x*520;let py=325-y*260;if(i===0)c.moveTo(px,py);else c.lineTo(px,py)} c.strokeStyle="#2f56d8";c.lineWidth=4;c.stroke();
+ // gate
+ c.beginPath(); for(let i=0;i<=220;i++){let x=i/220;let y=Math.exp(-Math.pow((x-.66)/.09,2)/2)*.88*t;let px=65+x*520;let py=325-y*260;if(i===0)c.moveTo(px,py);else c.lineTo(px,py)} c.strokeStyle="#7b45c8";c.lineWidth=4;c.stroke();
+ line(c,65+.34*520,65,65+.34*520,325,"#2f56d8",1.5); text(c,"z≈5000",65+.34*520,55,13,"#2f56d8","center","850");
+ line(c,65+.66*520,65,65+.66*520,325,"#7b45c8",1.5); text(c,"χ≈137",65+.66*520,55,13,"#7b45c8","center","850");
+ text(c,"localized transfer",140,100,13,"#2f56d8"); text(c,"stability gate",390,105,13,"#7b45c8");
+ text(c,"localize when and localize under what field-space condition",320,390,13,"#5d6675","center");
+}
+function animateMechanism(){let f=0;const tm=setInterval(()=>{f+=.04;drawMechanism(Math.min(1,f));if(f>=1)clearInterval(tm)},28)}
+let pipeTimer=null;
+function drawPipeline(k=0){
+ const c=C("pipelineCanvas");clear(c); text(c,"Repository evidence chain",320,34,20,"#161a22","center","850");
+ const labels=["manuscript","CLASS overlay","Cobaya YAML","MCMC summaries","claim boundary"];
+ for(let i=0;i<labels.length;i++){let x=85+i*135;let active=i<=k;rect(c,x-55,160,110,78,17,active?"#eaf0ff":"#f7f9fc",active?"#8098ff":"#d9dee8");text(c,labels[i],x,202,13,active?"#16389f":"#5d6675","center","800"); if(i<labels.length-1){line(c,x+55,199,x+80,199,active?"#2f56d8":"#c2c9d5",3);dot(c,x+80,199,4,active?"#2f56d8":"#c2c9d5")}}
+ text(c,"The repo preserves a chain of materials; it is not a bundled external likelihood distribution.",320,366,13,"#5d6675","center");
+}
+function animatePipeline(){resetPipeline();let k=0;pipeTimer=setInterval(()=>{for(let i=0;i<5;i++)document.getElementById("phase"+i).classList.toggle("active",i<=k);drawPipeline(k);k++;if(k>=5){clearInterval(pipeTimer);pipeTimer=null}},850)}
+function resetPipeline(){if(pipeTimer)clearInterval(pipeTimer);pipeTimer=null;for(let i=0;i<5;i++)document.getElementById("phase"+i).classList.toggle("active",i===0);drawPipeline(0)}
+function drawObservables(t=1){
+ const c=C("observablesCanvas");clear(c); text(c,"Residual-control concept",320,30,20,"#161a22","center","850");
+ axes(c,60,65,520,260,"multipole / distance observable schematic","relative residual");
+ line(c,60,195,580,195,"#aeb6c2",1);
+ function curve(color,amp,freq,phase,dec,label,ylabel){c.beginPath();for(let i=0;i<=260;i++){let x=i/260;let y=(Math.sin(x*freq+phase)*amp*Math.exp(-x*dec)+Math.sin(x*freq*.43)*amp*.25)*t;let px=60+x*520;let py=195-y;if(i===0)c.moveTo(px,py);else c.lineTo(px,py)}c.strokeStyle=color;c.lineWidth=3;c.stroke();text(c,label,570,ylabel,12,color,"right","850")}
+ curve("#a05a16",70,32,.2,.18,"simple broad deformation",96);
+ curve("#2f56d8",34,32,.75,.85,"localized A10-style target",124);
+ text(c,"visual target: raise H0 branch without uncontrolled acoustic damage",320,385,13,"#5d6675","center");
+}
+function animateObservables(){let f=0;const tm=setInterval(()=>{f+=.04;drawObservables(Math.min(1,f));if(f>=1)clearInterval(tm)},28)}
+function redraw(){drawReader();drawMechanism(1);drawPipeline(0);drawObservables(1)}
+window.addEventListener("resize",redraw); redraw();
+</script>
+</body>
+</html>
